@@ -57,7 +57,7 @@ isc.Page.setEvent("load", function () {
       alternateRecordStyles:true, width:"100%",
       fields:[
         {name:"month", width:60},
-        {name:"salesperson", title:"Sales Rep"},
+        {name:"salespersonName", title:"Sales Rep"},
         {name:"target",  formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0")},
         {name:"actual",  formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0")}
       ]
@@ -78,13 +78,13 @@ isc.Page.setEvent("load", function () {
              : rec.status==="Lost" ? "statusLost" : "statusPot";
       },
       fields:[
-        {name:"date", formatCellValue:v=>isc.DateUtil.format(v,"MM/dd/yyyy")},
-        {name:"customer"},
+        {name:"dateRaised", formatCellValue:v=>isc.DateUtil.format(v,"MM/dd/yyyy")},
+        {name:"customerName", title:"Customer"},
         {name:"comments"},
         {name:"chance", formatCellValue:v=>isc.NumberUtil.format(v,"##0.00'%'")},
         {name:"status"},
-        {name:"salesperson", title:"Salesperson"},
-        {name:"value", title:"Potential Value",
+        {name:"salesRepName", title:"Sales Rep"},
+        {name:"potentialValue", title:"Potential Value",
           formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0.00")}
       ]
     });
@@ -146,9 +146,9 @@ isc.Page.setEvent("load", function () {
     isc.DataSource.get("pipelineDS").fetchData({}, function (resp) {
       var total=0, won=0, lost=0;
       resp.data.forEach(r=>{
-        total+=r.value;
-        if(r.status==="Won")  won += r.value;
-        if(r.status==="Lost") lost+= r.value;
+        total+=r.potentialValue;
+        if(r.status==="Won")  won += r.potentialValue;
+        if(r.status==="Lost") lost+= r.potentialValue;
       });
       var fmt=v=>isc.NumberUtil.format(v,"$#,##0.00");
       var cards=[

@@ -41,9 +41,9 @@ isc.Page.setEvent("load", function(){
         fields:[
             {name:"officeCode", title:"Office", editorType:"SelectItem",
              optionDataSource:"officeDS", valueField:"officeCode", displayField:"city"},
-            {name:"salesRep", title:"Sales Rep", editorType:"SelectItem",
+            {name:"salesman", title:"Sales Rep", editorType:"SelectItem",
              optionDataSource:"employeeDS", valueField:"employeeNumber", displayField:"firstName"},
-            {name:"dateRange", title:"Date Range", editorType:"DateRangeItem"}
+            {name:"dateRaised", title:"Date Range", editorType:"DateRangeItem"}
         ],
         itemChanged:applyFilters
     });
