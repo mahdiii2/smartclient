@@ -39,15 +39,20 @@
 <script>
 isc.Page.setEvent("load", function(){
 
-    loadDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], init);
+    ensureDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], init);
 
-    function loadDS(list, callback){
+    function ensureDS(list, callback){
         if(list.length===0){
             if(callback) callback();
             return;
         }
         var id=list.shift();
-        isc.DataSource.load(id, function(){ loadDS(list, callback); });
+        var ds = isc.DataSource.get(id);
+        if(ds){
+            ensureDS(list, callback);
+        }else{
+            isc.DataSource.load(id, function(){ ensureDS(list, callback); });
+        }
     }
 
     function init(){
@@ -139,7 +144,8 @@ isc.Page.setEvent("load", function(){
     }
 
     function fetchAndDisplay(criteria){
-        isc.DataSource.get("pipelineDS").fetchData(criteria, function(resp){
+        ensureDS(["pipelineDS"], function(){
+            isc.DataSource.get("pipelineDS").fetchData(criteria, function(resp){
             var data = resp.data || [];
             pipelineGrid.setData(data);
             var repTotals = {}, statusTotals = {};
@@ -162,6 +168,7 @@ isc.Page.setEvent("load", function(){
             summaryPanel.getMember(0).setContents("Total Pipeline: <b>"+fmt(total)+"</b>");
             summaryPanel.getMember(1).setContents("Orders Won: <b>"+fmt(won)+"</b>");
             summaryPanel.getMember(2).setContents("Orders Lost: <b>"+fmt(lost)+"</b>");
+        });
         });
     }
 

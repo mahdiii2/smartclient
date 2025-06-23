@@ -40,15 +40,20 @@
 <script>
 // -------- run once all modules + DOM are ready --------
 isc.Page.setEvent("load", function () {
-  loadDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
+  ensureDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
 
-  function loadDS(list, callback){
+  function ensureDS(list, callback){
     if(list.length===0){
       if(callback) callback();
       return;
     }
     var id=list.shift();
-    isc.DataSource.load(id, function(){ loadDS(list, callback); });
+    var ds = isc.DataSource.get(id);
+    if(ds){
+      ensureDS(list, callback);
+    }else{
+      isc.DataSource.load(id, function(){ ensureDS(list, callback); });
+    }
   }
 
   function buildUI () {
@@ -152,26 +157,28 @@ isc.Page.setEvent("load", function () {
     });
 
     // ---------- compute KPI row ----------
-    isc.DataSource.get("pipelineDS").fetchData({}, function (resp) {
-      var total=0, won=0, lost=0;
-      resp.data.forEach(r=>{
-        total+=r.potentialValue;
-        if(r.status==="Won")  won += r.potentialValue;
-        if(r.status==="Lost") lost+= r.potentialValue;
+    ensureDS(["pipelineDS"], function(){
+      isc.DataSource.get("pipelineDS").fetchData({}, function (resp) {
+        var total=0, won=0, lost=0;
+        resp.data.forEach(r=>{
+          total+=r.potentialValue;
+          if(r.status==="Won")  won += r.potentialValue;
+          if(r.status==="Lost") lost+= r.potentialValue;
+        });
+        var fmt=v=>isc.NumberUtil.format(v,"$#,##0.00");
+        var cards=[
+          {t:"Pipeline Potential", v:fmt(total)},
+          {t:"Orders Won",        v:fmt(won),  cls:"kpi-green"},
+          {t:"Orders Lost",       v:fmt(lost), cls:"kpi-red"}
+        ].map(k=>isc.Canvas.create({
+              width:"*", styleName:"card", padding:10,
+              contents:`<div style="font-weight:600;font-size:1.1em">${k.t}</div>
+                        <div class="kpi-value ${k.cls||''}">${k.v}</div>`
+        }));
+        dashboardPane.replaceMember(0,
+          isc.HLayout.create({width:"100%", height:110, membersMargin:15, members:cards})
+        );
       });
-      var fmt=v=>isc.NumberUtil.format(v,"$#,##0.00");
-      var cards=[
-        {t:"Pipeline Potential", v:fmt(total)},
-        {t:"Orders Won",        v:fmt(won),  cls:"kpi-green"},
-        {t:"Orders Lost",       v:fmt(lost), cls:"kpi-red"}
-      ].map(k=>isc.Canvas.create({
-            width:"*", styleName:"card", padding:10,
-            contents:`<div style="font-weight:600;font-size:1.1em">${k.t}</div>
-                      <div class="kpi-value ${k.cls||''}">${k.v}</div>`
-      }));
-      dashboardPane.replaceMember(0,
-        isc.HLayout.create({width:"100%", height:110, membersMargin:15, members:cards})
-      );
     });
   }
 });
