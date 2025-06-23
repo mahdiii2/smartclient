@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://www.isomorphic.com/isomorphic/servlet/taglib" prefix="isomorphic" %>
+<%@ taglib uri="http://www.smartclient.com/taglib" prefix="isomorphic" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +40,16 @@
 <script>
 // -------- run once all modules + DOM are ready --------
 isc.Page.setEvent("load", function () {
-  buildUI();
+  loadDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
+
+  function loadDS(list, callback){
+    if(list.length===0){
+      if(callback) callback();
+      return;
+    }
+    var id=list.shift();
+    isc.DataSource.load(id, function(){ loadDS(list, callback); });
+  }
 
   function buildUI () {
 
