@@ -1,12 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://www.isomorphic.com/isomorphic/servlet/taglib" prefix="isomorphic" %>
 <!DOCTYPE html>
 <html>
 <head>
   <title>Dashboard Starter App</title>
 
   <!-- 1) SmartClient bootstrapping -->
-  <script>window.isomorphicDir = "isomorphic";</script>
-  <script>window.isomorphic_simpleNames = false;</script>
+  <script>window.isomorphicDir = "isomorphic/";</script>
 
   <script src="isomorphic/system/modules/ISC_Core.js"></script>
   <script src="isomorphic/system/modules/ISC_Foundation.js"></script>
@@ -15,16 +15,15 @@
   <script src="isomorphic/system/modules/ISC_Forms.js"></script>
   <script src="isomorphic/system/modules/ISC_DataBinding.js"></script>
   <script src="isomorphic/system/modules/ISC_Drawing.js"></script>
-    <!-- after ISC_DataBinding.js and ISC_Drawing.js -->
-    <script src="isomorphic/system/modules-debug/ISC_Logging.js"></script>
-    <script src="isomorphic/system/modules-debug/ISC_DebugConsole.js"></script>
-  
-  <script>
-    isc.Log.setLevel("DSRequest",  "debug");
-    isc.Log.setLevel("DataBinding", "debug");
-  </script>
   <!-- 2) Skin (after modules) -->
   <script src="isomorphic/skins/Shiva/load_skin.js"></script>
+
+  <!-- DataSources -->
+  <isomorphic:loadDS ID="pipelineDS"/>
+  <isomorphic:loadDS ID="forecastDS"/>
+  <isomorphic:loadDS ID="employeeDS"/>
+  <isomorphic:loadDS ID="officeDS"/>
+  <isomorphic:loadDS ID="customerDS"/>
 
   <style>
     html,body{height:100%;margin:0;overflow:hidden;background:#f2f2f2;font-family:Helvetica,Arial,sans-serif}
@@ -41,13 +40,7 @@
 <script>
 // -------- run once all modules + DOM are ready --------
 isc.Page.setEvent("load", function () {
-
-  // 1) Load DataSources (XML files must live beside this JSP)
-  isc.DataSource.load("pipelineDS", function () {
-    isc.DataSource.load("forecastDS", function () {
-      buildUI();
-    });
-  });
+  buildUI();
 
   function buildUI () {
 
