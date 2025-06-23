@@ -38,6 +38,24 @@
 <body>
 <script>
 isc.Page.setEvent("load", function(){
+    ensureDataSources(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
+
+    // ensureDataSources loads a list of DataSources before callback runs
+    function ensureDataSources(list, callback){
+        if(list.length===0){
+            if(callback) callback();
+            return;
+        }
+        var id=list.shift();
+        var ds = isc.DataSource.get(id);
+        if(ds){
+            ensureDataSources(list, callback);
+        }else{
+            isc.DataSource.load(id, function(){ ensureDataSources(list, callback); });
+        }
+    }
+
+    function buildUI(){
 
     var filterForm = isc.DynamicForm.create({
         ID:"filterForm", width:350, numCols:3, colWidths:["*",50,"*"],
@@ -153,6 +171,7 @@ isc.Page.setEvent("load", function(){
     }
 
     fetchAndDisplay({});
+    }
 });
 </script>
 </body>
