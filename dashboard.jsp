@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <script>window.isomorphicDir = "isomorphic/";</script>
+
     <script>window.isomorphic_simpleNames = false;</script>
 
     <!-- SmartClient modules -->
@@ -23,6 +24,8 @@
     <isomorphic:loadDS ID="forecastDS"/>
     <isomorphic:loadDS ID="employeeDS"/>
     <isomorphic:loadDS ID="officeDS"/>
+    <isomorphic:loadDS ID="customerDS"/>
+
 
     <style>
         html,body{height:100%;margin:0;overflow:hidden;background:#f2f2f2;font-family:Helvetica,Arial,sans-serif}
@@ -38,13 +41,30 @@ isc.Page.setEvent("load", function(){
 
     var filterForm = isc.DynamicForm.create({
         ID:"filterForm", width:350, numCols:3, colWidths:["*",50,"*"],
-        fields:[
-            {name:"officeCode", title:"Office", editorType:"SelectItem",
-             optionDataSource:"officeDS", valueField:"officeCode", displayField:"city"},
-            {name:"salesRep", title:"Sales Rep", editorType:"SelectItem",
-             optionDataSource:"employeeDS", valueField:"employeeNumber", displayField:"firstName"},
-            {name:"dateRange", title:"Date Range", editorType:"DateRangeItem"}
-        ],
+      fields: [
+    {
+        name: "officeCode",
+        title: "Office",
+        editorType: "SelectItem",
+        optionDataSource: "officeDS",
+        valueField: "officeCode",
+        displayField: "city"
+    },
+    {
+        name: "salesRep",
+        title: "Sales Rep",
+        editorType: "SelectItem",
+        optionDataSource: "employeeDS",
+        valueField: "employeeNumber",
+        displayField: "firstName"
+    },
+    {
+        name: "dateRange",
+        title: "Date Range",
+        editorType: "DateRangeItem"
+    }
+],
+
         itemChanged:applyFilters
     });
 
