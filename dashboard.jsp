@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.isomorphic.com/isomorphic/servlet/taglib" prefix="isomorphic" %>
+<%@ taglib uri="http://www.smartclient.com/taglib" prefix="isomorphic" %>
 <!DOCTYPE html>
 <html>
 <head>
