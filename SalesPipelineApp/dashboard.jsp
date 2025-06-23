@@ -40,9 +40,10 @@
 <script>
 // -------- run once all modules + DOM are ready --------
 isc.Page.setEvent("load", function () {
-  ensureDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
+  ensureDataSources(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], buildUI);
 
-  function ensureDS(list, callback){
+  // ensureDataSources loads a list of DataSources before callback runs
+  function ensureDataSources(list, callback){
     if(list.length===0){
       if(callback) callback();
       return;
@@ -50,9 +51,9 @@ isc.Page.setEvent("load", function () {
     var id=list.shift();
     var ds = isc.DataSource.get(id);
     if(ds){
-      ensureDS(list, callback);
+      ensureDataSources(list, callback);
     }else{
-      isc.DataSource.load(id, function(){ ensureDS(list, callback); });
+      isc.DataSource.load(id, function(){ ensureDataSources(list, callback); });
     }
   }
 
@@ -157,7 +158,7 @@ isc.Page.setEvent("load", function () {
     });
 
     // ---------- compute KPI row ----------
-    ensureDS(["pipelineDS"], function(){
+    ensureDataSources(["pipelineDS"], function(){
       isc.DataSource.get("pipelineDS").fetchData({}, function (resp) {
         var total=0, won=0, lost=0;
         resp.data.forEach(r=>{
