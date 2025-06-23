@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8"/>
     <script>window.isomorphicDir = "isomorphic/";</script>
-    <script>window.isomorphic_simpleNames = false;</script>
 
     <!-- SmartClient modules -->
     <script src="isomorphic/system/modules/ISC_Core.js"></script>
@@ -23,6 +22,7 @@
     <isomorphic:loadDS ID="forecastDS"/>
     <isomorphic:loadDS ID="employeeDS"/>
     <isomorphic:loadDS ID="officeDS"/>
+    <isomorphic:loadDS ID="customerDS"/>
 
     <style>
         html,body{height:100%;margin:0;overflow:hidden;background:#f2f2f2;font-family:Helvetica,Arial,sans-serif}
