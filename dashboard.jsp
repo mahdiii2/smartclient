@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.isomorphic.com/isomorphic/servlet/taglib" prefix="isomorphic" %>
+<%@ taglib uri="http://www.smartclient.com/taglib" prefix="isomorphic" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +38,19 @@
 <body>
 <script>
 isc.Page.setEvent("load", function(){
+
+    loadDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], init);
+
+    function loadDS(list, callback){
+        if(list.length===0){
+            if(callback) callback();
+            return;
+        }
+        var id=list.shift();
+        isc.DataSource.load(id, function(){ loadDS(list, callback); });
+    }
+
+    function init(){
 
     var filterForm = isc.DynamicForm.create({
         ID:"filterForm", width:350, numCols:3, colWidths:["*",50,"*"],
@@ -152,7 +165,8 @@ isc.Page.setEvent("load", function(){
         });
     }
 
-    fetchAndDisplay({});
+        fetchAndDisplay({});
+    }
 });
 </script>
 </body>
