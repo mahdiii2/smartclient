@@ -1,0 +1,41 @@
+
+<MockDataSource ID="iss_IssueStatus" clientOnly="true">
+    <fields>
+        <field name="uniqueId" type="sequence" hidden="false" primaryKey="true"/>
+        <field name="status" type="text" title="Status"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <status>Active</status>
+            <uniqueId>0</uniqueId>
+        </Object>
+        <Object>
+            <status>Open</status>
+            <uniqueId>1</uniqueId>
+        </Object>
+        <Object>
+            <status>Assigned</status>
+            <uniqueId>2</uniqueId>
+        </Object>
+        <Object>
+            <status>Awaiting Parts</status>
+            <uniqueId>3</uniqueId>
+        </Object>
+        <Object>
+            <status>Testing</status>
+            <uniqueId>4</uniqueId>
+        </Object>
+        <Object>
+            <status>Resolved</status>
+            <uniqueId>5</uniqueId>
+        </Object>
+        <Object>
+            <status>Closed</status>
+            <uniqueId>6</uniqueId>
+        </Object>
+        <Object>
+            <status>On Hold</status>
+            <uniqueId>7</uniqueId>
+        </Object>
+    </cacheData>
+</MockDataSource>

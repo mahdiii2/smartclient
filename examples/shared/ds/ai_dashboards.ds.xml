@@ -1,0 +1,12 @@
+<DataSource isSampleDS="true"
+    ID="ai_dashboards"
+	serverType="sql"
+	tableName="ai_dashboards"
+    testFileName="ai_dashboards.data.xml"
+>
+    <fields>
+        <field name="id"                               type="sequence" primaryKey="true"/>
+        <field name="description"  title="Description" type="text" length="100"/>
+        <field name="layout"       title="Layout"      type="text" length="50000"/>
+    </fields>
+</DataSource>

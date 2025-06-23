@@ -1,0 +1,36 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="iss_IssueType,iss_IssueMaster,iss_Users,iss_UserType,iss_IssueStatus,iss_Priority,iss_Department,iss_IssueHistory"/>
+
+
+<ListGrid dataSource="iss_IssueHistory" autoID="iss_IssueHistoryGrid" autoFetchData="false" width="80%" height="250">
+    <fields>
+        <LGField name="date" width="150"/>
+        <LGField name="Description" width="662"/>
+        <LGField name="iss_UsersUserName"/>
+    </fields>
+    <canHover>true</canHover>
+    <initialSort>
+        <SortSpecifier>
+            <direction>ascending</direction>
+            <property>date</property>
+            <normalizer>creatorTimestamp</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <autoPopulateData>true</autoPopulateData>
+</ListGrid>
+
+
+<DataView overflow="hidden" ID="historyMain" width="80%" height="250" autoDraw="true">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="iss_IssueHistoryGrid"/>
+    </members>
+    <autoPopulateData>false</autoPopulateData>
+</DataView>
+
+
+</isomorphicXML>

@@ -1,0 +1,15 @@
+<DataSource isSampleDS="true"
+    ID="subcontractors"
+    serverType="sql"
+    tableName="subcontractors"
+    recordName="subcontractor"
+    testFileName="/examples/shared/ds/test_data/subcontractors.data.xml"
+    titleField="fullName"
+>
+    <fields>
+        <field name="fullName"        title="Name"            type="text"/>
+        <field name="Job"             title="Title"           type="text" /> 
+        <field name="Email"           title="Email"           type="text" />
+        <field name="contractStartDate"                       type="date" />
+    </fields>
+</DataSource>

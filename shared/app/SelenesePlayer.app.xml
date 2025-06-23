@@ -1,0 +1,16 @@
+<Application>
+    <rpcBindings>
+        <ServerObject ID="SelenesePlayer" className="com.isomorphic.webdriver.SelenesePlayer">
+            <visibleMethods>
+                <method name="openSeleneseSession"/>
+                <method name="executeSelenese"/>
+                <method name="closeSeleneseSession"/>
+            </visibleMethods>
+        </ServerObject>
+        <ServerObject ID="SeleneseRPC" className="com.isomorphic.tools.SeleneseRPC">
+            <visibleMethods>
+                <method name="downloadScreenshot"/>
+            </visibleMethods>
+        </ServerObject>
+    </rpcBindings>
+</Application>

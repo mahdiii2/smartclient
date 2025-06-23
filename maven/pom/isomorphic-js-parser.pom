@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+    <description>
+        A parser capable of reading a JSON byte stream and creating an in-memory Java object structure to match. 
+        Required if you're using the built-in support for REST via the RESTHandler servlet with JSON payloads, but also used by any 
+        mechanism that relies on JSON-style configuration. Examples include FileAssembly definitions in JSON format, any use of the 
+        rulesFile with a URIRegexFilter (Java Servlet) or subclass.
+    </description>
+
+	<groupId>com.isomorphic.smartclient.eval</groupId>
+	<artifactId>isomorphic-js-parser</artifactId>
+	<version>14.1-p20250614</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.isomorphic.smartclient.eval</groupId>
+			<artifactId>isomorphic-core-rpc</artifactId>
+			<version>14.1-p20250614</version>
+		</dependency>
+	</dependencies>
+	
+</project>

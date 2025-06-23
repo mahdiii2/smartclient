@@ -1,0 +1,39 @@
+
+<MockDataSource fromServer="true" ID="iss_UserType" clientOnly="true">
+    <fields>
+        <field name="userTypeId" type="integer" primaryKey="true"/>
+        <field name="userType" type="text" title="User Type"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <userTypeId>1</userTypeId>
+            <userType>User</userType>
+            <internalId>1</internalId>
+        </Object>
+        <Object>
+            <userTypeId>2</userTypeId>
+            <userType>IT Dev</userType>
+            <internalId>2</internalId>
+        </Object>
+        <Object>
+            <userTypeId>3</userTypeId>
+            <userType>IT Hardware</userType>
+            <internalId>3</internalId>
+        </Object>
+        <Object>
+            <userTypeId>4</userTypeId>
+            <userType>QA</userType>
+            <internalId>4</internalId>
+        </Object>
+        <Object>
+            <userTypeId>5</userTypeId>
+            <userType>Finance</userType>
+            <internalId>5</internalId>
+        </Object>
+        <Object>
+            <userTypeId>6</userTypeId>
+            <userType>Administrator</userType>
+            <internalId>6</internalId>
+        </Object>
+    </cacheData>
+</MockDataSource>

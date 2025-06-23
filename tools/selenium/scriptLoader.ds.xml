@@ -1,0 +1,27 @@
+<!-- This DataSource allows the client framework to load Selenium scripts, by parsing them and
+     returning the HTML to the client as a DSResponse.  Requires the isomorphic WebDriver JAR.
+-->
+<DataSource ID="scriptLoader" serverType="sql" dropExtraFields="false" cacheSyncStrategy="refetch">
+
+	<fields>
+        <field name="id" type="sequence" primaryKey="true" hidden="true" />
+		<field name="selenese" type="binary" />
+		<field name="selenese_filename" ignore="true" />
+        
+    </fields>
+
+    <operationBindings>
+        <operationBinding operationType="add">
+        <script language="groovy">
+        import com.isomorphic.webdriver.SelenesePlayer;
+
+        def scriptFile = dsRequest.getUploadedFile("selenese");
+        def scriptObj = SelenesePlayer.getScriptObject(scriptFile.getInputStream());
+        scriptObj.selenese = dsRequest.clientSuppliedValues.selenese;
+
+        scriptObj;
+        </script>
+        </operationBinding>
+    </operationBindings>
+
+</DataSource>

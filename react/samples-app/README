@@ -1,0 +1,31 @@
+Using the React Showcase Samples Project
+
+You can rebuild/repack the React JSX samples featured in the Showcase using this
+project.  To do so, first create the proper softlinks to the SmartClient runtime,
+React source, and webpacked output with
+
+    npm run links
+
+then install the required project dependencies via
+
+    npm install
+
+ make the desired edits to the sample JSX source under
+
+    isomorphic/system/reactSamples/source/ 
+
+and finally, invoke
+
+    npm run tryit
+
+to have webpack rebuild the output directory isomorphic/system/reactSamples/build/
+and start monitoring it for future changes, so that it rebuilds the transpiled JS
+output loaded automatically by the Showcase.  Alternatively, to just rebuild the
+output directory in production mode in one shot and exit, use
+
+    npm run build
+
+For details on React support in SmartClient see the "Using SmartClient with React"
+help topic in the SmartClient Reference document viewer:
+
+https://smartclient.com/smartclient-latest/isomorphic/system/reference/?id=group..reactSupport

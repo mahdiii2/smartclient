@@ -1,0 +1,64 @@
+<DataSource
+    isSampleDS="true"
+    ID="forecastDS"
+    serverType="sql"
+    tableName="forecast"
+    recordName="forecastEntry"
+    testFileName="/examples/shared/ds/test_data/forecastData.xml"
+    titleField="month">
+  <fields>
+    <field
+        name="id"
+        type="integer"
+        primaryKey="true"
+        hidden="true"
+        required="true"
+        title="ID"/>
+
+    <field
+        name="month"
+        type="text"
+        title="Month"/>
+
+    <field
+        name="salesperson"
+        type="integer"
+        title="Salesperson ID"
+        foreignKey="employeeDS.employeeNumber"/>
+
+    <field
+        name="target"
+        type="float"
+        title="Target Sales"/>
+
+    <field
+        name="actual"
+        type="float"
+        title="Actual Sales"/>
+
+    <field
+        name="internalId"
+        type="integer"
+        hidden="true"
+        title="Internal ID"/>
+
+    <!-- pull in the rep’s first name -->
+    <field
+        name="salespersonName"
+        type="text"
+        title="Sales Rep"
+        includeFrom="employeeDS.firstName"/>
+  </fields>
+
+  <!-- basic fetch SQL -->
+  <SQL id="fetch">
+    SELECT
+      id,
+      month,
+      salesperson,
+      target,
+      actual,
+      internalId
+    FROM forecast
+  </SQL>
+</DataSource>

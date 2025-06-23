@@ -1,0 +1,21 @@
+<DataSource ID="geminiProRestConnector"
+            serverType="rest"
+>
+    <serverConfig>
+        <requestFormat>json</requestFormat>
+        <fetchHttpMethod>POST</fetchHttpMethod>
+        <dataURL>https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=$config['Gemini.api.key']</dataURL>
+        <!-- Require the full response so that we can parse any error(s) (such as response blocked because of safety settings) -->
+        <requiresCompleteRESTResponse>true</requiresCompleteRESTResponse>
+        <recordXPath>candidates</recordXPath>
+    </serverConfig>
+    <fields>
+        <field name="contents" type="any" multiple="true"/>
+        <field name="tools" type="any" multiple="true"/>
+        <field name="safetySettings" type="any" multiple="true"/>
+        <field name="generationConfig" type="any"/>
+
+        <field name="candidate_parts" type="any" multiple="true" valueXPath="content/parts"/>
+        <field name="candidate_role" valueXPath="content/role"/>
+    </fields>
+</DataSource>

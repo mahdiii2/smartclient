@@ -1,0 +1,86 @@
+<List>
+	<agency_worker>
+		<name>Mike Barnaby</name>
+		<agencyId>1</agencyId>
+		<agencyRef>17781</agencyRef>
+		<Job>Security Guard</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Petra Kitching</name>
+		<agencyId>1</agencyId>
+		<agencyRef>10433</agencyRef>
+		<Job>Security Guard</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Jakub Grobowski</name>
+		<agencyId>2</agencyId>
+		<agencyRef>406</agencyRef>
+		<Job>Night Security Guard</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Callum Hart</name>
+		<agencyId>3</agencyId>
+		<agencyRef>1899</agencyRef>
+		<Job>Cook</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Emily Williams</name>
+		<agencyId>3</agencyId>
+		<agencyRef>3079</agencyRef>
+		<Job>Cook</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Macy Andressen</name>
+		<agencyId>3</agencyId>
+		<agencyRef>3071</agencyRef>
+		<Job>Junior Cook</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Tom Harding</name>
+		<agencyId>6</agencyId>
+		<agencyRef>288</agencyRef>
+		<Job>Catering Manager</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Tom Hamilton</name>
+		<agencyId>4</agencyId>
+		<agencyRef>77283</agencyRef>
+		<Job>Janitor</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Erica Murray</name>
+		<agencyId>4</agencyId>
+		<agencyRef>10119</agencyRef>
+		<Job>Janitor</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Melissa Dupres</name>
+		<agencyId>4</agencyId>
+		<agencyRef>3288</agencyRef>
+		<Job>Services Manager</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Griselda Duckworth</name>
+		<agencyId>7</agencyId>
+		<agencyRef>22</agencyRef>
+		<Job>Receptionist</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Xiu Chen</name>
+		<agencyId>7</agencyId>
+		<agencyRef>31</agencyRef>
+		<Job>Receptionist</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Russ Jenkins</name>
+		<agencyId>7</agencyId>
+		<agencyRef>88</agencyRef>
+		<Job>Junior Receptionist</Job>
+	</agency_worker>
+	<agency_worker>
+		<name>Siobhan O'Leary</name>
+		<agencyId>7</agencyId>
+		<agencyRef>5</agencyRef>
+		<Job>Reception Manager</Job>
+	</agency_worker>
+</List>

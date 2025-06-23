@@ -1,0 +1,20 @@
+<DataSource 
+    ID="employees_large" 
+    tableName="employees_large" 
+    serverType="sql" 
+    testFileName="/examples/shared/ds/test_data/employees_large.data.xml" 
+    dbImportFileName="/examples/shared/ds/test_data/employees_large.data.xml">
+    <fields>
+        <field name="employeeNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="lastName" type="text" hidden="true" required="true" length="50"/>
+        <field name="firstName" type="text" hidden="true" required="true" length="50"/>
+        <field name="extension" type="text" required="true" length="15"/>
+        <field name="email" type="text" required="true" length="100"/>
+        <field name="officeCode" type="text" required="true" length="10" title="officeLocation"/>
+        <field name="reportsTo" type="integer" title="Reports To" />
+        <field name="jobTitle" type="text" required="true" />
+
+    </fields>
+</DataSource>

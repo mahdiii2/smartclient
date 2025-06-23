@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="customerDS"
+    clientOnly="true"
+    dataURL="customerData.xml"
+    autoDeriveSchema="false">
+
+  <fields>
+    <!-- Primary key -->
+    <field name="customerNumber" type="integer" primaryKey="true" title="Customer #"/>
+
+    <!-- Customer identity -->
+    <field name="customerName"       type="text"    title="Name"/>
+    <field name="contactLastName"    type="text"    title="Last Name"/>
+    <field name="contactFirstName"   type="text"    title="First Name"/>
+
+    <!-- Contact info -->
+    <field name="phone"              type="text"    title="Phone"/>
+
+    <!-- Address -->
+    <field name="addressLine1"       type="text"    title="Address Line 1"/>
+    <field name="addressLine2"       type="text"    title="Address Line 2"/>
+    <field name="city"               type="text"    title="City"/>
+    <field name="state"              type="text"    title="State"/>
+    <field name="postalCode"         type="text"    title="ZIP/Postal Code"/>
+    <field name="country"            type="text"    title="Country"/>
+
+    <!-- Sales rep relationship -->
+    <field name="salesRepEmployeeNumber" type="integer"
+           foreignKey="employeeDS.employeeNumber"
+           title="Sales Rep ID"/>
+
+    <!-- Financial -->
+    <field name="creditLimit"        type="float"   title="Credit Limit"/>
+
+    <!-- Convenience: bring in rep’s name from employeeDS -->
+    <field name="salesRepEmployeeName" type="text"
+           includeFrom="employeeDS.employeeName"
+           title="Sales Rep"/>
+
+  </fields>
+
+  <!-- clientOnly + dataURL means no server‐roundtrip needed -->
+</DataSource>

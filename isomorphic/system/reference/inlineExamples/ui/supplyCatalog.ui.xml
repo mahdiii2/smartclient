@@ -1,0 +1,208 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="supplyCategory,supplyItem"/>
+
+
+<TreeGrid dataSource="supplyCategory" autoID="TreeGrid0" loadDataOnDemand="false" autoFetchData="true">
+    <fields>
+        <field name="categoryName" treeField="true"/>
+    </fields>
+    <canReparentNodes>true</canReparentNodes>
+    <canAcceptDroppedRecords>true</canAcceptDroppedRecords>
+    <nodeClick>
+            <Action target="supplyItemGrid" name="fetchRelatedData" mapping="node,viewer"/>
+    </nodeClick>
+</TreeGrid>
+
+
+<VLayout autoID="VLayout0">
+    <members>
+        <Canvas ref="TreeGrid0"/>
+    </members>
+</VLayout>
+
+
+<Menu autoID="Menu0">
+    <items>
+        <MenuItem autoName="addNewItemItem">
+            <title>Add New Item</title>
+            <enabled>true</enabled>
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/plus.png</icon>
+            <click>
+                    <Process>
+                        <sequence>
+                            <ShowTask targetTabName="editTab" componentId="detailPaneScreens"/>
+                            <FormEditNewRecordTask componentId="supplyItemForm">
+                                <initialValues>
+                                    <category>$ruleScope.supplyItemGrid.values.category</category>
+                                </initialValues>
+                            </FormEditNewRecordTask>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem autoName="Item1">
+            <isSeparator>true</isSeparator>
+        </MenuItem>
+        <MenuItem autoName="showDetailsItem">
+            <title>Show Details</title>
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/view.png</icon>
+            <click>
+                    <Process>
+                        <sequence>
+                            <ShowTask targetTabName="viewTab" componentId="detailPaneScreens"/>
+                            <GridViewSelectedDataTask selectionComponentId="supplyItemGrid" componentId="supplyItemDetailGrid"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem autoName="editItemItem">
+            <title>Edit Item</title>
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/edit.png</icon>
+            <click>
+                    <Process>
+                        <sequence>
+                            <ShowTask targetTabName="editTab" componentId="detailPaneScreens"/>
+                            <FormEditSelectedTask selectionComponentId="supplyItemGrid" componentId="supplyItemForm"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem autoName="deleteItemItem">
+            <title>Delete Item</title>
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/remove.png</icon>
+            <click>
+                    <Process>
+                        <sequence>
+                            <GridRemoveSelectedDataTask allowMultiRecordRemove="false" showConfirmation="true" failureElement="next" componentId="supplyItemGrid"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+    </items>
+</Menu>
+
+
+<ListGrid dataSource="supplyItem" autoID="supplyItemGrid" showFilterEditor="true" canEdit="true" autoFetchData="true">
+    <fields>
+        <field name="itemName"/>
+        <field name="SKU">
+            <canEdit>false</canEdit>
+        </field>
+        <field name="description"/>
+        <field name="category">
+            <canEdit>false</canEdit>
+        </field>
+        <field name="units"/>
+        <field name="unitCost"/>
+        <field name="inStock">
+            <canEdit>false</canEdit>
+        </field>
+        <field name="nextShipment">
+            <canEdit>false</canEdit>
+        </field>
+    </fields>
+    <canDragRecordsOut>true</canDragRecordsOut>
+    <canReorderRecords>true</canReorderRecords>
+    <contextMenu ref="Menu0"/>
+    <recordClick>
+            <Action target="supplyItemForm" name="editSelectedData" mapping="viewer"/>
+    </recordClick>
+</ListGrid>
+
+
+<VLayout autoID="VLayout3">
+    <members>
+        <Canvas ref="supplyItemGrid"/>
+    </members>
+</VLayout>
+
+
+<DetailViewer dataSource="supplyItem" autoID="supplyItemDetailGrid">
+    <fields>
+        <DetailViewerField name="itemName" type="text" title="Item"/>
+        <DetailViewerField name="SKU" type="integer" title="SKU"/>
+        <DetailViewerField name="description" type="text" title="Description"/>
+        <DetailViewerField name="category" type="text" title="Category"/>
+        <DetailViewerField name="units" type="enum" title="Units"/>
+        <DetailViewerField name="unitCost" type="float" title="Unit Cost"/>
+        <DetailViewerField name="inStock" type="boolean" title="In Stock"/>
+        <DetailViewerField name="nextShipment" type="date" title="Next Shipment"/>
+    </fields>
+</DetailViewer>
+
+
+<VLayout autoID="VLayout2">
+    <members>
+        <Canvas ref="supplyItemDetailGrid"/>
+    </members>
+</VLayout>
+
+
+<DynamicForm dataSource="supplyItem" autoID="supplyItemForm" numCols="4">
+    <fields>
+        <TextItem name="itemName" title="Item"/>
+        <TextItem name="SKU" title="SKU"/>
+        <TextAreaItem name="description" rowSpan="3"/>
+        <ComboBoxItem name="category">
+            <valueField>parentID</valueField>
+            <displayField>categoryName</displayField>
+            <optionDataSource>supplyCategory</optionDataSource>
+        </ComboBoxItem>
+        <SelectItem name="units"/>
+        <FloatItem name="unitCost"/>
+        <CheckboxItem name="inStock"/>
+        <DateItem useTextField="true" name="nextShipment"/>
+        <ButtonItem title="Save Item" autoName="saveItemButton" colSpan="4">
+            <align>center</align>
+            <click>
+                    <Process>
+                        <sequence>
+                            <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="supplyItemForm"/>
+                            <ShowNotificationTask description="Show notification: &quot;Item #{_lastTask.itemID}  ...&quot;">
+                                <textFormula text="Item #{_lastTask.SKU} / #{_lastTask.itemName} updated successfully"/>
+                            </ShowNotificationTask>
+                        </sequence>
+                    </Process>
+            </click>
+        </ButtonItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<VLayout autoID="VLayout1">
+    <members>
+        <Canvas ref="supplyItemForm"/>
+    </members>
+</VLayout>
+
+
+<TabSet ID="detailPaneScreens">
+    <tabs>
+        <Tab title="View" autoID="viewTab">
+            <pane ref="VLayout2"/>
+        </Tab>
+        <Tab title="Edit" autoID="editTab">
+            <pane ref="VLayout1"/>
+        </Tab>
+    </tabs>
+    <destroyPanes>false</destroyPanes>
+</TabSet>
+
+
+<TriplePane autoNavigate="true" ID="mainView">
+    <navigationPane ref="VLayout0"/>
+    <listPane ref="VLayout3"/>
+    <detailPane ref="detailPaneScreens"/>
+</TriplePane>
+
+
+<DataView overflow="hidden" ID="supplyCatalog" width="100%" height="100%" autoDraw="true">
+    <members>
+        <Canvas ref="mainView"/>
+    </members>
+</DataView>
+
+
+</isomorphicXML>

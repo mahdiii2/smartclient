@@ -1,0 +1,27 @@
+<DataSource ID="ord_Order" serverType="sql">            
+    <fields>
+        <DSField name="orderNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </DSField>
+        <DSField name="orderDate" type="date" required="true"/>
+        <DSField name="requiredDate" type="date" required="true"/>
+        <DSField name="shippedDate" type="date"/>
+        <DSField name="status" type="enum" required="true" length="15">
+            <valueMap>
+                    <value>In Process</value>
+                    <value>Shipped</value>
+                    <value>Cancelled</value>
+                    <value>Disputed</value>
+                    <value>Resolved</value>
+                    <value>On Hold</value>
+            </valueMap>
+        </DSField>
+        <DSField name="comments" type="text" length="16777216"/>
+        <DSField name="customerNumber" type="integer" required="true" title="ord_Customer"
+                 foreignKey="ord_Customer.customerNumber" 
+                 displayField="ord_CustomerCustomerName" joinType="outer"/>
+        <DSField name="orderTotal" type="float" format="$,#.00"/>
+        <DSField name="ord_CustomerCustomerName" hidden="true"
+                 includeFrom="ord_Customer.customerName"/>
+    </fields>
+</DataSource>

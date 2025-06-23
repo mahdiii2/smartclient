@@ -1,0 +1,11 @@
+<DataSource isSampleDS="true"
+    ID="staff"
+    serverType="union"
+    unionOf="employees,subcontractors,agency_workers"
+>
+    <fields>
+        <field name="name"            title="Name"            unionOf="employees.Name,subcontractors.fullName,agency_workers.name"/>
+        <field name="employeeId"      title="Employee ID"     unionOf="employees.EmployeeId,agency_workers.agencyRef"/>
+        <field name="agencyName"      unionOf="agency_workers.agency"/>
+    </fields>
+</DataSource>

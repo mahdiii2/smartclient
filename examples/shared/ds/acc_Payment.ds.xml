@@ -1,0 +1,292 @@
+
+<MockDataSource fromServer="true" ID="acc_Payment" clientOnly="true">
+    <fields>
+        <DSField name="paymentId" type="sequence" title="Payment Id" primaryKey="true"/>
+        <DSField name="paymentDate" type="date" required="true" title="Payment Date"/>
+        <DSField name="fromCustomer" type="integer" title="acc_Customer" foreignKey="acc_Customer.customerNumber" displayField="acc_CustomerCustomerName" joinType="outer"/>
+        <DSField name="paymentType" type="enum" required="true" title="Payment Type">
+            <valueMap>
+                    <value>Bank Transfer</value>
+                    <value>Check</value>
+                    <value>Credit Card</value>
+                    <value>Cash</value>
+                    <value>Paypal</value>
+            </valueMap>
+        </DSField>
+        <DSField name="Status" type="enum" title="Status">
+            <valueMap>
+                    <value>Reconciled</value>
+                    <value>Open</value>
+                    <value>Voided/Cancelled</value>
+            </valueMap>
+        </DSField>
+        <DSField name="reconciled" type="boolean" title="Reconciled"/>
+        <DSField name="againstInvoice" type="text" title="Against Invoice"/>
+        <DSField name="Amount" type="float" required="true" title="Amount" format="$,#.00"/>
+        <DSField name="transactionNumber" type="text" required="true" title="Transaction Number"/>
+        <DSField name="balance" type="float" title="Balance" format="$,#.00"/>
+        <DSField name="acc_CustomerCustomerName" hidden="false" includeFrom="acc_Customer.customerName"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <paymentId>1</paymentId>
+            <paymentDate>2022-03-05</paymentDate>
+            <fromCustomer>103</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10100</againstInvoice>
+            <Amount>2501.6</Amount>
+            <transactionNumber>QR101256</transactionNumber>
+            <internalId>1</internalId>
+            <balance>2501.6</balance>
+        </Object>
+        <Object>
+            <paymentId>2</paymentId>
+            <paymentDate>2022-03-05</paymentDate>
+            <fromCustomer>112</fromCustomer>
+            <paymentType>Check</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10101,10115</againstInvoice>
+            <Amount>2994.5</Amount>
+            <transactionNumber>10-10-55 1789567</transactionNumber>
+            <internalId>2</internalId>
+            <balance>2994.5</balance>
+        </Object>
+        <Object>
+            <paymentId>3</paymentId>
+            <paymentDate>2022-03-14</paymentDate>
+            <fromCustomer>103</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10102</againstInvoice>
+            <Amount>503.5</Amount>
+            <transactionNumber>12487545</transactionNumber>
+            <internalId>3</internalId>
+            <balance>503.5</balance>
+        </Object>
+        <Object>
+            <paymentId>4</paymentId>
+            <paymentDate>2022-03-17</paymentDate>
+            <fromCustomer>114</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10103</againstInvoice>
+            <Amount>779.1</Amount>
+            <transactionNumber>ZZ112245</transactionNumber>
+            <internalId>4</internalId>
+            <balance>779.1</balance>
+        </Object>
+        <Object>
+            <paymentId>5</paymentId>
+            <paymentDate>2022-04-01</paymentDate>
+            <fromCustomer>186</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10104</againstInvoice>
+            <Amount>954</Amount>
+            <transactionNumber>98756436</transactionNumber>
+            <internalId>5</internalId>
+            <balance>954</balance>
+        </Object>
+        <Object>
+            <paymentId>6</paymentId>
+            <paymentDate>2022-04-01</paymentDate>
+            <fromCustomer>124</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10105</againstInvoice>
+            <Amount>10918</Amount>
+            <transactionNumber>FR010101</transactionNumber>
+            <internalId>6</internalId>
+            <balance>10918</balance>
+        </Object>
+        <Object>
+            <paymentId>7</paymentId>
+            <paymentDate>2022-04-01</paymentDate>
+            <fromCustomer>216</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10106</againstInvoice>
+            <Amount>2501.6</Amount>
+            <transactionNumber>PY125456</transactionNumber>
+            <internalId>7</internalId>
+            <balance>2501.6</balance>
+        </Object>
+        <Object>
+            <paymentId>8</paymentId>
+            <paymentDate>2022-04-03</paymentDate>
+            <fromCustomer>216</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10107</againstInvoice>
+            <Amount>1749</Amount>
+            <transactionNumber>FT457895</transactionNumber>
+            <internalId>8</internalId>
+            <balance>1749</balance>
+        </Object>
+        <Object>
+            <paymentId>9</paymentId>
+            <paymentDate>2022-04-03</paymentDate>
+            <fromCustomer>114</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10108</againstInvoice>
+            <Amount>991.1</Amount>
+            <transactionNumber>12098564</transactionNumber>
+            <internalId>9</internalId>
+            <balance>991.1</balance>
+        </Object>
+        <Object>
+            <paymentId>10</paymentId>
+            <paymentDate>2022-04-06</paymentDate>
+            <fromCustomer>128</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10110</againstInvoice>
+            <Amount>4849.5</Amount>
+            <transactionNumber>QR101556</transactionNumber>
+            <internalId>10</internalId>
+            <balance>4849.5</balance>
+        </Object>
+        <Object>
+            <paymentId>11</paymentId>
+            <paymentDate>2022-04-07</paymentDate>
+            <fromCustomer>129</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10111</againstInvoice>
+            <Amount>3180</Amount>
+            <transactionNumber>QD123456</transactionNumber>
+            <internalId>11</internalId>
+            <balance>3180</balance>
+        </Object>
+        <Object>
+            <paymentId>12</paymentId>
+            <paymentDate>2022-04-08</paymentDate>
+            <fromCustomer>141</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10112</againstInvoice>
+            <Amount>3710</Amount>
+            <transactionNumber>AA122434</transactionNumber>
+            <internalId>12</internalId>
+            <balance>3710</balance>
+        </Object>
+        <Object>
+            <paymentId>13</paymentId>
+            <paymentDate>2022-04-08</paymentDate>
+            <fromCustomer>187</fromCustomer>
+            <paymentType>Cash</paymentType>
+            <Status>Reconciled</Status>
+            <reconciled>true</reconciled>
+            <againstInvoice>10113</againstInvoice>
+            <Amount>73.14</Amount>
+            <transactionNumber>FR123454</transactionNumber>
+            <internalId>13</internalId>
+            <balance>73.14</balance>
+        </Object>
+        <Object>
+            <paymentId>14</paymentId>
+            <paymentDate>2022-04-08</paymentDate>
+            <fromCustomer>186</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>79.5</Amount>
+            <transactionNumber>FT123456</transactionNumber>
+            <internalId>14</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>15</paymentId>
+            <paymentDate>2022-04-09</paymentDate>
+            <fromCustomer>128</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>291.5</Amount>
+            <transactionNumber>FT234567</transactionNumber>
+            <internalId>15</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>16</paymentId>
+            <paymentDate>2022-04-10</paymentDate>
+            <fromCustomer>129</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>6572</Amount>
+            <transactionNumber>PY112233</transactionNumber>
+            <internalId>16</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>17</paymentId>
+            <paymentDate>2022-04-11</paymentDate>
+            <fromCustomer>187</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>3445</Amount>
+            <transactionNumber>PY334455</transactionNumber>
+            <internalId>17</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>18</paymentId>
+            <paymentDate>2022-04-11</paymentDate>
+            <fromCustomer>187</fromCustomer>
+            <paymentType>Credit Card</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>3975</Amount>
+            <transactionNumber>CC454545</transactionNumber>
+            <internalId>18</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>19</paymentId>
+            <paymentDate>2022-04-14</paymentDate>
+            <fromCustomer>103</fromCustomer>
+            <paymentType>Bank Transfer</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>12720</Amount>
+            <transactionNumber>CR485912</transactionNumber>
+            <internalId>19</internalId>
+            <balance>0</balance>
+        </Object>
+        <Object>
+            <paymentId>20</paymentId>
+            <paymentDate>2022-04-14</paymentDate>
+            <fromCustomer>186</fromCustomer>
+            <paymentType>Credit Card</paymentType>
+            <Status>Open</Status>
+            <reconciled>false</reconciled>
+            <againstInvoice></againstInvoice>
+            <Amount>3445</Amount>
+            <transactionNumber>CC124567</transactionNumber>
+            <internalId>20</internalId>
+            <balance>0</balance>
+        </Object>
+    </cacheData>
+</MockDataSource>

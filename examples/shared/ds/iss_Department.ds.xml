@@ -1,0 +1,39 @@
+
+<MockDataSource fromServer="true" ID="iss_Department" clientOnly="true">
+    <fields>
+        <field name="deptId" type="integer" primaryKey="true"/>
+        <field name="Department" type="text"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <deptId>1</deptId>
+            <Department>Finance</Department>
+            <internalId>1</internalId>
+        </Object>
+        <Object>
+            <deptId>2</deptId>
+            <Department>IT</Department>
+            <internalId>2</internalId>
+        </Object>
+        <Object>
+            <deptId>3</deptId>
+            <Department>Projects</Department>
+            <internalId>3</internalId>
+        </Object>
+        <Object>
+            <deptId>4</deptId>
+            <Department>Sales</Department>
+            <internalId>4</internalId>
+        </Object>
+        <Object>
+            <deptId>5</deptId>
+            <Department>Customer Support</Department>
+            <internalId>5</internalId>
+        </Object>
+        <Object>
+            <deptId>6</deptId>
+            <Department>Legal</Department>
+            <internalId>6</internalId>
+        </Object>
+    </cacheData>
+</MockDataSource>

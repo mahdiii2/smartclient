@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="ISC" status="WARN" strict="true" 
+               packages="com.isomorphic.datasource,com.isomorphic.log">
+
+	<Appenders>
+        <Console name="STDOUT">
+            <PatternLayout charset="UTF-8"
+                pattern="%highlight{=== %d [%.4t] %-5p %c{1} - %m%throwable%n}{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=normal, TRACE=normal}" />
+        </Console>
+
+		<File name="FILE_LOG" fileName="./smartClientServerLog.txt" append="false">
+			<PatternLayout charset="UTF-8" 
+				pattern="=== %d [%.4t] %-5p %c{1} - %m%throwable%n" />
+		</File>
+        
+		<RevolvingMemoryAppender name="SmartClientLog" maxEntries="10000">
+            <PatternLayout charset="UTF-8"
+                pattern="=== %d [%.4t] %-5p %c{1} - %m%throwable{80}%n" />
+        </RevolvingMemoryAppender>
+    </Appenders>
+
+    <!-- isomorphic log messages -->
+    <!-- The STDOUT appender defined above is set as the default appender for all Isomorphic
+         SmartClient server logging.  It should typically be visible in the console from which
+         you started the application server.
+         
+         Some Application Servers redirect stdout output to a file (typically called stdout.log
+         or something like that, so you should be able to find it there.
+
+         If you can't find the server log, you should be able to use the SmartClientLog (above)
+         which is visible in the Developer Console under "Server Logs" and as a standalone log
+         viewer in /tools/serverLogViewer.jsp.  
+         
+         Failing all of the above, you can switch the appender-ref value for the com.isomorphic
+         category to use the FILE_LOG appender which will log to smartClientServerLog.txt in
+         the binary directory of your application server.  You can change this by modifying the
+         value of the "File" param in the FILE_LOG definition above.
+    -->
+
+	<Loggers>
+		<Logger name="com.isomorphic" level="INFO">
+			<AppenderRef ref="STDOUT" />
+            <AppenderRef ref="SmartClientLog" />
+		</Logger>
+
+    	<Logger name="com.isomorphic.base.Reflection" level="INFO" />
+
+    	<Logger name="com.isomorphic.base.ISCInit" level="INFO" />
+
+    	<Logger name="com.isomorphic.base.ConfigLoader" level="INFO" />
+
+    	<Logger name="com.isomorphic.scripting" level="WARN" />
+
+		<Logger name="com.isomorphic.download.Download" level="INFO" />
+
+		<Logger name="com.isomorphic.sql.ValueSet" level="INFO" />
+
+		<Logger name="com.isomorphic.servlet.RequestContext" level="INFO" />
+
+    	<Logger name="com.isomorphic.servlet.IDACall" level="INFO" />
+    
+    	<Logger name="com.isomorphic.servlet.DataSourceLoader" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.DataSource" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.BasicDataSource" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.DSRequest" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.DSResponse" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.PoolableDataSourceFactory" level="INFO" />
+
+		<Logger name="com.isomorphic.datasource.DataSourceManager" level="INFO" />
+
+		<Logger name="com.isomorphic.validation.Validation" level="INFO" />
+
+		<Logger name="com.isomorphic.store.DataStructCache" level="INFO" />
+
+		<Logger name="com.isomorphic.assembly.FileAssembler" level="INFO" />
+
+		<Logger name="com.isomorphic.obfuscation.Obfuscator" level="INFO" />
+
+		<Logger name="com.isomorphic.servlet.PreCache" level="INFO" />
+
+		<Logger name="com.isomorphic.timing.Timing" level="INFO" />
+    
+   		<Logger name="com.isomorphic.resultData.ResultData" level="INFO" />
+
+		<Logger name="com.isomorphic.js.JSSyntaxScannerFilter" level="INFO" />
+
+		<Logger name="com.isomorphic.interfaces.InterfaceProvider" level="INFO" />
+
+		<Logger name="com.isomorphic.compression.Compression" level="INFO" />
+		<Logger name="com.isomorphic.servlet.Compression" level="INFO" />
+
+		<Logger name="com.isomorphic.servlet.ProxyHttpServletResponse" level="INFO" />
+
+    	<Logger name="com.isomorphic.naming.JNDI" level="WARN" />
+
+		<!-- NOTE: To enable Messaging logging, you must also set this in your client-side code:
+			isc.Messaging.enableServerLogging = true; -->
+    	<Logger name="com.isomorphic.messaging" level="INFO" />
+
+    	<Logger name="com.isomorphic.pool.ISCKeyedObjectPool" level="INFO" />
+
+		<!-- Velocity - set at DEBUG to enable logging of resolution failures -->
+		<Logger name="org.apache.Velocity" level="DEBUG" />
+
+		<Logger name="org.hibernate.SQL" level="DEBUG" />
+
+		<!-- shows values bound to params in SQL query, but produces a lot of output -->
+        <!-- <Logger name="org.hibernate.type" level="DEBUG">
+            <AppenderRef ref="STDOUT"/>
+        </Logger> -->
+
+		<!-- embedded tomcat -->
+        <Logger name="org.apache" level="INFO">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="SmartClientLog" />
+        </Logger>
+
+    	<!-- hibernate log messages -->
+        <Logger name="org.hibernate" level="WARN">
+            <AppenderRef ref="STDOUT" />
+            <AppenderRef ref="SmartClientLog" />
+        </Logger>
+        
+        <!-- root logger -->
+        <Root level="WARN" />
+	</Loggers>
+
+</Configuration>

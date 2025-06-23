@@ -1,0 +1,9 @@
+<DataSource ID="ord_ProductLine" serverType="sql">
+    <fields>
+        <field name="productLine" type="text" length="50" required="true" primaryKey="true"
+               editRequires="false" />
+        <field name="textDescription" type="text" length="4000" />
+        <field name="htmlDescription" type="text" length="16777216" />
+        <field name="image" type="image" length="16777216" imageWidth="207" imageHeight="96" />
+    </fields>
+</DataSource>

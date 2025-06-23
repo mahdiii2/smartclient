@@ -1,0 +1,40 @@
+#if($firstBatchFound)
+#if($regression.size()>0)
+<h2>REGRESSIONS:</h2>
+#foreach( $tr in $regression )
+<b>Test:</b> $tr.testFile #$tr.testNumber <br/>
+#if ($tr.description) <b>Description:</b> $tr.description <br/>#end
+<b>Error Detail:</b> #if($tr.details) $tr.details #else No details provided #end <br/><br/>
+#end
+#else
+NO REGRESSIONS<br/>
+#end
+<br/>
+#if($fixed.size()>0)
+<h2>FIXED:</h2>
+#foreach( $tr in $fixed )
+<b>Test:</b> $tr.testFile #$tr.testNumber <br/>
+#if ($tr.description) <b>Description:</b> $tr.description <br/>#end<br/>
+#end
+#else
+NO FIXES<br/>
+#end
+#else
+NO COMMITTED TEST RESULTS FOUND<br/>
+#end
+<br/>
+<h2>AutoTest summary:</h2>
+<b>Passed / Total Test Files:</b> ${passedTestFiles} / ${totalTestFiles} <br/>
+#if($totalTests)
+<b>Passed / Total Test Cases:</b> ${passedTests} / ${totalTests} <br/>
+#end
+<br/>
+#if($batchStartTime)
+<br/>
+<b>Batch Start Time:</b> ${batchStartTime}<br/>
+<br/>
+<br/>
+#end
+#if($batchLog)
+$batchLog
+#end

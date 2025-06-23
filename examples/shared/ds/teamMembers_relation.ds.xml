@@ -1,0 +1,15 @@
+<!-- Many-to-many pivot table mapping Teams ↔ Employees -->
+<DataSource 
+    ID="teamMembers_relation"
+    serverType="sql"
+    tableName="teamMembers2"
+>
+    <fields>
+        <field name="RowId"             hidden="true"             type="sequence"    primaryKey="true"/>
+        <field name="TeamId"            hidden="true"             type="integer"
+               foreignKey="teams_relation.TeamId"/>
+               
+        <field name="EmployeeId"        hidden="true"             type="integer"
+               foreignKey="employees_relation.EmployeeId"/>
+    </fields>
+</DataSource>

@@ -1,0 +1,229 @@
+/* Isomorphic SmartClient SDK */
+/* CubeGrid/Chart example -- stylesheet */
+
+/* Styles for CubeGrid cells*/
+.cubeCell					{
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:11px;
+	background-color:white;
+	border:1px solid white;
+}
+
+/* Styles for CubeGrid cells (alternate color bands) */
+.cubeCellDark				{
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:11px;
+	background-color: #EFE2D1;
+	border:1px solid #EFE2D1;
+}
+
+/* Partial Styles for CubeGrid cell state changes */
+.cubeCellOver				{
+	border: 1px solid Navy;
+}
+.cubeCellSelected			{
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:11px;
+	background-color: #FFFF66;
+	border:1px solid #FFFF66;
+}
+.cubeCellSelectedOver		{
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:11px;
+	background-color: #FFFF66;
+	border: 1px solid Navy;
+}
+.cubeCellDisabled			{font-family:Verdana,Helvetica,sans-serif; font-size:11px; background-color:#FFFFFF; color:#666666;
+							border-top:1px solid #FFFFFF;
+							border-bottom:1px solid #FFFFFF;
+						}
+
+
+/* row headers */
+.rowHeader,
+.colHeader     			{
+	font-family: Tahoma;
+	font-size:11px;
+	color:black;
+	border-left: 1px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
+	border-right:1px solid #808080;
+	border-bottom:1px solid #808080;
+	background:#A6B5BC;
+}
+.rowHeaderDown,
+.rowHeaderOver,
+.colHeaderDown,
+.colHeaderOver 			{
+	font-family: Tahoma;
+	font-size:11px;
+	color:black;
+	border-left:1px solid #808080;
+	border-top:1px solid #808080;
+	border-right:1px solid #DDDDDD;
+	border-bottom:1px solid #DDDDDD;
+	background:#A6B5BC;
+}
+.rowHeaderSelected,
+.rowHeaderSelectedDown,
+.colHeaderSelected,
+.colHeaderSelectedDown,
+.innerHeaderSelected,
+.innerHeaderSelectedDown	{
+	font-family: Tahoma;
+	font-size:11px;
+	color:white;
+	border-left:1px solid black;
+	border-top:1px solid black;
+	border-right:1px solid #555555;
+	border-bottom:1px solid #555555;
+	background:#2B2F37;
+}
+.rowHeaderSelectedOver,
+.colHeaderSelectedOver,
+.innerHeaderSelectedOver	{
+	font-family: Tahoma;
+	font-size:11px;
+	color:white;
+	border:1px solid white;
+	background:#2B2F37;
+}
+.rowHeaderDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#CCCCCC;
+						}
+	
+.rowHeaderSelectedDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#CCCCCC;
+						}
+
+/* row label */
+.rowHeaderLabel,
+.colHeaderLabel,
+.rowHeaderLabelOver,
+.colHeaderLabelOver     	{
+	font-family: Tahoma;
+	font-size: 11px;
+	color:black;
+	border-left:1px solid #DBDBDB;
+	border-top:1px solid #DBDBDB;
+	border-right:1px solid #555555;
+	border-bottom:1px solid #555555;
+	background: #88B29D;
+	font-weight: bold;
+}
+.rowHeaderLabelDown,
+.colHeaderLabelDown		{
+	font-family: Tahoma;
+	font-size: 11px;
+	color:black;
+	border-left:1px solid #555555;
+	border-top:1px solid #555555;
+	border-right:1px solid #DBDBDB;
+	border-bottom:1px solid #DBDBDB;
+	background: #88B29D;
+	font-weight: bold;
+}
+.rowHeaderLabelDisabled	{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#A5A5A5;
+						}
+.rowHeaderLabelSelected,
+.rowHeaderLabelSelectedDown {font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:white;
+							border-left:1px solid black; border-top:1px solid black;
+							border-right:1px solid #555555; border-bottom:1px solid #555555;
+							background:#2B2F37;
+						}
+						
+.rowHeaderLabelSelectedOver	{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:white;
+							border:1px solid white;
+							background:#2B2F37;
+						}						
+
+.rowHeaderLabelSelectedDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#A5A5A5;
+						}
+						
+/* column headers */
+
+.colHeaderDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#7D7D7D;
+						}
+.colHeaderSelectedDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#7D7D7D;
+						}
+
+/* column label */
+.colHeaderLabelDisabled	{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#7D7D7D;
+						}
+.colHeaderLabelSelected,
+.colHeaderLabelSelectedDown {font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:white;
+							border-left:1px solid black; border-top:1px solid black;
+							border-right:1px solid #555555; border-bottom:1px solid #555555;
+							background:#2B2F37;
+						}
+						
+.colHeaderLabelSelectedOver	{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:white;
+							border:1px solid white;
+							background:#2B2F37;
+						}						
+
+.colHeaderLabelSelectedDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#7D7D7D;
+						}
+
+/* inner header */
+.innerHeader     			{
+	font-family: Tahoma;
+	font-size: 11px;
+	color:black;
+	border-left:1px solid #E8E4DD;
+	border-top: 1px solid #E8E4DD;
+	border-right: 1px solid #766850;
+	border-bottom: 1px solid #766850;
+	background: #C9CCA3;
+}
+.innerHeaderOver,
+.innerHeaderDown 			{
+	font-family: Tahoma;
+	font-size:11px;
+	color:black;
+	border-left:1px solid #766850;
+	border-top:1px solid #766850;
+	border-right:1px solid #E8E4DD;
+	border-bottom:1px solid #E8E4DD;
+	background:#C9CCA3;
+}
+.innerHeaderDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#CCCCCC;
+						}
+.innerHeaderSelectedDisabled		{font-family:Verdana,Helvetica,sans-serif; font-size:10px; color:#808080;
+							border-left:1px solid #808080; border-top:1px solid #808080;
+							border-right:1px solid #808080; border-bottom:1px solid #808080;
+							background:#CCCCCC;
+						}
+/* Hover styles for grid */
+.facetHover { font-family:Verdana,Helvetica,sans-serif; font-size:11px; color:black;
+                background-color:#FFAAAA; border:1px solid #000000; padding:5px; 
+} 
+
+.gridHover { font-family:Verdana,Helvetica,sans-serif; font-size:11px; color:black;
+                background-color:#CCCCCC; border:1px solid #000000; padding:5px; 
+}

@@ -1,0 +1,15 @@
+<DataSource isSampleDS="true"
+    ID="agency_workers"
+    serverType="sql"
+    tableName="agency_workers"
+    recordName="agency_worker"
+    testFileName="/examples/shared/ds/test_data/agency_workers.data.xml"
+>
+    <fields>
+        <field name="name"            title="Name"            type="text" />
+        <field name="agencyId"        title="Agency ID"       foreignKey="agency.agencyId" />
+        <field name="agency"          title="Agency Name"     includeFrom="agency.agencyName" />
+        <field name="agencyRef"       type="integer"          primaryKey="true"  required="true"/>
+        <field name="Job"             title="Title"           type="text"    /> 
+    </fields>
+</DataSource>

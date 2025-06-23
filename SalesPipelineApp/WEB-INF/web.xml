@@ -1,0 +1,467 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	      version="3.0">
+
+    <!-- IMPORTANT SECURITY NOTE: Do not use this file vebatim as the web.xml for your
+        production server or any internet-accessible server where you care about the security
+        of your system.  Start with the web-runtime.xml as a blueprint and read the "Installing
+        SmartClient" section of the reference Docs.
+    -->
+
+	<!-- Init: initializes SmartClient framework.  This listener should be the first one listed
+         in web.xml because part of its function is to make JDBC DataSources available via JNDI
+         to Spring and other Listeners.  See the client-side documentation topic "serverInit"
+         for a discussion of this.  -->
+	<listener>
+		<listener-class>com.isomorphic.base.InitListener</listener-class>
+	</listener>
+
+    <!-- Note: The servlets/filters referenced here are documented in the SDK javadoc -->
+
+    <!-- Extend MessagingAuthFilter to limit access to Realtime Messaging channels to
+         authorized requests.  See server-side documentation of the filter for more details.
+         Realtime Messaging is available in SmartClient Power Edition or better.
+    <filter>
+        <filter-name>MessagingAuthFilter</filter-name>
+        <filter-class>com.isomorphic.messaging.MessagingAuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MessagingAuthFilter</filter-name>
+        <url-pattern>/isomorphic/websocket/*</url-pattern>
+        <url-pattern>/isomorphic/messaging/*</url-pattern>
+    </filter-mapping>
+    -->
+
+    <!-- VersionedURLFilter - this will strip SmartClient version path segments of the format added by loadISC tags
+         with versionStyle "pathSegment" 
+         Note that the FileDownload servlet will also strip these SmartClient version path-segments, so this
+         filter is only required for paths that are not mapped to that servlet
+    -->
+    <filter>
+        <filter-name>VersionedURLFilter</filter-name>
+        <filter-class>com.isomorphic.servlet.VersionedURLFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>VersionedURLFilter</filter-name>
+        <url-pattern>/isomorphic/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- //>FileLoader -->
+    <!-- Dynamic Compression -->
+    <filter>
+        <filter-name>CompressionFilter</filter-name>
+        <filter-class>com.isomorphic.servlet.CompressionFilter</filter-class>
+    </filter>
+    <!-- //<FileLoader -->
+
+    <!-- Configuration for Secure Application Example -->
+    <filter>
+      <filter-name>AuthExampleAuthenticator</filter-name>
+      <filter-class>com.isomorphic.auth.AuthenticationFilter</filter-class>
+      <init-param>
+        <param-name>authenticator</param-name>
+        <param-value>authExample</param-value>
+      </init-param>
+      <init-param>
+        <param-name>maxTries</param-name>
+        <param-value>-1</param-value>
+      </init-param>
+      <init-param>
+        <param-name>defaultLoginRedirect</param-name>
+        <param-value>/examples/secureApp/index.jsp</param-value>
+      </init-param>
+      <init-param>
+        <param-name>loginPage</param-name>
+        <param-value>/examples/secureApp/login.jsp</param-value>
+      </init-param>
+      <!-- Rules file is necessary when some files in a directory must not be authenticated, 
+           while the rest of the directory must be authenticated. -->
+      <init-param>
+        <param-name>rules</param-name>
+        <param-value>
+            ignore:register.jsp
+            ignore:nonAuthenticatedOperations.jsp
+            match:.*
+        </param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthExampleAuthenticator</filter-name>
+        <url-pattern>/examples/secureApp/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Set the isc_tenantId attribute on the servlet request if it's present as a query param
+         to allow a simple demo of the multi-tenant feature.  You'd need a real auth mechanism
+         if deploying this feature to a production server. See SmartClient Reference docs.  -->
+    <filter>
+      <filter-name>MultiTenantDemoParamMapper</filter-name>
+      <filter-class>com.isomorphic.servlet.ParamMapperFilter</filter-class>
+      <init-param>
+        <param-name>param_isc_tenantId</param-name>
+        <param-value>isc_tenantId</param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MultiTenantDemoParamMapper</filter-name>
+        <url-pattern>/examples/multi_tenant/*</url-pattern>
+    </filter-mapping>
+
+    <!--  Scans for trailing commas in JS code -->
+    <filter>
+        <filter-name>JSSyntaxScannerFilter</filter-name>
+        <filter-class>com.isomorphic.js.JSSyntaxScannerFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>com.isomorphic.servlet.NoCacheFilter</filter-class>
+    </filter>
+
+    <!-- //>FileLoader -->
+    <!-- CompressionFilter for dynamic compression -->
+    <filter-mapping>
+        <filter-name>CompressionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- //<FileLoader -->
+
+    <!-- Some syntax errors are hard to debug in the browser, this filter looks for those and
+         reports them in the server logs.  Safely ignores mime types that can't contain JS code.
+    -->
+    <filter-mapping>
+        <filter-name>JSSyntaxScannerFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Explicitly disabling caching of assets served by the default Tomcat servlet.
+         Without this, the default servlet will send a last-modified header matching
+         the file timestamp and the browser will apply heuristic caching.
+
+         All SmartClient/SmartGWT skin assets are served by a separate servlet or filter
+         that applies agressive caching with url versioning and is not subject to this
+         NoCacheFilter    
+    -->
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <servlet-name>default</servlet-name>
+    </filter-mapping>
+
+    <!-- Caching: anything with an isc_version query param is cacheable for 1 year -->
+    <filter>
+        <filter-name>CacheFilterMaxExpires</filter-name>
+        <filter-class>com.isomorphic.servlet.CacheFilter</filter-class>
+        <init-param>
+          <param-name>rules</param-name>
+          <param-value>
+              match:isc_version=
+          </param-value>
+        </init-param>
+        <init-param>
+          <param-name>expires</param-name>
+          <param-value>*:31536000</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CacheFilterMaxExpires</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- Apache AXIS RPC servlet -->
+    <servlet>
+        <servlet-name>AxisServlet</servlet-name>
+        <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+    </servlet>
+
+    <!-- The IDACall servlet handles all Built-in DataSource operations -->
+    <servlet>
+        <servlet-name>IDACall</servlet-name>
+        <servlet-class>com.isomorphic.servlet.IDACall</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>StockQuotesServlet</servlet-name>
+        <servlet-class>com.isomorphic.examples.StockQuotesServlet</servlet-class>
+    </servlet>
+
+    <!-- The RESTHandler servlet handles SmartClient Server DataSource operations issued by 
+         REST clients - it's like IDACall, but for the REST protocol.  Typically,  the clients
+         of this servlet would not be ordinary SmartClient/SmartGWT applications (though they 
+         could be), but other client technologies that need to access SmartClient DataSource 
+         operations as reusable services -->
+    <servlet>
+        <servlet-name>RESTHandler</servlet-name>
+        <servlet-class>com.isomorphic.servlet.RESTHandler</servlet-class>
+    </servlet>
+
+    <!-- The DataSourceLoader servlet returns Javascript representations of the dataSources whose
+         ID's are passed to it - it is an alternative to using the <loadDS> JSP tag -->
+    <servlet>
+        <servlet-name>DataSourceLoader</servlet-name>
+        <servlet-class>com.isomorphic.servlet.DataSourceLoader</servlet-class>
+    </servlet>
+
+    <!-- The projectLoader servlet loads project definitions in javascript notation -->
+    <servlet>
+        <servlet-name>projectLoader</servlet-name>
+        <servlet-class>com.isomorphic.servlet.ProjectLoaderServlet</servlet-class>
+    </servlet>
+
+    <!-- The screenLoader servlet loads screen definitions in javascript notation -->
+    <servlet>
+        <servlet-name>screenLoader</servlet-name>
+        <servlet-class>com.isomorphic.servlet.ScreenLoaderServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>FeatureExplorerRPC</servlet-name>
+        <servlet-class>com.isomorphic.servlet.FeatureExplorerRPC</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>XMLSelect</servlet-name>
+        <servlet-class>com.isomorphic.xml.XMLSelectServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>HttpProxy</servlet-name>
+        <servlet-class>com.isomorphic.servlet.HttpProxyServlet</servlet-class>
+    </servlet>
+
+    <!-- The FileDownload servlet downloads static files, like a webserver -->
+    <servlet>
+        <servlet-name>FileDownload</servlet-name>
+        <servlet-class>com.isomorphic.servlet.FileDownload</servlet-class>
+    </servlet>
+
+    <!-- The MessagingServlet is used by realtime messaging -->
+	<servlet>
+        <servlet-name>MessagingServlet</servlet-name>
+        <servlet-class>com.isomorphic.messaging.MessagingServlet</servlet-class>
+    </servlet>
+    
+
+    <!-- //>FileLoader -->
+    <!-- The FileAssembly servlet is used for downloading dynamically assembled files -->
+    <servlet>
+        <servlet-name>FileAssembly</servlet-name>
+        <servlet-class>com.isomorphic.servlet.FileAssembly</servlet-class>
+    </servlet>
+    <!-- //<FileLoader -->
+
+
+    <!-- The PreCache servlet initializes when the servlet engine starts up and pre-loads 
+         data need for all client requests.  This is optional, and improves performance
+         of the first few page requests.  PreCache cannot be invoked by a browser, because
+         there is no "servlet-mapping" defined for it. -->
+    <servlet>
+        <servlet-name>PreCache</servlet-name>
+        <servlet-class>com.isomorphic.servlet.PreCache</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!-- this servlet cleanly shuts down the HSQL database whenever the container is reloaded.  If
+         you want container reloading to work reliably with HSQL, this servlet must be enabled -->
+    <servlet>
+        <servlet-name>HSQLShutdown</servlet-name>
+        <servlet-class>com.isomorphic.sql.HSQLShutdown</servlet-class>
+        <load-on-startup>3</load-on-startup>
+    </servlet>
+
+    <!-- streams a file to the browser with the "text/plain" mime type for in-browser viewing -->
+    <!-- IMPORTANT SECURITY NOTE: This servlet allows the end user to inspect the source version
+         of arbitrary content under your webRoot.  Do not deploy this servlet with your application.
+    -->
+    <servlet>
+        <servlet-name>SourceViewer</servlet-name>
+        <servlet-class>com.isomorphic.servlet.SourceViewer</servlet-class>
+        <init-param>
+            <param-name>allowedExtensions</param-name>
+            <param-value>*</param-value>
+        </init-param>
+    </servlet>
+
+    <!-- standard spring configuration -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>    
+    <listener>
+        <listener-class>com.isomorphic.spring.ContextLoaderListener</listener-class>
+    </listener> 
+
+    <!-- SOAP RPC requests -->
+    <servlet-mapping>
+        <servlet-name>AxisServlet</servlet-name>
+        <url-pattern>/isomorphic/services/1.0/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- RPCManager uses this URL by default for Built-in DataSource operations -->
+    <servlet-mapping>
+        <servlet-name>IDACall</servlet-name>
+        <url-pattern>/isomorphic/IDACall/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Built-in DataSource operations backcompat -->
+    <servlet-mapping>
+        <servlet-name>IDACall</servlet-name>
+        <url-pattern>/isomorphic/IDACall.aspx/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Duplicate the servlet mapping for IDACall to inside examples/secureApp, so that
+         its access may be authenticated. For a production server, the "main" IDACall
+         mapping is removed, while this secured mapping remains. -->
+    <servlet-mapping>
+      <servlet-name>IDACall</servlet-name>
+      <url-pattern>/examples/secureApp/IDACall/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- REST connector for the SmartClient Server - like IDACall, but for REST requests -->
+    <servlet-mapping>
+        <servlet-name>RESTHandler</servlet-name>
+        <url-pattern>/isomorphic/RESTHandler/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>StockQuotesServlet</servlet-name>
+        <url-pattern>/examples/StockQuotes/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- DataSourceLoader requests -->
+    <servlet-mapping>
+        <servlet-name>DataSourceLoader</servlet-name>
+        <url-pattern>/isomorphic/DataSourceLoader</url-pattern>
+    </servlet-mapping>
+
+    <!-- The projectLoader servlet loads project definitions in javascript notation -->
+    <servlet-mapping>
+        <servlet-name>projectLoader</servlet-name>
+        <url-pattern>/isomorphic/projectLoader</url-pattern>
+    </servlet-mapping>
+
+    <!-- The screenLoader servlet loads screen definitions in javascript notation -->
+    <servlet-mapping>
+        <servlet-name>screenLoader</servlet-name>
+        <url-pattern>/isomorphic/screenLoader</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>FeatureExplorerRPC</servlet-name>
+        <url-pattern>/isomorphic/FeatureExplorerRPC/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Messaging uses this URL by default -->
+    <servlet-mapping>
+        <servlet-name>MessagingServlet</servlet-name>
+        <url-pattern>/isomorphic/messaging/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>HttpProxy</servlet-name>
+        <url-pattern>/isomorphic/HttpProxy/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>XMLSelect</servlet-name>
+        <url-pattern>/isomorphic/XMLSelect/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- streams a file to the browser with the "text/plain" mime type for in-browser viewing -->
+    <!-- IMPORTANT SECURITY NOTE: This servlet allows the end user to inspect the source version
+         of arbitrary content under your webRoot.  Do not deploy this servlet with your application.
+    -->
+    <servlet-mapping>
+        <servlet-name>SourceViewer</servlet-name>
+        <url-pattern>/isomorphic/Source.Viewer/*</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- Use FileDownload servlet to download all static content that's part of the skin, such as
+         image files, so we can set Expires headers and other cache control directives.  In a
+         production deployment, you'd want to use a webserver such as Apache to do this.  
+    -->
+    <servlet-mapping>
+      <servlet-name>FileDownload</servlet-name>
+      <url-pattern>/isomorphic/skins/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+      <servlet-name>FileDownload</servlet-name>
+      <url-pattern>/isomorphic/locales/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/isomorphic/system/helpers/fonts/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/isomorphic/system/reference/skin/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/isomorphic/system/reference/exampleImages/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/isomorphic/system/reference/inlineExamples/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileDownload</servlet-name>
+        <url-pattern>/docs/images/*</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- security: disallow direct browser access to datasource files that may have embedded
+         server code.  This code is stripped out when loaded via the DataSourceLoader servlet,
+         but not if directly fetched via http. -->
+    <security-constraint>
+      <web-resource-collection>
+        <url-pattern>/shared/ds/*</url-pattern>
+      </web-resource-collection>
+      <auth-constraint/>
+    </security-constraint>    
+
+    <!-- General config -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    
+    <jsp-config>
+        <!-- Serve *.isc files with iscHeader/iscFooter -->
+        <jsp-property-group>
+            <url-pattern>*.isc</url-pattern>
+            <el-ignored>true</el-ignored>
+            <include-prelude>/shared/jsp/iscHeader.jsp</include-prelude>
+            <include-coda>/shared/jsp/iscFooter.jsp</include-coda>
+        </jsp-property-group>
+        <!-- Process *.rpc files as RPC requests - puts you in an iterator over current RPC requests -->
+        <jsp-property-group>
+            <url-pattern>*.rpc</url-pattern>
+            <el-ignored>true</el-ignored>
+            <include-prelude>/shared/jsp/rpcHeader.jsp</include-prelude>
+            <include-coda>/shared/jsp/rpcFooter.jsp</include-coda>
+        </jsp-property-group>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <el-ignored>true</el-ignored>
+        </jsp-property-group>
+    </jsp-config>
+
+    <mime-mapping>
+        <extension>wsdl</extension>
+        <mime-type>text/xml</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>csv</extension>
+        <mime-type>text/csv</mime-type>
+    </mime-mapping>
+
+    <mime-mapping>
+        <extension>manifest</extension>
+        <mime-type>text/cache-manifest</mime-type>
+    </mime-mapping>
+</web-app>

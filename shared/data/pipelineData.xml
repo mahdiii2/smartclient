@@ -1,0 +1,53 @@
+<List>
+	<Record id="1" dateRaised="2022-01-23" Customer="103" comments="Quarterly order" potentialValue="10000" chance="0.75" status="Won" salesman="1165" internalId="1"></Record>
+	<Record id="2" dateRaised="2022-01-25" Customer="112" comments="Quarterly order" potentialValue="8250" chance="0.5" status="Lost" salesman="1076" internalId="2"></Record>
+	<Record id="3" dateRaised="2022-01-25" Customer="112" comments="Quarterly order" potentialValue="750.75" chance="0.5" status="Won" salesman="1076" internalId="3"></Record>
+	<Record id="4" dateRaised="2022-01-26" Customer="114" comments="Quarterly order" potentialValue="1250" chance="0.95" status="Won" salesman="1501" internalId="4"></Record>
+	<Record id="5" dateRaised="2022-01-26" Customer="124" comments="Quarterly order" potentialValue="745" chance="0.75" status="Won" salesman="1612" internalId="5"></Record>
+	<Record id="6" dateRaised="2022-01-26" Customer="103" comments="Quarterly order" potentialValue="7850" chance="0.7" status="Won" salesman="1165" internalId="6"></Record>
+	<Record id="7" dateRaised="2022-01-27" Customer="124" comments="Quarterly order" potentialValue="2578.75" chance="0.6" status="Lost" salesman="1612" internalId="7"></Record>
+	<Record id="8" dateRaised="2022-01-27" Customer="124" comments="Expanding product lines" potentialValue="15000" chance="0.25" status="Lost" salesman="1612" internalId="8"></Record>
+	<Record id="9" dateRaised="2022-02-01" Customer="124" comments="Expanding product lines" potentialValue="22000" chance="0.9" status="Lost" salesman="1612" internalId="9"></Record>
+	<Record id="10" dateRaised="2022-02-01" Customer="124" comments="Expanding product lines" potentialValue="14000" chance="0.9" status="Won" salesman="1612" internalId="10"></Record>
+	<Record id="11" dateRaised="2022-02-03" Customer="124" comments="Expanding product lines" potentialValue="14500" chance="0.95" status="Won" salesman="1612" internalId="11"></Record>
+	<Record id="12" dateRaised="2022-02-04" Customer="121" comments="Monthly stock upkeep order" potentialValue="6550" chance="0.65" status="Won" salesman="1501" internalId="12"></Record>
+	<Record id="13" dateRaised="2022-02-06" Customer="103" comments="Monthly stock upkeep order" potentialValue="285.5" chance="0.65" status="Won" salesman="1165" internalId="13"></Record>
+	<Record id="14" dateRaised="2022-02-06" Customer="121" comments="special customer order" potentialValue="9780" chance="0.7" status="Won" salesman="1501" internalId="14"></Record>
+	<Record id="15" dateRaised="2022-02-15" Customer="103" comments="2 year deal" potentialValue="13250" chance="0.55" status="Won" salesman="1165" internalId="15"></Record>
+	<Record id="16" dateRaised="2022-02-15" Customer="125" comments="1 year deal" potentialValue="12500.5" chance="0.5" status="Won" salesman="1501" internalId="16"></Record>
+	<Record id="17" dateRaised="2022-02-16" Customer="128" comments="subsiduary order" potentialValue="11500" chance="0.25" status="Lost" salesman="1188" internalId="17"></Record>
+	<Record id="18" dateRaised="2022-02-17" Customer="128" comments="Monthly stock upkeep order" potentialValue="7788" chance="0.4" status="Won" salesman="1188" internalId="18"></Record>
+	<Record id="19" dateRaised="2022-02-17" Customer="121" comments="New Store" potentialValue="5568" chance="0.3" status="Lost" salesman="1501" internalId="19"></Record>
+	<Record id="20" dateRaised="2022-02-21" Customer="103" comments="1 year deal" potentialValue="2250" chance="0.7" status="Lost" salesman="1165" internalId="20"></Record>
+	<Record id="21" dateRaised="2022-02-21" Customer="125" comments="Monthly stock upkeep order" potentialValue="37500" chance="0.75" status="Won" salesman="1501" internalId="21"></Record>
+	<Record id="22" dateRaised="2022-02-21" Customer="125" comments="Monthly stock upkeep order" potentialValue="800" chance="0.8" status="Won" salesman="1501" internalId="22"></Record>
+	<Record id="23" dateRaised="2022-02-22" Customer="131" comments="Monthly stock upkeep order" potentialValue="950" chance="0.85" status="Won" salesman="1286" internalId="23"></Record>
+	<Record id="24" dateRaised="2022-02-22" Customer="131" comments="Monthly stock upkeep order" potentialValue="9500" chance="0.65" status="Lost" salesman="1286" internalId="24"></Record>
+	<Record id="25" dateRaised="2022-02-23" Customer="121" comments="New Store" potentialValue="7880" chance="0.35" status="Lost" salesman="1501" internalId="25"></Record>
+	<Record id="26" dateRaised="2022-02-24" Customer="103" comments="Monthly stock upkeep order" potentialValue="6975" chance="0.5" status="Won" salesman="1165" internalId="26"></Record>
+	<Record id="27" dateRaised="2022-02-25" Customer="112" comments="Monthly stock upkeep order" potentialValue="8750.75" chance="0.6" status="Won" salesman="1188" internalId="27"></Record>
+	<Record id="28" dateRaised="2022-02-26" Customer="119" comments="Expanding product lines" potentialValue="4900" chance="0.7" status="Bidding" salesman="1501" internalId="28"></Record>
+	<Record id="29" dateRaised="2022-02-26" Customer="114" comments="Monthly stock upkeep order" potentialValue="7568" chance="0.9" status="Bidding" salesman="1501" internalId="29"></Record>
+	<Record id="30" dateRaised="2022-02-27" Customer="112" comments="Monthly stock upkeep order" potentialValue="22500" chance="0.99" status="Bidding" salesman="1188" internalId="30"></Record>
+	<Record id="31" dateRaised="2022-02-27" Customer="129" comments="Full Catalogue quote" potentialValue="120000" chance="1" status="Bidding" salesman="1286" internalId="31"></Record>
+	<Record id="32" dateRaised="2022-02-28" Customer="114" comments="Monthly stock upkeep order" potentialValue="75000" chance="0.7" status="Delayed" salesman="1501" internalId="32"></Record>
+	<Record id="33" dateRaised="2022-03-01" Customer="119" comments="Expanding product lines" potentialValue="1750" chance="0.75" status="Bidding" salesman="1501" internalId="33"></Record>
+	<Record id="34" dateRaised="2022-03-01" Customer="131" comments="Monthly stock upkeep order" potentialValue="5500" chance="0.25" status="Bidding" salesman="1286" internalId="34"></Record>
+	<Record id="35" dateRaised="2022-03-01" Customer="114" comments="Expanding product lines" potentialValue="6300" chance="0.95" status="Bidding" salesman="1501" internalId="35"></Record>
+	<Record id="36" dateRaised="2022-03-01" Customer="131" comments="Quarterly order" potentialValue="3000" chance="0.85" status="On Hold" salesman="1286" internalId="36"></Record>
+	<Record id="37" dateRaised="2022-03-01" Customer="114" comments="Expanding product lines" potentialValue="2500" chance="0.5" status="Bidding" salesman="1501" internalId="37"></Record>
+	<Record id="38" dateRaised="2022-03-01" Customer="131" comments="Quarterly order" potentialValue="4580" chance="0.5" status="Bidding" salesman="1286" internalId="38"></Record>
+	<Record id="39" dateRaised="2022-03-02" Customer="103" comments="Monthly stock upkeep order" potentialValue="8910" chance="0.5" status="Bidding" salesman="1165" internalId="39"></Record>
+	<Record id="40" dateRaised="2022-03-05" Customer="119" comments="New Store" potentialValue="4400" chance="0.5" status="On Hold" salesman="1501" internalId="40"></Record>
+	<Record id="41" dateRaised="2022-03-05" Customer="119" comments="New Store" potentialValue="8800" chance="0.75" status="Bidding" salesman="1501" internalId="41"></Record>
+	<Record id="42" dateRaised="2022-03-08" Customer="121" comments="New Store" potentialValue="7700" chance="0.75" status="Bidding" salesman="1501" internalId="42"></Record>
+	<Record id="43" dateRaised="2022-03-08" Customer="124" comments="New Store" potentialValue="13750" chance="0.75" status="Bidding" salesman="1612" internalId="43"></Record>
+	<Record id="44" dateRaised="2022-03-11" Customer="119" comments="New Store" potentialValue="14750" chance="0.25" status="Bidding" salesman="1501" internalId="44"></Record>
+	<Record id="45" dateRaised="2022-03-11" Customer="103" comments="Monthly stock upkeep order" potentialValue="14000" chance="0.95" status="Bidding" salesman="1165" internalId="45"></Record>
+	<Record id="46" dateRaised="2022-03-11" Customer="124" comments="New Store" potentialValue="15000" chance="0.5" status="Bidding" salesman="1612" internalId="46"></Record>
+	<Record id="47" dateRaised="2022-03-12" Customer="128" comments="Monthly stock upkeep order" potentialValue="2750" chance="0.75" status="Bidding" salesman="1188" internalId="47"></Record>
+	<Record id="48" dateRaised="2022-03-14" Customer="128" comments="Monthly stock upkeep order" potentialValue="175" chance="0.7" status="Bidding" salesman="1188" internalId="48"></Record>
+	<Record id="49" dateRaised="2022-03-18" Customer="103" comments="Monthly stock upkeep order" potentialValue="4500" chance="0.25" status="Bidding" salesman="1165" internalId="49"></Record>
+	<Record id="50" dateRaised="2022-03-21" Customer="131" comments="Monthly stock upkeep order" potentialValue="5500" chance="0.8" status="Bidding" salesman="1286" internalId="50"></Record>
+</List>
+

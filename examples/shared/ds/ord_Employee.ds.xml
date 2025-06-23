@@ -1,0 +1,24 @@
+<DataSource ID="ord_Employee" titleField="lastName" serverType="sql">
+    <fields>
+        <field name="employeeNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="lastName" type="text" required="true" length="50"/>
+        <field name="firstName" type="text" required="true" length="50"/>
+        <field name="extension" type="text" required="true" length="10"/>
+        <field name="email" type="text" required="true" length="100">
+            <validators>
+                <Validator>
+                    <type>isUnique</type>
+                </Validator>
+            </validators>
+        </field>
+        <field name="officeCode" type="text" required="true" length="10" title="officeLocation"
+               foreignKey="ord_Office.officeCode" displayField="officeLocation" joinType="outer"/>
+        <field name="reportsTo" type="integer" title="Reports To" foreignKey="employeeNumber"
+               displayField="ord_EmployeeLastName" joinType="outer"/>
+        <field name="jobTitle" type="text" required="true" length="50"/>
+        <field name="officeLocation" hidden="true" includeFrom="ord_Office.city"/>
+        <field name="ord_EmployeeLastName" hidden="true" includeFrom="ord_Employee.lastName"/>
+    </fields>
+</DataSource>

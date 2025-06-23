@@ -1,0 +1,30 @@
+<List>
+<agency>
+<agencyId>1</agencyId>
+<agencyName>Guardco Inc</agencyName>
+</agency>
+<agency>
+<agencyId>2</agencyId>
+<agencyName>Springfield Security Services</agencyName>
+</agency>
+<agency>
+<agencyId>3</agencyId>
+<agencyName>Complete Catering</agencyName>
+</agency>
+<agency>
+<agencyId>4</agencyId>
+<agencyName>Johnson Janitorial Agency</agencyName>
+</agency>
+<agency>
+<agencyId>5</agencyId>
+<agencyName>Commercial Cleaning Services Inc</agencyName>
+</agency>
+<agency>
+<agencyId>6</agencyId>
+<agencyName>The Manchester Catering Company</agencyName>
+</agency>
+<agency>
+<agencyId>7</agencyId>
+<agencyName>Smith Clerical</agencyName>
+</agency>
+</List>

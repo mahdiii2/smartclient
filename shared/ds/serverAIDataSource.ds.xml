@@ -1,0 +1,46 @@
+<DataSource ID="serverAIDataSource"
+            serverConstructor="com.isomorphic.ai.AIDataSource"
+>
+    <!-- 
+        serverAIDataSource services AI prompt requests from the client
+    -->
+
+    <fields>
+
+
+        <!-- Client-supplied values -->
+        <field name="text"/>              <!-- assembled AI prompt text - see, e.g., AIEngine.makePromptText() in AI.js -->
+
+        <!-- Server inbound params -->
+
+        <!-- Details of the requested engine -->
+        <field name="model" type="text" required="true"/>
+        <field name="temperature" type="float"/>
+
+        <!-- CHAT: -->
+        
+        <!-- Create Chat completion -->
+        <!-- https://platform.openai.com/docs/api-reference/chat/create -->
+        <!-- https://api.openai.com/v1/chat/completions -->
+        <!-- Format for messages: -->
+        <!-- {"role":"user", "content":"hello"} -->
+        <field name="messages" multiple="true"/>
+        
+        <!--  -->
+        
+        
+        <!-- Server response format -->
+        <!--  -->
+        
+        <!-- documented under create completion -->
+        <field name="index"/>
+        <field name="logprobs"/>
+        <field name="finish_reason"/>
+        
+        <!-- documented under chat completion -->
+        <!--  -->
+        <field name="chat_role"   />
+        <field name="chat_content"/>
+    </fields>
+
+</DataSource>

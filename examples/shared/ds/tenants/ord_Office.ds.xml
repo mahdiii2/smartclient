@@ -1,0 +1,21 @@
+<DataSource ID="ord_Office" serverType="sql">
+    <fields>
+        <field name="officeCode" type="text" length="10" primaryKey="true"
+               editRequires="false"/>
+        <field name="city" type="text" length="50" required="true"/>
+        <field name="phone" type="text" length="50" required="true"/>
+        <field name="addressLine1" type="text" length="50" required="true"/>
+        <field name="addressLine2" type="text" length="50"/>
+        <field name="state" type="text" length="50"/>
+        <field name="country" type="text" length="50" required="true"/>
+        <field name="postalCode" type="text" length="15" required="true"/>
+        <field name="territory" type="enum" length="10" required="true">
+            <valueMap>
+                <value>NA</value>
+                <value>EMEA</value>
+                <value>APAC</value>
+                <value>Japan</value>
+            </valueMap>
+        </field>
+    </fields>
+</DataSource>

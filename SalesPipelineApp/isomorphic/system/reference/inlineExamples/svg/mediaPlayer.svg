@@ -1,0 +1,32 @@
+<svg aria-hidden="true" style="position: absolute; width: 0px; height: 0px; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="icon-play" viewBox="0 0 32 32">
+        <path d="M6 4l20 12-20 12z"></path>
+    </symbol>
+    <symbol id="icon-pause" viewBox="0 0 32 32">
+        <path d="M4 4h10v24h-10zM18 4h10v24h-10z"></path>
+    </symbol>
+    <symbol id="icon-stop" viewBox="0 0 32 32">
+        <path d="M4 4h24v24h-24z"></path>
+    </symbol>
+    <symbol id="icon-backward" viewBox="0 0 32 32">
+        <path d="M18 5v10l10-10v22l-10-10v10l-11-11z"></path>
+    </symbol>
+    <symbol id="icon-forward" viewBox="0 0 32 32">
+        <path d="M16 27v-10l-10 10v-22l10 10v-10l11 11z"></path>
+    </symbol>
+    <symbol id="icon-first" viewBox="0 0 32 32">
+        <path d="M4 28v-24h4v11l10-10v10l10-10v22l-10-10v10l-10-10v11z"></path>
+    </symbol>
+    <symbol id="icon-last" viewBox="0 0 32 32">
+        <path d="M28 4v24h-4v-11l-10 10v-10l-10 10v-22l10 10v-10l10 10v-11z"></path>
+    </symbol>
+    <symbol id="icon-previous" viewBox="0 0 32 32">
+        <path d="M8 28v-24h4v11l10-10v22l-10-10v11z"></path>
+    </symbol>
+    <symbol id="icon-next" viewBox="0 0 32 32">
+        <path d="M24 4v24h-4v-11l-10 10v-22l10 10v-11z"></path>
+    </symbol>
+    <symbol id="icon-eject" viewBox="0 0 32 32">
+        <path d="M0 24h32v4h-32zM16 4l16 16h-32z"></path>
+    </symbol>
+</svg>

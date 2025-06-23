@@ -1,0 +1,63 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>
+        Various utilities bundled with the SmartClient / SmartGWT SDK for use by the 
+        Isomorphic plugin for Maven.
+    </description>
+
+    <groupId>com.isomorphic.extras</groupId>
+    <artifactId>isomorphic-m2pluginextras</artifactId>
+    <version>14.1-p20250614</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-core-rpc</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>
+        
+        <!-- 
+            Technically, the following are optional but we opt not to define them that way, 
+            for convenience.  They should not impact dependenecy resolution at project build
+            anyway.
+        -->
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-sql</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>        
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-hibernate</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-jpa</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.8.0-beta2</version>
+        </dependency>        
+        
+        <!-- 
+          This should probably not be required in standalone mode, but is per BasicDataSource line ~1717
+
+          if (!PreCache.isCachingFinished()) {
+
+          b/c PreCache extends HttpServlet
+         -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>[5.0.0,)</version>
+        </dependency>
+
+    </dependencies>
+</project>

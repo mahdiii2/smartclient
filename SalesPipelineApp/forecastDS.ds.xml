@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="forecastDS"
+    clientOnly="true"
+    dataURL="forecastData.xml"
+    autoDeriveSchema="false">
+
+  <fields>
+    <!-- Primary key -->
+    <field name="id"          type="integer" primaryKey="true" title="ID"/>
+
+    <!-- Month of record -->
+    <field name="month"       type="text"    title="Month"/>
+
+    <!-- Sales rep linkage -->
+    <field name="salesperson" type="integer" title="Salesperson ID"
+           foreignKey="employeeDS.employeeNumber"/>
+
+    <!-- Goals vs. actuals -->
+    <field name="target"      type="float"   title="Target Sales"/>
+    <field name="actual"      type="float"   title="Actual Sales"/>
+
+    <!-- Internal bookkeeping (hidden by default) -->
+    <field name="internalId"  type="integer" title="Internal ID" hidden="true"/>
+  </fields>
+
+</DataSource>

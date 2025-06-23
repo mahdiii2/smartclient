@@ -1,0 +1,39 @@
+<DataSource ID="ord_OrderLine" serverType="sql">            
+    <fields>
+        <field name="orderLineId" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="orderNumber" type="integer" title="OrderNum"
+               foreignKey="ord_Order.orderNumber" displayField="orderNum" joinType="outer">
+            <validators>
+                <validator type="isUnique" criteriaFields="orderLineNumber"
+                    errorMessage="Line # must be unique within the order."/>
+                <validator type="isUnique" criteriaFields="productCode,priceEach"
+                    errorMessage="Each (Product, Price Each) pair can be specified only one time per order, and there is already another line item for the product at the same price in this order."/>
+            </validators>
+        </field>
+        <field name="productCode" type="text" length="15" title="Product"
+               foreignKey="ord_Product.productCode" displayField="product" joinType="outer">
+            <validators>
+                <validator type="isUnique" criteriaFields="orderNumber,priceEach"
+                    errorMessage="Each (Product, Price Each) pair can be specified only one time per order, and there is already another line item for the product at the same price in this order."/>
+            </validators>
+        </field>
+        <field name="orderLineNumber" type="integer" required="true">
+            <validators>
+                <validator type="isUnique" criteriaFields="orderNumber"
+                    errorMessage="Line # must be unique within the order."/>
+            </validators>
+        </field>
+        <field name="quantityOrdered" type="integer" required="true"/>
+        <field name="priceEach" type="float" required="true" format="$,#.00">
+            <validators>
+                <validator type="isUnique" criteriaFields="orderNumber,productCode"
+                    errorMessage="Each (Product, Price Each) pair can be specified only one time per order, and there is already another line item for the product at the same price in this order."/>
+            </validators>
+        </field>
+        <field name="orderNum" hidden="true" includeFrom="ord_Order.orderNumber"/><!--  -->
+        <field name="product" hidden="true" includeFrom="ord_Product.productName"/>
+        <field name="CustomerCustomerNumber" includeFrom="ord_Order.ord_Customer.customerNumber"/>
+    </fields>
+</DataSource>

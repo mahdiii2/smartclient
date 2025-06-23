@@ -1,0 +1,21 @@
+<DataSource ID="ord_Customer" serverType="sql">
+    <fields>
+        <DSField name="customerNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </DSField>
+        <DSField name="customerName" type="text" required="true" length="50" hidden="true"/>
+        <DSField name="contactLastName" type="text" required="true" length="50"/>
+        <DSField name="contactFirstName" type="text" required="true" length="50"/>
+        <DSField name="phone" type="text" required="true" length="50"/>
+        <DSField name="addressLine1" type="text" required="true" length="50"/>
+        <DSField name="addressLine2" type="text" length="50"/>
+        <DSField name="city" type="text" required="true" length="50"/>
+        <DSField name="state" type="text" length="50"/>
+        <DSField name="postalCode" type="text" length="15"/>
+        <DSField name="country" type="text" required="true" length="50"/>
+        <DSField name="salesRepEmployeeNumber" type="integer" title="salesperson"
+                 foreignKey="ord_Employee.employeeNumber" displayField="salesperson" joinType="outer"/>
+        <DSField name="creditLimit" type="float" format="$,#.00"/>
+        <DSField name="salesperson" hidden="true" includeFrom="ord_Employee.lastName"/>
+    </fields>
+</DataSource>

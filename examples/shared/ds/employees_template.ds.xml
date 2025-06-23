@@ -1,0 +1,16 @@
+<DataSource ID="employees_template" tableName="employees_large" serverType="sql">
+    <fields>
+        <field name="employeeNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="compositeName" title="Full Name" length="100">
+            <template>#{lastName}, #{firstName}</template>
+        </field>
+        <field name="lastName" type="text" hidden="true" required="true" length="50"/>
+        <field name="firstName" type="text" hidden="true" required="true" length="50"/>
+        <field name="extension" type="text" required="true" length="15"/>
+        <field name="email" type="text" required="true" length="100"/>
+        <field name="jobTitle" type="text" required="true" length="50"/>
+
+    </fields>
+</DataSource>

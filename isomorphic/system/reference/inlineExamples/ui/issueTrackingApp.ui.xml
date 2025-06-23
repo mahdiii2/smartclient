@@ -1,0 +1,1080 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="iss_IssueType,iss_Users,iss_UserType,iss_IssueStatus,iss_Priority,iss_IssueHistory,iss_Department,iss_IssueMaster"/>
+
+
+<Img width="75" height="75" ID="companyLogo" overflow="hidden">
+    <imageType>center</imageType>
+    <imageHeight>75</imageHeight>
+    <imageWidth>75</imageWidth>
+    <src>logo.png</src>
+    <title>Image0</title>
+    <showMenuOnClick>true</showMenuOnClick>
+</Img>
+
+
+<Label ID="appHeader" width="*" height="75">
+    <contents>&lt;span style="font-size:35px;font-weight:bold"&gt;Issue Tracking App&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label0</title>
+</Label>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="headerLayout" height="75">
+    <members>
+        <Canvas withID="companyLogo"/>
+        <Canvas withID="appHeader"/>
+    </members>
+    <backgroundColor>#FFFFFF</backgroundColor>
+</HLayout>
+
+
+<Label ID="totalTicketsTitle" height="20">
+    <contents>Total Tickets</contents>
+    <align>center</align>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="totalTicketsCount" width="150" height="30">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label2</title>
+</Label>
+
+
+<VLayout overflow="hidden" ID="ticketsLayout" height="60">
+    <align>top</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="totalTicketsTitle"/>
+        <Canvas withID="totalTicketsCount"/>
+    </members>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="openTicketsTitle" height="20">
+    <contents>Number of Open Tickets</contents>
+    <align>center</align>
+    <title>Label3</title>
+</Label>
+
+
+<Label ID="openTicketsCount" width="150" height="30">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label4</title>
+    <drawn>
+            <Process autoStart="false">
+                <sequence>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">1</value>
+                            <value xsi:type="xsd:text">2</value>
+                            <value xsi:type="xsd:text">4</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</Label>
+
+
+<VLayout overflow="hidden" ID="openLayout" height="60">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="openTicketsTitle"/>
+        <Canvas withID="openTicketsCount"/>
+    </members>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="closedTicketsTitle" height="20">
+    <contents>Number of Closed Tickets</contents>
+    <align>center</align>
+    <title>Label6</title>
+</Label>
+
+
+<Label ID="closedTicketsCount" width="150" height="30">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label5</title>
+</Label>
+
+
+<VLayout overflow="hidden" ID="closedLayout" height="60">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="closedTicketsTitle"/>
+        <Canvas withID="closedTicketsCount"/>
+    </members>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="onHoldTicketsTitle" height="20">
+    <contents>Number of Tickets on Hold/Waiting</contents>
+    <align>center</align>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="onHoldTicketsCount" width="150" height="30">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label0</title>
+</Label>
+
+
+<VLayout overflow="hidden" ID="onHoldLayout" height="60">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="onHoldTicketsTitle"/>
+        <Canvas withID="onHoldTicketsCount"/>
+    </members>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="statsLayout" height="70">
+    <members>
+        <Canvas withID="ticketsLayout"/>
+        <Canvas withID="openLayout"/>
+        <Canvas withID="closedLayout"/>
+        <Canvas withID="onHoldLayout"/>
+    </members>
+    <layoutMargin>0</layoutMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next"/>
+                    <SetTitleTask componentId="totalTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="iss_IssueStatusStatus" operator="equals">
+                                    <value xsi:type="xsd:text">Open</value>
+                                </Criterion>
+                                <Criterion fieldName="iss_IssueStatusStatus" operator="equals">
+                                    <value xsi:type="xsd:text">Assigned</value>
+                                </Criterion>
+                                <Criterion fieldName="iss_IssueStatusStatus" operator="equals">
+                                    <value xsi:type="xsd:text">Testing</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Closed</value>
+                            <value xsi:type="xsd:text">Resolved</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="closedTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:green&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">On Hold</value>
+                            <value xsi:type="xsd:text">Awaiting Parts</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="onHoldTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:purple&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<DynamicForm ID="viewSelectForm" height="26">
+    <fields>
+        <SelectItem title="Show " defaultValue="All Tickets" autoName="showField">
+            <valueMap>
+                    <value>All Tickets</value>
+                    <value>Added in the last 7 days</value>
+                    <value>HIgh/Emergency Priority</value>
+                    <value>Closed Tickets</value>
+                    <value>Open Tickets</value>
+                    <value>Held Tickets</value>
+            </valueMap>
+            <changed>
+                    <Process autoStart="false" mapping="form,item,value">
+                        <sequences>
+                            <ProcessSequence>
+                                <elements>
+                                    <DecisionTask failureElement="Decision0">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="Form0.values.showField" operator="equals">
+                                                    <value xsi:type="xsd:text">My Tickets</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionTask>
+                                    <GridFetchDataTask componentId="iss_IssueMasterGrid">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="assignedToUserName" operator="equals">
+                                                    <value xsi:type="xsd:text">$ruleScope.auth.userId</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </GridFetchDataTask>
+                                </elements>
+                            </ProcessSequence>
+                            <ProcessSequence>
+                                <elements>
+                                    <DecisionTask failureElement="isc_DecisionTask_2" ID="Decision0">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="viewSelectForm.values.showField" operator="equals">
+                                                    <value xsi:type="xsd:text">Added in the last 7 days</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionTask>
+                                    <GridFetchDataTask componentId="iss_IssueMasterGrid">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="dateRaised" operator="greaterOrEqual">
+                                                    <value xsi:type="xsd:Object">
+                                                    	<type xsi:type="xsd:List">
+                                                    		<elem xsi:type="xsd:string">xsd:Object</elem>
+                                                    		<elem xsi:type="xsd:string">xsd:Object</elem>
+                                                    	</type>
+                                                    	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                                                    	<value xsi:type="xsd:string">-7d</value>
+                                                    </value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </GridFetchDataTask>
+                                </elements>
+                            </ProcessSequence>
+                        </sequences>
+                        <elements>
+                            <DecisionTask failureElement="Decision1" ID="isc_DecisionTask_2" nextElement="GridFetchData0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="viewSelectForm.values.showField" operator="equals">
+                                            <value xsi:type="xsd:text">Closed Tickets</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <GridFetchDataTask componentId="iss_IssueMasterGrid" ID="GridFetchData0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="Status" operator="inSet">
+                                            <value xsi:type="xsd:float">5</value>
+                                            <value xsi:type="xsd:float">6</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <DecisionTask failureElement="isc_DecisionTask_3" ID="Decision1" nextElement="isc_GridFetchDataTask_1">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="viewSelectForm.values.showField" operator="equals">
+                                            <value xsi:type="xsd:text">Open Tickets</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <GridFetchDataTask componentId="iss_IssueMasterGrid" ID="isc_GridFetchDataTask_1">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="Status" operator="inSet">
+                                            <value xsi:type="xsd:float">1</value>
+                                            <value xsi:type="xsd:float">2</value>
+                                            <value xsi:type="xsd:float">4</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <DecisionTask failureElement="Decision3" ID="isc_DecisionTask_3" nextElement="isc_GridFetchDataTask_2">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="viewSelectForm.values.showField" operator="equals">
+                                            <value xsi:type="xsd:text">HIgh/Emergency Priority</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <GridFetchDataTask componentId="iss_IssueMasterGrid" ID="isc_GridFetchDataTask_2">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="Priority" operator="inSet">
+                                            <value xsi:type="xsd:float">1</value>
+                                            <value xsi:type="xsd:float">4</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <DecisionTask failureElement="GridFetchData1" ID="Decision3" nextElement="isc_GridFetchDataTask_3">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="viewSelectForm.values.showField" operator="equals">
+                                            <value xsi:type="xsd:text">Held Tickets</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <GridFetchDataTask componentId="iss_IssueMasterGrid" ID="isc_GridFetchDataTask_3">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="Status" operator="inSet">
+                                            <value xsi:type="xsd:float">3</value>
+                                            <value xsi:type="xsd:float">7</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <GridFetchDataTask componentId="iss_IssueMasterGrid" ID="GridFetchData1"/>
+                        </elements>
+                    </Process>
+            </changed>
+        </SelectItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<FixedSpacer ID="spacer"/>
+
+
+<IconImgButton ID="exportButton">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton0</title>
+    <prompt>Export Grid as CSV</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <GridExportClientDataTask componentId="iss_IssueMasterGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download">
+                            <showInWindow>false</showInWindow>
+                        </requestProperties>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printLIst">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton0</title>
+    <prompt>Print Issues LIst</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <ShowMessageTask>
+                        <message>The Print function is not currently active in this Starter App</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<Menu ID="actionsMenu">
+    <items>
+        <MenuItem title="Add New Issue">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/add.png</icon>
+            <name>addIssue</name>
+            <click>
+                    <Process autoStart="false" mapping="target,item,menu,colNum">
+                        <sequence>
+                            <FormEditNewRecordTask componentId="addEditIssueForm">
+                                <initialValues>
+                                    <Status>1</Status>
+                                </initialValues>
+                            </FormEditNewRecordTask>
+                            <SetTitleTask componentId="addEditIssueWindow">
+                                <title>Add New Issue</title>
+                            </SetTitleTask>
+                            <ShowTask componentId="addEditIssueWindow"/>
+                            <FormSetFieldValueTask targetField="assignedTo" componentId="addEditIssueForm">
+                                <value xsi:type="xsd:float">11</value>
+                            </FormSetFieldValueTask>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem title="Edit/View Issue">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/edit.png</icon>
+            <visibleWhen fieldName="iss_IssueMasterGrid.numSelected" operator="equals" value="1"/>
+            <name>editIssue</name>
+            <click>
+                    <Process autoStart="false" mapping="target,item,menu,colNum">
+                        <sequence>
+                            <FormEditSelectedTask selectionComponentId="iss_IssueMasterGrid" componentId="addEditIssueForm"/>
+                            <SetTitleTask componentId="addEditIssueWindow">
+                                <textFormula text="Editing Issue #{iss_IssueMasterGrid.selectedRecord.issueId} / #{iss_IssueMasterGrid.selectedRecord.issueTitle}"/>
+                            </SetTitleTask>
+                            <ShowTask componentId="addEditIssueWindow"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem title="Remove Issue">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/cancel.png</icon>
+            <visibleWhen fieldName="iss_IssueMasterGrid.numSelected" operator="equals" value="1"/>
+            <name>removeIssue</name>
+            <click>
+                    <Process autoStart="false" mapping="target,item,menu,colNum">
+                        <sequences>
+                            <ProcessSequence>
+                                <elements>
+                                    <UserConfirmationTask failureElement="placeHolder0">
+                                        <message>Are you sure you want to completely remove this Issue?</message>
+                                    </UserConfirmationTask>
+                                    <GridRemoveSelectedDataTask allowMultiRecordRemove="false" componentId="iss_IssueMasterGrid"/>
+                                    <DSRemoveTask dataSource="iss_IssueHistory" failureElement="next">
+                                        <values>
+                                            <internalId>$ruleScope.iss_IssueMasterGrid.selectedRecord.issueId</internalId>
+                                        </values>
+                                    </DSRemoveTask>
+                                    <ShowNotificationTask message="Issue has been removed"/>
+                                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next"/>
+                                    <SetTitleTask componentId="totalTicketsCount">
+                                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                                    </SetTitleTask>
+                                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                                            <value xsi:type="xsd:text">Open</value>
+                                            <value xsi:type="xsd:text">Assigned</value>
+                                            <value xsi:type="xsd:text">Testing</value>
+                                        </criteria>
+                                    </DSFetchTask>
+                                    <SetTitleTask componentId="openTicketsCount">
+                                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                                    </SetTitleTask>
+                                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                                            <value xsi:type="xsd:text">Resolved</value>
+                                            <value xsi:type="xsd:text">Closed</value>
+                                        </criteria>
+                                    </DSFetchTask>
+                                    <SetTitleTask componentId="closedTicketsCount">
+                                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:green&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                                    </SetTitleTask>
+                                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                                            <value xsi:type="xsd:text">On Hold</value>
+                                            <value xsi:type="xsd:text">Awaiting Parts</value>
+                                        </criteria>
+                                    </DSFetchTask>
+                                    <SetTitleTask componentId="onHoldTicketsCount">
+                                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:purple&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                                    </SetTitleTask>
+                                </elements>
+                            </ProcessSequence>
+                            <ProcessSequence>
+                                <elements>
+                                    <EndProcessTask ID="placeHolder0"/>
+                                </elements>
+                            </ProcessSequence>
+                        </sequences>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem title="Assign/Reassign Issue">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/approve.png</icon>
+            <visibleWhen fieldName="iss_IssueMasterGrid.numSelected" operator="equals" value="1"/>
+            <name>assignIssue</name>
+            <click>
+                    <Process autoStart="false" mapping="target,item,menu,colNum">
+                        <sequence>
+                            <FormEditSelectedTask selectionComponentId="iss_IssueMasterGrid" componentId="changeAssignmentForm"/>
+                            <SetTitleTask componentId="changeIssueAssignmentWindow">
+                                <textFormula text="Reassign Issue #{iss_IssueMasterGrid.selectedRecord.issueId} / #{iss_IssueMasterGrid.selectedRecord.issueTitle}"/>
+                            </SetTitleTask>
+                            <FormSetFieldValueTask targetField="commentsField" componentId="changeAssignmentForm">
+                                <value xsi:type="xsd:text">[None]</value>
+                            </FormSetFieldValueTask>
+                            <ShowTask componentId="changeIssueAssignmentWindow"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+        <MenuItem title="Change Status/Progress">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/forward.png</icon>
+            <visibleWhen fieldName="iss_IssueMasterGrid.numSelected" operator="equals" value="1"/>
+            <name>changeStatus</name>
+            <click>
+                    <Process autoStart="false" mapping="target,item,menu,colNum">
+                        <sequence>
+                            <FormEditSelectedTask selectionComponentId="iss_IssueMasterGrid" componentId="changeStatusForm"/>
+                            <SetTitleTask componentId="changeIssueStatusWindow">
+                                <textFormula text="Changing Status for Issue #{iss_IssueMasterGrid.selectedRecord.issueId} / #{iss_IssueMasterGrid.selectedRecord.issueTitle}"/>
+                            </SetTitleTask>
+                            <FormSetFieldValueTask targetField="commentsField" componentId="changeStatusForm">
+                                <value xsi:type="xsd:text">[None]</value>
+                            </FormSetFieldValueTask>
+                            <ShowTask componentId="changeIssueStatusWindow"/>
+                        </sequence>
+                    </Process>
+            </click>
+        </MenuItem>
+    </items>
+    <backgroundColor>#B8B8B8</backgroundColor>
+</Menu>
+
+
+<ToolStripMenuButton autoID="actionsToolStripMenuButton">
+    <menu withID="actionsMenu"/>
+    <title>Actions</title>
+</ToolStripMenuButton>
+
+
+<ToolStrip membersMargin="10" ID="mainToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="viewSelectForm"/>
+        <Canvas withID="spacer"/>
+        <Canvas withID="exportButton"/>
+        <Canvas withID="printLIst"/>
+        <Canvas withID="actionsToolStripMenuButton"/>
+    </members>
+    <layoutMargin>1</layoutMargin>
+    <layoutRightMargin>20</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="iss_IssueMaster" autoID="iss_IssueMasterGrid" showFilterEditor="true" autoFetchData="true">
+    <fields>
+        <LGField name="issueId" width="70"/>
+        <LGField name="issueTitle"/>
+        <LGField name="issueDescription" width="300"/>
+        <LGField name="dateRaised" width="120"/>
+        <LGField name="createdBy" title="Created By"/>
+        <LGField name="lastChangedDate" width="120"/>
+        <LGField name="Department" title="Department"/>
+        <LGField name="IssueType" title="Issue Type"/>
+        <LGField name="resolutionDate" width="120"/>
+        <LGField name="Priority" title="Priority"/>
+        <LGField name="Status" title="Status"/>
+        <LGField name="assignedTo" title="Assigned To"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <canHover>true</canHover>
+    <headerHeight>40</headerHeight>
+    <wrapHeaderTitles>true</wrapHeaderTitles>
+    <autoFitHeaderHeights>true</autoFitHeaderHeights>
+    <selectionType>single</selectionType>
+    <selectionAppearance>rowStyle</selectionAppearance>
+    <initialSort>
+        <SortSpecifier>
+            <direction>descending</direction>
+            <property>issueId</property>
+            <normalizer>integer</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <autoFitFieldWidths>false</autoFitFieldWidths>
+    <autoFitWidthApproach>title</autoFitWidthApproach>
+    <hilites>
+        <Hilite id="0" fieldName="Status">
+            <criteria fieldName="Status" operator="inSet">
+                <value xsi:type="xsd:float">5</value>
+                <value xsi:type="xsd:float">6</value>
+            </criteria>
+            <textColor>#339966</textColor>
+            <cssText>color:#339966;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="1" fieldName="Status">
+            <criteria fieldName="Status" operator="notInSet">
+                <value xsi:type="xsd:float">3</value>
+                <value xsi:type="xsd:float">5</value>
+                <value xsi:type="xsd:float">6</value>
+                <value xsi:type="xsd:float">7</value>
+            </criteria>
+            <textColor>#FF0000</textColor>
+            <cssText>color:#FF0000;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="2" fieldName="Status">
+            <criteria fieldName="Status" operator="inSet">
+                <value xsi:type="xsd:float">3</value>
+                <value xsi:type="xsd:float">7</value>
+            </criteria>
+            <textColor>#000080</textColor>
+            <cssText>color:#000080;</cssText>
+            <icon></icon>
+        </Hilite>
+    </hilites>
+    <canExpandRecords>true</canExpandRecords>
+    <canExpandMultipleRecords>false</canExpandMultipleRecords>
+    <expansionMode>related</expansionMode>
+    <expansionScreen>historyScreen</expansionScreen>
+</ListGrid>
+
+
+<VLayout ID="mainLayout">
+    <members>
+        <Canvas withID="headerLayout"/>
+        <Canvas withID="statsLayout"/>
+        <Canvas withID="mainToolstrip"/>
+        <Canvas withID="iss_IssueMasterGrid"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+</VLayout>
+
+
+<DataView overflow="hidden" ID="issueTrackingApp" width="100%" height="100%" autoDraw="true">
+    <members>
+        <Canvas withID="mainLayout"/>
+    </members>
+</DataView>
+
+
+<DynamicForm ID="addEditIssueForm" dataSource="iss_IssueMaster" numCols="4">
+    <fields>
+        <TextItem name="issueId" readOnlyDisplay="static" endRow="true">
+            <readOnlyWhen fixedValue="true"/>
+            <visibleWhen fieldName="issueId" operator="notBlank"/>
+        </TextItem>
+        <TextItem name="issueTitle" title="Issue" readOnlyDisplay="static" width="625" colSpan="4" endRow="true">
+            <required>true</required>
+            <readOnlyWhen operator="or">
+                <criteria>
+                    <Criterion fieldName="Status" operator="equals" value="5"/>
+                    <Criterion fieldName="Status" operator="equals" value="6"/>
+                </criteria>
+            </readOnlyWhen>
+        </TextItem>
+        <TextAreaItem name="issueDescription" title="Description" readOnlyDisplay="static" width="625" colSpan="4">
+            <required>true</required>
+            <readOnlyWhen operator="or">
+                <criteria>
+                    <Criterion fieldName="Status" operator="equals" value="5"/>
+                    <Criterion fieldName="Status" operator="equals" value="6"/>
+                </criteria>
+            </readOnlyWhen>
+        </TextAreaItem>
+        <SelectItem name="createdBy" title="Create By User" canEdit="false" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="issueId" operator="notBlank"/>
+        </SelectItem>
+        <DateTimeItem name="lastChangedDate" canEdit="false" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+            <visibleWhen fieldName="addEditIssueForm.values.issueId" operator="notBlank"/>
+            <hidden>true</hidden>
+        </DateTimeItem>
+        <SelectItem name="Department" title="Department" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="Status" operator="notEqual" value="1"/>
+        </SelectItem>
+        <SelectItem name="Status" title="Status" defaultValue="Open" readOnlyDisplay="static">
+            <readOnlyWhen operator="or">
+                <criteria>
+                    <Criterion fieldName="Status" operator="equals" value="5"/>
+                    <Criterion fieldName="Status" operator="equals" value="6"/>
+                </criteria>
+            </readOnlyWhen>
+        </SelectItem>
+        <SelectItem name="IssueType" title="Issue Type" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="Status" operator="notEqual" value="1"/>
+        </SelectItem>
+        <SelectItem name="Priority" title="Priority" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="Status" operator="notEqual" value="1"/>
+        </SelectItem>
+        <SelectItem name="assignedTo" title="assigned To" defaultValue="Julie Carney" readOnlyDisplay="static">
+            <readOnlyWhen operator="or">
+                <criteria>
+                    <Criterion fieldName="issueId" operator="notBlank"/>
+                    <Criterion fieldName="Status" operator="notEqual" value="1"/>
+                </criteria>
+            </readOnlyWhen>
+        </SelectItem>
+        <DateItem useTextField="true" name="resolutionDate" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+            <visibleWhen operator="or">
+                <criteria>
+                    <Criterion fieldName="Status" operator="equals" value="5"/>
+                    <Criterion fieldName="Status" operator="equals" value="6"/>
+                </criteria>
+            </visibleWhen>
+        </DateItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton autoID="saveButton">
+    <title>Save</title>
+    <visibleWhen operator="and">
+        <criteria>
+            <Criterion fieldName="addEditIssueForm.values.Status" operator="notEqual" value="5"/>
+            <Criterion fieldName="addEditIssueForm.values.Status" operator="notEqual" value="6"/>
+        </criteria>
+    </visibleWhen>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" componentId="addEditIssueForm">
+                        <notifyMessage>Issue saved successfully</notifyMessage>
+                    </FormSaveDataTask>
+                    <DSAddTask dataSource="iss_IssueHistory" failureElement="next">
+                        <values>
+                            <issueId>$last.issueId</issueId>
+                            <Description template="Issue #{_lastTask.issueId} / #{_lastTask.issueTitle} has been added or updated successfully. Assigned to #{_lastTask.assignedToUser} with Status #{_lastTask.iss_IssueStatusStatus}"/>
+                        </values>
+                    </DSAddTask>
+                    <ShowNotificationTask description="Show notification: &quot;Issue  #{_lastTask.issueI ...&quot;">
+                        <textFormula text="Issue #{addEditIssueForm.values.issueId} / #{addEditIssueForm.values.issueTitle} added or updated successfully"/>
+                    </ShowNotificationTask>
+                    <HideTask componentId="addEditIssueWindow"/>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next"/>
+                    <SetTitleTask componentId="totalTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Open</value>
+                            <value xsi:type="xsd:text">Assigned</value>
+                            <value xsi:type="xsd:text">Testing</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Resolved</value>
+                            <value xsi:type="xsd:text">Closed</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="closedTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:green&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">On Hold</value>
+                            <value xsi:type="xsd:text">Awaiting Parts</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="onHoldTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:purple&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton">
+    <title>Cancel</title>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <FormClearValuesTask componentId="addEditIssueForm"/>
+                    <HideTask componentId="addEditIssueWindow"/>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="addEditIssueButtonLayout" width="100%" height="30">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="saveButton"/>
+        <Canvas withID="cancelButton"/>
+    </members>
+</HLayout>
+
+
+<VLayout ID="addEditIssueMainLayout">
+    <members>
+        <Canvas withID="addEditIssueForm"/>
+        <Canvas withID="addEditIssueButtonLayout"/>
+    </members>
+    <layoutTopMargin>20</layoutTopMargin>
+</VLayout>
+
+
+<ModalWindow ID="addEditIssueWindow" width="75%" height="450">
+    <autoCenter>true</autoCenter>
+    <autoSize>false</autoSize>
+    <headerControls>
+        <WindowHeaderIcon/>
+        <WindowHeaderLabel/>
+        <WindowMinimizeButton/>
+        <WindowMaximizeButton/>
+        <WindowCloseButton/>
+    </headerControls>
+    <title>Add New Issue</title>
+    <items>
+        <Canvas withID="addEditIssueMainLayout"/>
+    </items>
+</ModalWindow>
+
+
+<DynamicForm ID="changeAssignmentForm" dataSource="iss_IssueMaster" numCols="2" width="540">
+    <fields>
+        <TextItem name="issueId">
+            <visible>false</visible>
+        </TextItem>
+        <TextItem name="issueTitle">
+            <visible>false</visible>
+        </TextItem>
+        <TextAreaItem name="issueDescription" canEdit="false" readOnlyDisplay="static" width="440" colSpan="4"/>
+        <SelectItem name="Department" title="Department" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="IssueType" title="IssueType" canEdit="false" readOnlyDisplay="static"/>
+        <DateTimeItem name="lastChangedDate" canEdit="false" readOnlyDisplay="static">
+            <visible>true</visible>
+            <hidden>true</hidden>
+        </DateTimeItem>
+        <SelectItem name="Priority" title="Priority" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="assignedTo" title="Assigned To" endRow="true"/>
+        <TextAreaItem name="commentsField" title="Comments" width="440" colSpan="2"/>
+        <TextItem name="assignedToUser" title="User Name">
+            <visible>false</visible>
+        </TextItem>
+    </fields>
+    <titleOrientation>top</titleOrientation>
+</DynamicForm>
+
+
+<IButton autoID="saveButton3">
+    <title>Save</title>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="changeAssignmentForm"/>
+                    <DSAddTask dataSource="iss_IssueHistory" failureElement="next">
+                        <values>
+                            <issueId>$last.issueId</issueId>
+                            <Description template="Issue Assigned to #{_lastTask.assignedToUser}. Additional Comments: #{changeAssignmentForm.values.commentsField}"/>
+                        </values>
+                    </DSAddTask>
+                    <ShowNotificationTask description="Show notification: &quot;Issue #{_lastTask.issueId ...&quot;">
+                        <textFormula text="Issue #{changeAssignmentForm.values.issueId} / #{changeAssignmentForm.values.issueTitle} assignment changed successfully"/>
+                    </ShowNotificationTask>
+                    <HideTask componentId="changeIssueAssignmentWindow"/>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Open</value>
+                            <value xsi:type="xsd:text">Assigned</value>
+                            <value xsi:type="xsd:text">Testing</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Closed</value>
+                            <value xsi:type="xsd:text">Resolved</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="closedTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:green&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">On Hold</value>
+                            <value xsi:type="xsd:text">Awaiting Parts</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="onHoldTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:purple&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;&quot;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton2">
+    <title>Cancel</title>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <HideTask componentId="changeIssueAssignmentWindow"/>
+                    <FormClearValuesTask componentId="changeAssignmentForm"/>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="assignButtonLayout" width="500" height="30">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="saveButton3"/>
+        <Canvas withID="cancelButton2"/>
+    </members>
+</HLayout>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="assignLayout" width="600" height="350">
+    <members>
+        <Canvas withID="changeAssignmentForm"/>
+        <Canvas withID="assignButtonLayout"/>
+    </members>
+    <layoutLeftMargin>15</layoutLeftMargin>
+</VLayout>
+
+
+<ModalWindow ID="changeIssueAssignmentWindow" width="608" height="388" overflow="hidden">
+    <autoSize>true</autoSize>
+    <title>Assign Issue</title>
+    <items>
+        <Canvas withID="assignLayout"/>
+    </items>
+</ModalWindow>
+
+
+<DynamicForm ID="changeStatusForm" dataSource="iss_IssueMaster" numCols="2">
+    <fields>
+        <TextItem name="issueId">
+            <visible>false</visible>
+        </TextItem>
+        <TextItem name="issueTitle">
+            <visible>false</visible>
+        </TextItem>
+        <TextAreaItem name="issueDescription" canEdit="false" readOnlyDisplay="static" colSpan="2"/>
+        <SelectItem name="createdBy" title="Created By" canEdit="false" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+        </SelectItem>
+        <SelectItem name="Department" title="Department" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="IssueType" title="Issue Type" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="Priority" title="Priority" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="Status" title="Status"/>
+        <SelectItem name="assignedTo" title="Assigned To"/>
+        <DateItem name="resolutionDate" canEdit="false" readOnlyDisplay="static">
+            <visibleWhen fieldName="Status" operator="inSet" value="5,6"/>
+        </DateItem>
+        <TextAreaItem title="Comments" autoName="commentsField" width="500" colSpan="2" endRow="true"/>
+        <TextItem name="iss_IssueStatusStatus" title="Status">
+            <visible>false</visible>
+            <hidden>true</hidden>
+        </TextItem>
+    </fields>
+    <titleOrientation>top</titleOrientation>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton autoID="saveButton2">
+    <title>Save</title>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="changeStatusForm"/>
+                    <DSAddTask dataSource="iss_IssueHistory" failureElement="next">
+                        <values>
+                            <issueId>$last.issueId</issueId>
+                            <Description template="Issue Status changed to #{_lastTask.iss_IssueStatusStatus} - Currently assigned to #{_lastTask.assignedToUser} - Additional Comments: #{changeStatusForm.values.commentsField}"/>
+                        </values>
+                    </DSAddTask>
+                    <ShowNotificationTask>
+                        <textFormula text="Status Changed for Issue #{_lastTask.issueId} / #{_lastTask.issueTitle} assignment changed succcessfully"/>
+                    </ShowNotificationTask>
+                    <HideTask componentId="changeIssueStatusWindow"/>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Open</value>
+                            <value xsi:type="xsd:text">Assigned</value>
+                            <value xsi:type="xsd:text">Testing</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:red&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Resolved</value>
+                            <value xsi:type="xsd:text">Closed</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="closedTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:green&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="iss_IssueMaster" failureElement="next">
+                        <criteria fieldName="iss_IssueStatusStatus" operator="inSet" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">On Hold</value>
+                            <value xsi:type="xsd:text">Awaiting Parts</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="onHoldTicketsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px;color:purple&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton3">
+    <title>Cancel</title>
+    <click>
+            <Process autoStart="false">
+                <sequence>
+                    <FormClearValuesTask componentId="changeStatusForm"/>
+                    <HideTask componentId="changeIssueStatusWindow"/>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="statusButtonLayout" height="30">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="saveButton2"/>
+        <Canvas withID="cancelButton3"/>
+    </members>
+</HLayout>
+
+
+<VLayout ID="statusChangeLayout">
+    <members>
+        <Canvas withID="changeStatusForm"/>
+        <Canvas withID="statusButtonLayout"/>
+    </members>
+</VLayout>
+
+
+<ModalWindow ID="changeIssueStatusWindow" width="606" height="450">
+    <title>Change Issue Status</title>
+    <items>
+        <Canvas withID="statusChangeLayout"/>
+    </items>
+</ModalWindow>
+
+
+</isomorphicXML>

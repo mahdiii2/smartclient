@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="employeeDS"
+    clientOnly="true"
+    dataURL="shared/data/employeeData.xml"
+    autoDeriveSchema="false">
+
+  <fields>
+    <!-- Primary key -->
+    <field name="employeeNumber" type="integer" primaryKey="true" title="Employee #"/>
+
+    <!-- Name -->
+    <field name="lastName"    type="text" title="Last Name"/>
+    <field name="firstName"   type="text" title="First Name"/>
+
+    <!-- Contact -->
+    <field name="extension"   type="text" title="Phone Ext."/>
+    <field name="email"       type="text" title="Email"/>
+
+    <!-- Org structure -->
+    <field name="officeCode"  type="integer" title="Office ID"
+           foreignKey="officeDS.officeCode"/>
+    <field name="reportsTo"   type="integer" title="Reports To"
+           foreignKey="employeeDS.employeeNumber"/>
+
+    <!-- Role -->
+    <field name="jobTitle"    type="text" title="Job Title"/>
+  </fields>
+
+</DataSource>

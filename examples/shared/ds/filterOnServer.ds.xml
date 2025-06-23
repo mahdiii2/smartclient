@@ -1,0 +1,13 @@
+<DataSource 
+    ID="filterOnServer"
+    serverType="sql"
+    tableName="supplyItem">
+
+    <fields>
+        <field name="itemID"      type="sequence" hidden="true"       primaryKey="true"/>
+        <field name="itemName"    type="text"     title="Item"        length="128"       required="true"/>
+        <field name="SKU"         type="text"     title="SKU"         length="10"       required="true"/>
+        <field name="description" type="text"     filterOn="serverOnly"   title="Description" length="2000"/>
+    </fields>
+
+</DataSource>

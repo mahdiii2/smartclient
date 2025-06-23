@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
+    <modelVersion>4.0.0</modelVersion>
+
+    <description>
+        A dependency group containing the various Isomorphic artifacts related to network performance (referred to as the "Network
+        Performance Module" in documentation).
+    </description>
+
+    <groupId>com.isomorphic.smartclient.eval</groupId>
+    <artifactId>isomorphic-network</artifactId>
+    <version>14.1-p20250614</version>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-assembly</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>
+        <dependency>
+            <groupId>com.isomorphic.smartclient.eval</groupId>
+            <artifactId>isomorphic-compression</artifactId>
+            <version>14.1-p20250614</version>
+        </dependency>
+    </dependencies>
+
+</project>

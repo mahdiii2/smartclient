@@ -1,0 +1,50 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="acc_Payment,acc_ProductLine,acc_Product,acc_Order,acc_Office,acc_Employee,acc_Customer,acc_invoiceLine,acc_Invoice,acc_OrderLine"/>
+
+
+<ListGrid dataSource="acc_OrderLine" autoID="acc_OrderLineGrid" autoFetchData="true" showGridSummary="true" showGroupSummary="false" width="80%">
+    <fields>
+        <field name="orderLineId" hidden="true"/>
+        <field name="orderNumber" hidden="true"/>
+        <field name="orderLineNumber" title="Line #" showGridSummary="false" showGroupSummary="false" width="75"/>
+        <field name="productCode" width="300"/>
+        <field name="quantityOrdered" showGridSummary="false" showGroupSummary="false"/>
+        <field name="priceEach" showGridSummary="false" showGroupSummary="false">
+            <format>$,#.00</format>
+        </field>
+        <field name="Line_Total1" type="float" title="Line Total" summaryFunction="" showGroupSummary="false" width="125">
+            <canFilter>false</canFilter>
+            <canEditFormula>false</canEditFormula>
+            <canSortClientOnly>true</canSortClientOnly>
+            <userFormula text="D*E">
+                <formulaVars>
+                        <value id="E">priceEach</value>
+                        <value id="D">quantityOrdered</value>
+                </formulaVars>
+            </userFormula>
+            <format>$,#.00</format>
+            <canFilterOnClient>true</canFilterOnClient>
+            <originalOrder>5</originalOrder>
+        </field>
+    </fields>
+    <initialSort>
+        <SortSpecifier>
+            <direction>ascending</direction>
+            <property>orderLineNumber</property>
+            <normalizer>integer</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <autoPopulateData>true</autoPopulateData>
+</ListGrid>
+
+
+<DataView overflow="hidden" ID="orderLinesView" width="100%" height="300" autoDraw="true">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas ref="acc_OrderLineGrid"/>
+    </members>
+</DataView>
+
+
+</isomorphicXML>

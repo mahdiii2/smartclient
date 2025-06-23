@@ -1,0 +1,42 @@
+Overview - Using SeleneseRunner from the command line
+
+1. Providing a path to the browser driver to SeleneseRunner
+
+When invoking SeleneseRunner, you must ensure Selenium can find the browser driver.  This can
+be done in three ways:
+- Add a path binding for the executable (would have .exe under windows) like the following into
+  your config file, and then load that file with the -p option when invoking SeleneseRunner:
+
+    webdriver.gecko.driver=/home/user/downloads/geckodriver
+
+- Add the executable path to your PATH variable before running SeleneseRunner, as such:
+
+    export PATH=/home/user/downloads/geckodriver:${PATH}
+
+in Linux, or in Windows:
+
+    set PATH=c:\downloads\geckodriver.exe;%PATH%
+
+- Define the system property webdriver.gecko.driver (or webdriver.chrome.driver, etc.) on the
+  Java command line to specify the correct path.  This is the approach that will be used below.
+
+2. Running a Test Script or Test Suite with SeleneseRunner
+
+To see the command-line options available, you can invoke SeleneseRunner with no arguments:
+
+    java -cp "../WEB-INF/lib/*" com.isomorphic.webdriver.SeleneseRunner
+
+There is also documentation for SeleneseRunner in the Enterprise Edition Server Javadocs:
+https://smartclient.com/smartgwtee/server/javadoc/com/isomorphic/webdriver/SeleneseRunner.html
+
+To run a single test, simply provide it on the command line after the target URL:
+
+    java -Dwebdriver.gecko.driver=/home/user/downloads/geckodriver -cp "../WEB-INF/lib/*" com.isomorphic.webdriver.SeleneseRunner "https://smartclient.com/smartclient-release/showcase/" dataTypes-1.rctest.html
+
+To run an entire suite, just specify it instead of an individual test:
+
+    java -Dwebdriver.gecko.driver=/home/user/downloads/geckodriver -cp "../WEB-INF/lib/*" com.isomorphic.webdriver.SeleneseRunner "https://smartclient.com/smartclient-release/showcase/" suite.html -j report.xml
+
+where the "-j" flag is optional, and signals that you want to create a JUnit-style XML report
+for the suite.  In this directory is one suite that should complete successfully, and another
+that should fail, providing examples of a generated JUnit-style XML report for those cases.

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>var isomorphicDir = "../isomorphic/";</script>
+    <script src="../isomorphic/system/modules/ISC_Core.js"></script>
+    <script src="../isomorphic/system/modules/ISC_Foundation.js"></script>
+    <script src="../isomorphic/system/modules/ISC_Containers.js"></script>
+    <script src="../isomorphic/system/modules/ISC_Grids.js"></script>
+    <script src="../isomorphic/system/modules/ISC_Forms.js"></script>
+    <script src="../isomorphic/system/modules/ISC_DataBinding.js"></script>
+    <script src="../isomorphic/skins/SmartClient/load_skin.js"></script>
+</head>
+<body>
+    <script>
+    isc.ListGrid.create({
+        ID: "contactsList",
+        left: 50, top: 50, width: 300,
+        fields: [
+            { name: "salutation", title: "Title" },
+            { name: "firstname",  title: "First Name" },
+            { name: "lastname",   title: "Last Name" }
+        ],
+        data: [
+            { salutation: "Ms",  firstname: "Kathy", lastname: "Whitting" },
+            { salutation: "Mr",  firstname: "Chris", lastname: "Glover" },
+            { salutation: "Mrs", firstname: "Gwen",  lastname: "Glover" }
+        ]
+    });
+    </script>
+</body>
+</html>

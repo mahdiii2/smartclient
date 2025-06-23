@@ -1,0 +1,11 @@
+
+/* filled green icons, no outline */
+.svgForestFill { fill: green; stroke: none; }
+.svgForestFillOver { fill: lightgreen; stroke: none; }
+.svgForestFillDown { fill: darkgreen; stroke: none; }
+
+/* outlined orange icons, no fill, stroke (border) width-change on rollover */
+.svgFloridaOutline { stroke: orange; stroke-width: 1px; fill: none; }
+.svgFloridaOutlineOver { stroke: darkorange; stroke-width: 2px; fill: none; }
+.svgFloridaOutlineDown { stroke: red; stroke-width: 1px; fill: none; }
+

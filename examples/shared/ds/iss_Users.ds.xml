@@ -1,0 +1,130 @@
+
+<MockDataSource fromServer="true" ID="iss_Users" clientOnly="true">
+    <fields>
+        <field name="userId" type="integer" title="User Id" primaryKey="true"/>
+        <field name="userName" type="text" title="User Name"/>
+        <field name="userType" type="integer" title="iss_UserType" foreignKey="iss_UserType.userTypeId" displayField="iss_UserTypeUserType" joinType="outer"/>
+        <field name="email" type="text" title="Email"/>
+        <field name="phone" type="text" title="Phone"/>
+        <field name="thisUserId" type="text" title="thisUserId"/>
+        <field name="iss_UserTypeUserType" hidden="true" includeFrom="iss_UserType.userType"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <userId>1</userId>
+            <userName>Bob Smith</userName>
+            <userType>1</userType>
+            <email>bsmith@mycompany.com</email>
+            <phone>555-111-2222</phone>
+            <internalId>1</internalId>
+            <thisUserId>bsmith</thisUserId>
+        </Object>
+        <Object>
+            <userId>2</userId>
+            <userName>Fred Smith</userName>
+            <userType>1</userType>
+            <email>fsmith@mycompany.com</email>
+            <phone>555-111-2223</phone>
+            <internalId>2</internalId>
+            <thisUserId>fsmith</thisUserId>
+        </Object>
+        <Object>
+            <userId>3</userId>
+            <userName>Alan Jones</userName>
+            <userType>1</userType>
+            <email>ajones@mycompnay.com</email>
+            <phone>555-111-2224</phone>
+            <internalId>3</internalId>
+            <thisUserId>ajones</thisUserId>
+        </Object>
+        <Object>
+            <userId>4</userId>
+            <userName>Melanie Bart</userName>
+            <userType>1</userType>
+            <email>mbart@mycompany.com</email>
+            <phone>555-111-2225</phone>
+            <internalId>4</internalId>
+            <thisUserId>mbart</thisUserId>
+        </Object>
+        <Object>
+            <userId>5</userId>
+            <userName>Jane Austin</userName>
+            <userType>1</userType>
+            <email>jaustin@mycompany.com</email>
+            <phone>555-111-2226</phone>
+            <internalId>5</internalId>
+            <thisUserId>jaustin</thisUserId>
+        </Object>
+        <Object>
+            <userId>6</userId>
+            <userName>Cath Mack</userName>
+            <userType>1</userType>
+            <email>cmack@mycompany.com</email>
+            <phone>555-111-2227</phone>
+            <internalId>6</internalId>
+            <thisUserId>cmack</thisUserId>
+        </Object>
+        <Object>
+            <userId>7</userId>
+            <userName>Paul Smith</userName>
+            <userType>3</userType>
+            <email>psmith@mycompany.com</email>
+            <phone>555-111-2228</phone>
+            <internalId>7</internalId>
+            <thisUserId>psmith</thisUserId>
+        </Object>
+        <Object>
+            <userId>8</userId>
+            <userName>Dave Allan</userName>
+            <userType>2</userType>
+            <email>dallan@mycompany.com</email>
+            <phone>555-111-2229</phone>
+            <internalId>8</internalId>
+            <thisUserId>dallan</thisUserId>
+        </Object>
+        <Object>
+            <userId>9</userId>
+            <userName>Wayne Jones</userName>
+            <userType>2</userType>
+            <email>wjones@mycompany.com</email>
+            <phone>555-111-2230</phone>
+            <internalId>9</internalId>
+            <thisUserId>wjones</thisUserId>
+        </Object>
+        <Object>
+            <userId>10</userId>
+            <userName>Peter Mayweather</userName>
+            <userType>5</userType>
+            <email>pmayweather@mycompany.com</email>
+            <phone>555-111-2231</phone>
+            <internalId>10</internalId>
+            <thisUserId>pmayweather</thisUserId>
+        </Object>
+        <Object>
+            <userId>11</userId>
+            <userName>Julie Carney</userName>
+            <userType>4</userType>
+            <email>jcarney@mycompany.com</email>
+            <phone>555-111-2232</phone>
+            <internalId>11</internalId>
+            <thisUserId>jcarney</thisUserId>
+        </Object>
+        <Object>
+            <userId>12</userId>
+            <userName>Emily Ross</userName>
+            <userType>6</userType>
+            <email>eross@mycompany.com</email>
+            <phone>555-111-2233</phone>
+            <internalId>12</internalId>
+            <thisUserId>eross</thisUserId>
+        </Object>
+        <Object>
+            <userId>13</userId>
+            <userName>Unassigned</userName>
+            <userType>1</userType>
+            <email>N/A</email>
+            <phone>0</phone>
+            <thisUserId>unassigned</thisUserId>
+        </Object>
+    </cacheData>
+</MockDataSource>

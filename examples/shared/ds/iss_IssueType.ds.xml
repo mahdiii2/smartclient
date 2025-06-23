@@ -1,0 +1,39 @@
+
+<MockDataSource fromServer="true" ID="iss_IssueType" clientOnly="true">
+    <fields>
+        <field name="issueTypeId" type="integer" primaryKey="true"/>
+        <field name="issueType" type="text" title="Issue Type"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <issueTypeId>1</issueTypeId>
+            <issueType>Hardware</issueType>
+            <internalId>1</internalId>
+        </Object>
+        <Object>
+            <issueTypeId>2</issueTypeId>
+            <issueType>Projects</issueType>
+            <internalId>2</internalId>
+        </Object>
+        <Object>
+            <issueTypeId>3</issueTypeId>
+            <issueType>Software</issueType>
+            <internalId>3</internalId>
+        </Object>
+        <Object>
+            <issueTypeId>4</issueTypeId>
+            <issueType>Emergency</issueType>
+            <internalId>4</internalId>
+        </Object>
+        <Object>
+            <issueTypeId>5</issueTypeId>
+            <issueType>Enhancements</issueType>
+            <internalId>5</internalId>
+        </Object>
+        <Object>
+            <issueTypeId>6</issueTypeId>
+            <issueType>Supplies</issueType>
+            <internalId>6</internalId>
+        </Object>
+    </cacheData>
+</MockDataSource>

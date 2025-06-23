@@ -1,0 +1,59 @@
+<DataSource ID="openAIRestConnector"
+            serverType="rest"
+>
+    <serverConfig>
+        <!-- The OpenAI APIKey should be stored in server.properties under OpenAI.api.key
+            
+            OpenAI requires the 'Content-Type' header to be exactly "application/json", with no
+            charset= parameter. This caused issues with Unicode text because RESTDataSource
+            (via Apache HttpComponents) would by default encode the text in ISO-8859-1 encoding,
+            but then OpenAI would complain about malformed UTF-8. Set implicitRequestCharset to
+            UTF-8 to work around this.
+        -->
+        <headers>
+            <Content-Type>application/json</Content-Type>
+            <Authorization>Bearer $config['OpenAI.api.key']</Authorization>
+        </headers>
+        <requestFormat>json</requestFormat>
+        <implicitRequestCharset>UTF-8</implicitRequestCharset>
+        <fetchHttpMethod>POST</fetchHttpMethod>
+        <dataURL>https://api.openai.com/v1/chat/completions</dataURL>
+
+        <responseFormat>json</responseFormat>
+        <!-- Require the full response so that we can parse any error(s) -->
+        <requiresCompleteRESTResponse>true</requiresCompleteRESTResponse>
+        <recordXPath>choices</recordXPath>
+    </serverConfig>
+    <fields>
+        <!-- Server inbound params -->
+        <field name="model" required="true"/>
+        
+        <!-- CHAT: -->
+        
+        <!-- Create Chat completion -->
+        <!-- https://platform.openai.com/docs/api-reference/chat/create -->
+        <!-- https://api.openai.com/v1/chat/completions -->
+        <!-- Format for messages: -->
+        <!-- {"role":"user", "content":"hello"} -->
+        <field name="messages" type="any" multiple="true"/>
+        <field name="response_format" type="any"/>
+        <field name="max_tokens" type="integer"/>
+        <field name="seed" type="integer"/>
+
+        <!--  -->
+        
+        <!-- Server response format -->
+        <!--  -->
+        
+        <!-- documented under create completion -->
+        <field name="index"/>
+        <field name="logprobs"/>
+        <field name="finish_reason"/>
+        
+        <!-- documented under chat completion -->
+        <!--  -->
+        <field name="chat_role"    valueXPath="message/role"/>
+        <field name="chat_content" valueXPath="message/content"/>
+    </fields>
+
+</DataSource>

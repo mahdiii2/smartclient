@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+    <description>Required for DMI dispatches to CDI beans (via lookupStyle : "cdi").</description>
+
+	<groupId>com.isomorphic.smartclient.eval</groupId>
+	<artifactId>isomorphic-cdi</artifactId>
+	<version>14.1-p20250614</version>
+	
+	<dependencies>
+
+		<dependency>
+			<groupId>com.isomorphic.smartclient.eval</groupId>
+			<artifactId>isomorphic-core-rpc</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
+	</dependencies>
+
+</project>

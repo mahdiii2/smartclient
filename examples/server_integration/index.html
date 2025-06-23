@@ -1,0 +1,241 @@
+<HTML>
+<HEAD>
+<STYLE>
+.normal				{font-family:Verdana; font-size:12px;}
+.pageHeader			{font-family:Verdana; font-size:24px; font-weight:bold;}
+H2					{font-family:Verdana; font-size:24px; font-weight:bold;}
+H3					{font-family:Verdana; font-size:14px; font-weight:bold;}
+</STYLE>
+<TITLE>SmartClient&trade; SDK - Server Integration Examples</TITLE>
+</HEAD>
+<BODY BGCOLOR='white' CLASS=normal>
+<TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=5 BORDER=0>
+	<TR>
+		<TD HEIGHT=100><a href="http://www.isomorphic.com"><IMG SRC="../../docs/images/logos/Isomorphic_Software_Logo.gif" WIDTH="256" HEIGHT="100" ALT="Isomorphic Software Logo" border="0"></a></TD>
+		<TD VALIGN=MIDDLE ALIGN=RIGHT><SPAN CLASS=pageHeader>SmartClient&trade; SDK<br>Server Integration Examples</SPAN><BR>
+			<SPAN WIDTH=100% CLASS=normal ALIGN=RIGHT>Version v14.1p_2025-06-14/EVAL Deployment (2025-06-14)</SPAN>
+		</TD>
+	</TR>
+</TABLE>
+<BR><TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0 BORDER=0><TR><TD BGCOLOR=336666><IMG SRC=../images/blank.gif WIDTH=1 HEIGHT=4></TD></TR></TABLE><br>
+
+<h3>Contents</h3>
+<ul>
+<li><a href="#builtinDataSourceIntegration">Built-in DataSource Integration</a><br>&nbsp;</li>
+<li><a href="#batchUploader">Using the BatchUploader component</a><br>&nbsp;</li>
+<li><a href="#xml2JSLOD">ListGrid/TreeGrid Load on Demand from XML source using XPath selectors</a><br>&nbsp;</li>
+<li><a href="#jstlList">Inline XML ListGrid databinding with JSTL</a><br>&nbsp;</li>
+<li><a href="#jstlTree">Inline XML TreeGrid databinding with JSTL</a><br>&nbsp;</li>
+<li><a href="#customDataSourceIntegration">Custom DataSource Integration</a><br>&nbsp;</li>
+<li><a href="#customDataSourceIntegrationDMI">Custom DataSource Integration using DMI (Direct Method Invocation)</a><br>&nbsp;</li>
+<li><a href="#customDataSourceIntegrationTreeBeans">Custom DataSource Integration - Tree Load on Demand with Beans</a><br>&nbsp;</li>
+<li><a href="#customDataSourceIntegrationHibernate">Custom DataSource Integration with Hibernate</a><br>&nbsp;</li>
+<li><a href="#genericRPCIntegration">Generic RPC Integration</a><br>&nbsp;</li>
+<li><a href="#genericRPCIntegrationDMI">Generic RPC Integration using DMI (Direct Method Invocation)</a><br>&nbsp;</li>
+<li><a href="#springDMI">Spring DMI (Direct Method Invocation)</a><br>&nbsp;</li>
+<li><a href="#springDSHiberateDMI">Spring DataSource Integration using DMI to Hibernate</a><br>&nbsp;</li>
+<li><a href="#secureApp">Secure Application with custom DataSource and DMI</a><br>&nbsp;</li>
+</ul>
+
+<br>Please make sure you're accessing this page through the application server before trying to run these examples.
+<br><br>
+
+Most of these examples share the <b>supplyItem</b> datasource descriptor and sample data:
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/supplyItem.ds.xml" target="_blank">supplyItem.ds.xml</a></li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/test_data/supplyItem.data.xml" target="_blank">supplyItem.data.xml</a></li>
+</ul>
+
+<!-- 
+Many of these examples also share the <b>supplyCatalog</b> ui descriptor file:
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ui/supplyCatalog.ui.xml" target="_blank">supplyCatalog.ui.xml</a></li>
+</ul>
+-->
+
+<hr><a name="builtinDataSourceIntegration"><h3>Built-in DataSource Integration</h3></a>
+This example demonstrates how SmartClient UI components can be bound to DataSources.
+DataSources serve as metadata for a set of similar objects, describing those objects as
+consisting of a set of fields.  Using a DataSource, a SmartClient UI component can
+automatically configure itself for viewing and editing objects from that DataSource.
+<p>
+The example is available written in both JS and XML.
+
+<br><br>
+<ul>
+<li><a href="../databinding/component_databinding.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(component_databinding.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/employees.ds.xml" target="_blank">View employees.ds.xml</a>&nbsp;&nbsp;(datasource descriptor)</li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/animals.ds.xml" target="_blank">View animals.ds.xml</a>&nbsp;&nbsp;(datasource descriptor)</li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/supplyItem.ds.xml" target="_blank">View supplyItem.ds.xml</a>&nbsp;&nbsp;(datasource descriptor)</li>
+</ul>
+
+<hr><a name="batchUploader"><h3>Using the BatchUploader component</h3></a>
+This example demonstrates how to use the BatchUploader, a component which encapsulates the 
+end-to-end process of taking raw data in CSV or other import formats, and uploading, validating,
+displaying, editing and finally saving that data to persistent storage.<p>
+<b>NOTE: The BatchUploader is an Enterprise feature.</b>  If you have a Pro license, this example
+will not exist in your SDK.  
+<br><br>
+<ul>
+<li><a href="../databinding/batchUploader.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(batchUploader.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/supplyItemHB.ds.xml" target="_blank">View supplyItemHB.ds.xml</a>&nbsp;&nbsp;(datasource descriptor)</li>
+</ul>
+
+<hr><a name="xml2JSLOD"><h3>ListGrid/TreeGrid Load on Demand from XML source using XPath selectors</h3></a>
+This example demonstrates load on demand using XPath selectors against an XML source.
+<br><br>
+<ul>
+<li><a href="../databinding/xml_databinding.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(xml_databinding.jsp)<br>&nbsp;</li>
+</ul>
+
+
+<hr><a name="jstlList"><h3>Inline XML ListGrid databinding with JSTL</h3></a>
+This example demonstrates simple databinding with data provided inline at component creation
+time using JSTL to generate &lt;isomorphic:XML&gt; compatible data structures for the ListGrid
+<br><br>
+<ul>
+<li><a href="../databinding/jstl_list_databinding.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(jstl_list_databinding.jsp)<br>&nbsp;</li>
+</ul>
+
+<hr><a name="jstlTree"><h3>Inline XML TreeGrid databinding with JSTL</h3></a>
+This example demonstrates simple databinding with data provided inline at component creation
+time using JSTL to generate &lt;isomorphic:XML&gt; compatible data structures for the TreeGrid
+<br><br>
+<ul>
+<li><a href="../databinding/jstl_tree_databinding.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(jstl_tree_databinding.jsp)<br>&nbsp;</li>
+</ul>
+
+<hr><a name="customDataSourceIntegration"><h3>Custom DataSource Integration</h3></a>
+This example demonstrates how to connect the standard SmartClient DataSource operations (fetch, add,
+update, remove) to an arbitrary data model, such as a Java Beans component model or web
+service.  This kind of integration allows all of SmartClient's rich client-side databinding behaviors
+to be retained while using the SmartClient server as an RPC manager and operation dispatcher only.
+Another benefit of this approach is that applications can be prototyped against the built-in
+SQLDataSource functionality, then switched over to a custom data store without client-side
+changes.
+<br><br>
+<ul>
+<li><a href="custom_datasource_operations/supplyItemUI.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(supplyItemUI.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyItem.java" target="_blank">View SupplyItem.java</a>&nbsp;&nbsp;(Java source code)</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/supplyItemOperations.jsp" target="_blank">View supplyItemOperations.jsp</a>&nbsp;&nbsp;(JSP source for the DSRequest target)</li>
+</ul>
+
+
+<hr><a name="customDataSourceIntegrationDMI"><h3>Custom DataSource Integration using DMI (Direct Method Invocation)</h3></a>
+This is just like the above (Custom DataSource Integration), but uses DMI.  Instead of
+unwrapping the DSRequest object yourself, you declare a POJO to be auto-instantiated in the
+DataSource itself and then implement the POJO for the actual bindings.
+<br><br>
+<ul>
+<li><a href="custom_datasource_operations/supplyItemDMI.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(supplyItemDMI.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyItem.java" target="_blank">View SupplyItem.java</a>&nbsp;&nbsp;(Java source code)</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyItemDMI.java" target="_blank">View SupplyItemDMI.java</a>&nbsp;&nbsp;(Java source code for DMI logic)</li>
+<li><a href="/isomorphic/Source.Viewer?file=../shared/ds/supplyItemDMI.ds.xml" target="_blank">supplyItemDMI.ds.xml</a>&nbsp;&nbsp;(Just like SupplyItem.ds.xml, but with DMI mappings)</li>
+</ul>
+
+
+<hr><a name="customDataSourceIntegrationTreeBeans"><h3>Custom DataSource Integration - Tree Load on Demand with Beans</h3></a>
+This example demonstrates how to connect a SmartClient TreeGrid to a Java Bean model for
+load-on-demand fetching of nodes.
+<br><br>
+<ul>
+<li><a href="custom_datasource_operations/supplyCategoryUI.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(supplyCategoryUI.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyCategory.java" target="_blank">View SupplyCategory.java</a>&nbsp;&nbsp;(Java source code)</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/supplyCategoryOperations.jsp" target="_blank">View supplyCategoryOperations.jsp</a>&nbsp;&nbsp;(JSP source for the DSRequest target)</li>
+</ul>
+
+<hr><a name="customDataSourceIntegrationHibernate"><h3>Custom DataSource Integration with Hibernate</h3></a>
+This example demonstrates how to connect the standard SmartClient DataSource operations (fetch, add,
+update, remove) to Hibernate.
+<br><br>
+<ul>
+<li><a href="custom_datasource_operations/supplyItemHibernateUI.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(supplyItemHibernateUI.jsp)<br>&nbsp;</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyItem.java" target="_blank">View SupplyItem.java</a>&nbsp;&nbsp;(Java source code)</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/SupplyItem.hbm.xml" target="_blank">View SupplyItem.hbm.xml</a>&nbsp;&nbsp;(Hibernate descriptor)</li>
+<li><a href="/isomorphic/Source.Viewer?file=custom_datasource_operations/supplyItemHibernateOperations.jsp" target="_blank">View supplyItemHibernateOperations.jsp</a>&nbsp;&nbsp;(JSP source for the DSRequest target)</li>
+<li><a href="/isomorphic/Source.Viewer?file=/WEB-INF/classes//hibernate.cfg.xml" target="_blank">View Hibernate Configuration 'hibernate.cfg.xml'</a>&nbsp;&nbsp;
+</ul>
+
+<hr><a name="genericRPCIntegration"><h3>Generic RPC Integration</h3></a>
+This example demonstrates a simple client/server communication interaction using the SmartClient RPCManager
+for transparent communication over HTTP.
+<br><br>
+<ul>
+<li><a href="generic_rpc_operations/getTimeStamp.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(getTimeStamp.jsp)<br>&nbsp;</li>
+</ul>
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=generic_rpc_operations/rpcTarget.jsp" target="_blank">View rpcTarget.jsp</a>&nbsp;&nbsp;(JSP source for the rpc target)
+</ul>
+
+<hr><a name="genericRPCIntegrationDMI"><h3>Generic RPC Integration using Direct Method Invocation (DMI)</h3></a>
+This example demonstrates a simple client/server communication interaction using Direct Method
+Invocation (DMI) for transparent communication over HTTP.
+<br><br>
+<ul>
+<li><a href="generic_rpc_operations/getTimeStampDMI.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(getTimeStampDMI.jsp)<br>&nbsp;</li>
+</ul>
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=generic_rpc_operations/GetTimeStampDMI.java" target="_blank">View GetTimeStampDMI.java</a>&nbsp;&nbsp;(Java source for the server-side DMI implementation)
+<li><a href="/isomorphic/Source.Viewer?file=/shared/app/example.app.xml" target="_blank">View example.app.xml</a>&nbsp;&nbsp;(DMI binding)
+</ul>
+
+
+<hr><a name="springDMI"><h3>Spring DMI (Direct Method Invocation)</h3></a>
+This example demonstrates a simple client/server communication interaction whereby Direct Method
+Invocation (DMI) is used to invoke a method on a Spring-managed bean in the application server
+container from the browser.
+<br><br>
+<ul>
+<li><a href="../spring/helloWorld/helloWorld.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(helloWorld.jsp)<br>&nbsp;</li>
+</ul>
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=../spring/helloWorld/helloWorld.jsp" target="_blank">View helloWorld.jsp</a>&nbsp;&nbsp;(JSP source for the page)
+<li><a href="/isomorphic/Source.Viewer?file=/shared/app/springExamples.app.xml" target="_blank">View springExamples.app.xml</a>&nbsp;&nbsp;(DMI binding)
+<li><a href="/isomorphic/Source.Viewer?file=/WEB-INF/applicationContext.xml" target="_blank">View Spring Configuration File applicationContext.xml</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=../spring/helloWorld/HelloWorld.java" target="_blank">View Spring Bean 'HelloWorld.java'</a>&nbsp;&nbsp;
+</ul>
+
+
+<hr><a name="springDSHiberateDMI"><h3>Spring DataSource Integration using DMI to Hibernate</h3></a>
+This example demonstrates the binding of the 4 DataSource operations (add, remove, update,
+delete) via DMI to a Spring Bean which then uses Hibernate as the persistence layer.
+<br><br>
+<ul>
+<li><a href="../spring/hibernateDataBinding/hibernateDataBinding.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(hibernateDataBinding.jsp)<br>&nbsp;</li>
+</ul>
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=../spring/hibernateDataBinding/hibernateDataBinding.jsp" target="_blank">View hibernateDataBinding.jsp</a>&nbsp;&nbsp;(JSP source for the page)
+<li><a href="/isomorphic/Source.Viewer?file=/examples/shared/ds/supplyItemSpringDMI.ds.xml" target="_blank">View supplyItemSpringDMI.ds.xml</a>&nbsp;&nbsp;(DataSource)
+<li><a href="/isomorphic/Source.Viewer?file=../spring/hibernateDataBinding/SupplyItem.hbm.xml" target="_blank">View SupplyItem Bean hibernate mapping (SupplyItem.hbml.xml)</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=/WEB-INF/applicationContext.xml" target="_blank">View Spring Configuration File applicationContext.xml</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=../spring/hibernateDataBinding/SupplyItemDao.java" target="_blank">View Spring Bean 'SupplyItemDao.java'</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=/WEB-INF/classes//hibernate.cfg.xml" target="_blank">View Hibernate Configuration 'hibernate.cfg.xml'</a>&nbsp;&nbsp;
+</ul>
+
+
+<hr><a name="secureApp"><h3>Secure Application</h3></a>
+This example demonstrates securing a portion of a website with SmartClient's authentication
+facilities, and the use of SmartClient UIs to log into the site. Authentication is performed
+through secured DMI calls and user manipulation is performed through custom DataSource requests.
+<br><br>
+<ul>
+<li><a href="../secureApp/index.jsp" target="_blank">Launch example</a>&nbsp;&nbsp;(index.jsp)<br>&nbsp;</li>
+</ul>
+<ul>
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/index.jsp" target="_blank">View index.jsp</a>&nbsp;&nbsp;(JSP source for the page)
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/login.jsp" target="_blank">View login.jsp</a>&nbsp;&nbsp;(JSP source for the page)
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/register.jsp" target="_blank">View register.jsp</a>&nbsp;&nbsp;(JSP source for the page)
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/nonAuthenticatedOperations.jsp" target="_blank">View nonAuthenticatedOperations.jsp</a>&nbsp;&nbsp;(DataSource access for operations not requiring a login)
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/authenticatedOperations.jsp" target="_blank">View nonAuthenticatedOperations.jsp</a>&nbsp;&nbsp;(DataSource access for operations requiring a login)
+<li><a href="/isomorphic/Source.Viewer?file=/shared/app/SecureAppDMI.app.xml" target="_blank">View SecureAppDMI.app.xml</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/SecureAppDMI.java" target="_blank">View SecureAppDMI.java</a>&nbsp;&nbsp;(DMI implementation source)
+<li><a href="/isomorphic/Source.Viewer?file=/examples/shared/ds/user.ds.xml" target="_blank">View user.ds.xml</a>&nbsp;&nbsp;(DataSource)
+<li><a href="/isomorphic/Source.Viewer?file=/WEB-INF/web.xml" target="_blank">View servlet configuration file web.xml</a>&nbsp;&nbsp;
+<li><a href="/isomorphic/Source.Viewer?file=../secureApp/server.properties" target="_blank">View required changes to server.properties</a>&nbsp;&nbsp;
+</ul>
+
+
+<BR><TABLE WIDTH=100% CELLSPACING=0 CELLPADDING=0 BORDER=0><TR><TD BGCOLOR=336666><IMG SRC=../images/blank.gif WIDTH=1 HEIGHT=4></TD></TR></TABLE><BR><BR>
+&copy;2005 Isomorphic Software, Inc.&nbsp;&nbsp;All rights reserved.&nbsp;&nbsp;<a href="../../docs/license.html">License agreement.</a>
+</body></html>
+

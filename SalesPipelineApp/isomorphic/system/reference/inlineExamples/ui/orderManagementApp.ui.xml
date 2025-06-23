@@ -1,0 +1,1467 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="ord_ProductLine,ord_Employee,ord_Office,ord_Order,ord_OrderLine,ord_Customer,ord_Product"/>
+
+
+<Img width="75" height="75" ID="companyLogo" overflow="hidden">
+    <imageType>center</imageType>
+    <imageHeight>75</imageHeight>
+    <imageWidth>75</imageWidth>
+    <src>logo.png</src>
+    <title>Image0</title>
+    <showMenuOnClick>true</showMenuOnClick>
+</Img>
+
+
+<Label ID="appTitle" width="100%" height="75">
+    <contents>&lt;span style="font-size:35px;font-weight:bold"&gt;Order Management App&lt;/span&gt; </contents>
+    <align>center</align>
+    <wrap>false</wrap>
+    <title>Label0</title>
+</Label>
+
+
+<HLayout overflow="hidden" ID="headerLayout" height="75">
+    <align>center</align>
+    <members>
+        <Canvas withID="companyLogo"/>
+        <Canvas withID="appTitle"/>
+    </members>
+</HLayout>
+
+
+<Label ID="totalOrderLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Totals Orders&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label0</title>
+</Label>
+
+
+<Label ID="totalOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label1</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalOrdersLayout" height="100%">
+    <members>
+        <Canvas withID="totalOrderLabel"/>
+        <Canvas withID="totalOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="shippedOrdersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;color:purple"&gt;Shipped Orders&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label2</title>
+</Label>
+
+
+<Label ID="shippedOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label3</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalShippedOrdersLayout" height="100%">
+    <members>
+        <Canvas withID="shippedOrdersLabel"/>
+        <Canvas withID="shippedOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="openOrdersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;color:green"&gt;Open Orders&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label4</title>
+</Label>
+
+
+<Label ID="openOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label5</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalOpenOrdersLayout" height="100%">
+    <members>
+        <Canvas withID="openOrdersLabel"/>
+        <Canvas withID="openOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="heldOrdersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;color:red"&gt;Held Orders&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label6</title>
+</Label>
+
+
+<Label ID="heldOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label7</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalHeldOrdersLayout" height="100%">
+    <members>
+        <Canvas withID="heldOrdersLabel"/>
+        <Canvas withID="heldOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="orderStatsLayout" height="100">
+    <members>
+        <Canvas withID="totalOrdersLayout"/>
+        <Canvas withID="totalShippedOrdersLayout"/>
+        <Canvas withID="totalOpenOrdersLayout"/>
+        <Canvas withID="totalHeldOrdersLayout"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch all Order records">
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch Order where &lt;ul&gt;&lt;li&gt;Status equals Shipped&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Shipped</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="shippedOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:purple&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch Order where &lt;ul&gt;&lt;li&gt;Status equals In Process&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">In Process</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:green&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch Order where &lt;ul&gt;&lt;li&gt;Status equals On Hold&lt;/li&gt;&lt;li&gt; or Status equals Disputed&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">On Hold</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Disputed</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Cancelled</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="heldOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:red&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<IconImgButton ID="addNewOrderButton">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/plus.png</_base>
+    </src>
+    <title>IconButton0</title>
+    <prompt>Add New Order</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <SetTitleTask componentId="addEditOrderLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold;&quot;&gt;Add New Order&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <FormEditNewRecordTask componentId="ord_OrderForm">
+                        <initialValues>
+                            <status>In Process</status>
+                        </initialValues>
+                    </FormEditNewRecordTask>
+                    <FormSetFieldValueTask targetField="orderDate" componentId="ord_OrderForm">
+                        <value xsi:type="xsd:Object">
+                        	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                        	<value xsi:type="xsd:string">$today</value>
+                        </value>
+                    </FormSetFieldValueTask>
+                    <ShowTask componentId="addEditOrderLayout" ID="Show0"/>
+                    <ShowTask componentId="hdrActionButtonsLayout"/>
+                    <HideTask componentId="orderDetailLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printOrdersButton">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton1</title>
+    <prompt>Print Orders</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Print functions not available in this starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportOrdersButton">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton2</title>
+    <prompt>Export Order List</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="ord_OrderGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="actionsToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="addNewOrderButton"/>
+        <Canvas withID="printOrdersButton"/>
+        <Canvas withID="exportOrdersButton"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<DynamicForm ID="savedSearchForm" height="26">
+    <fields>
+        <SavedSearchItem targetComponent="ord_OrderGrid" autoName="SavedSearchItem0">
+            <hint>Select a Saved View</hint>
+        </SavedSearchItem>
+    </fields>
+</DynamicForm>
+
+
+<ListGrid dataSource="ord_Order" dataPageSize="150" autoID="ord_OrderGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="true" height="*" minHeight="300">
+    <initialCriteria/>
+    <fields>
+        <LGField name="orderNumber"/>
+        <LGField name="orderDate" width="120"/>
+        <LGField name="requiredDate" width="120"/>
+        <LGField name="shippedDate" width="120"/>
+        <LGField name="status"/>
+        <LGField name="comments"/>
+        <LGField name="customerNumber" title="Customer"/>
+        <LGField name="orderTotal"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <initialSort>
+        <SortSpecifier>
+            <direction>descending</direction>
+            <property>orderNumber</property>
+            <normalizer>sequence</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <hilites>
+        <Hilite id="0" fieldName="status">
+            <criteria fieldName="status" operator="equals">
+                <value xsi:type="xsd:text">Shipped</value>
+            </criteria>
+            <textColor>#333399</textColor>
+            <cssText>color:#333399;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="1" fieldName="status">
+            <criteria fieldName="status" operator="equals">
+                <value xsi:type="xsd:text">In Process</value>
+            </criteria>
+            <textColor>#339966</textColor>
+            <cssText>color:#339966;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="2" fieldName="status">
+            <criteria operator="or">
+                <criteria>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">On Hold</value>
+                    </Criterion>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">Disputed</value>
+                    </Criterion>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">Cancelled</value>
+                    </Criterion>
+                </criteria>
+            </criteria>
+            <textColor>#FF0000</textColor>
+            <cssText>color:#FF0000;</cssText>
+            <icon></icon>
+        </Hilite>
+    </hilites>
+    <canExpandRecords>true</canExpandRecords>
+    <expansionScreen>orderLinesSubset</expansionScreen>
+    <adminSavedSearches>
+        <Record>
+            <pk>10000</pk>
+            <data>({field:["orderNumber",{name:"orderDate",width:120},{name:"requiredDate",width:120},{name:"shippedDate",width:120},"status","comments","customerNumber","orderTotal"],sort:{sortSpecifiers:[{direction:"descending",property:"orderNumber"}]},hilite:[{fieldName:"status",id:"0",criteria:{fieldName:"status",value:"Shipped"},textColor:"#333399"},{fieldName:"status",id:"1",criteria:{fieldName:"status",value:"In Process"},textColor:"#339966"},{fieldName:"status",id:"2",criteria:{operator:"or",criteria:[{fieldName:"status",value:"On Hold"},{fieldName:"status",value:"Disputed"}]},textColor:"#FF0000"}],group:[{fieldName:"customerNumber"}],showFilterEditor:true,userCriteria:"[No Criteria]"})</data>
+            <searchName>Orders by Customer</searchName>
+            <componentId>ord_OrderGrid:ord_Order</componentId>
+            <userId></userId>
+            <isSharedDefault>true</isSharedDefault>
+        </Record>
+        <Record>
+            <pk>10001</pk>
+            <data>({field:["orderNumber",{name:"orderDate",width:120},{name:"requiredDate",width:120},{name:"shippedDate",width:120},"status","comments","customerNumber","orderTotal"],sort:{sortSpecifiers:[{direction:"descending",property:"orderNumber"}]},hilite:[{fieldName:"status",id:"0",criteria:{fieldName:"status",value:"Shipped"},textColor:"#333399"},{fieldName:"status",id:"1",criteria:{fieldName:"status",value:"In Process"},textColor:"#339966"},{fieldName:"status",id:"2",criteria:{operator:"or",criteria:[{fieldName:"status",value:"On Hold"},{fieldName:"status",value:"Disputed"}]},textColor:"#FF0000"}],group:"[No Grouping]",showFilterEditor:true,userCriteria:"[No Criteria]"})</data>
+            <searchName>All Orders Descending</searchName>
+            <componentId>ord_OrderGrid:ord_Order</componentId>
+            <userId></userId>
+        </Record>
+        <Record>
+            <pk>10002</pk>
+            <data>({field:["orderNumber",{name:"orderDate",width:120},{name:"requiredDate",width:120},{name:"shippedDate",width:120},"status","comments","customerNumber","orderTotal"],sort:{sortSpecifiers:[{direction:"descending",property:"orderNumber"}]},hilite:[{fieldName:"status",id:"0",criteria:{fieldName:"status",value:"Shipped"},textColor:"#333399"},{fieldName:"status",id:"1",criteria:{fieldName:"status",value:"In Process"},textColor:"#339966"},{fieldName:"status",id:"2",criteria:{operator:"or",criteria:[{fieldName:"status",value:"On Hold"},{fieldName:"status",value:"Disputed"}]},textColor:"#FF0000"}],group:"[No Grouping]",showFilterEditor:true,userCriteria:{status:["In Process"]}})</data>
+            <searchName>In Process Orders</searchName>
+            <componentId>ord_OrderGrid:ord_Order</componentId>
+            <userId></userId>
+        </Record>
+        <Record>
+            <pk>10003</pk>
+            <data>({field:["orderNumber",{name:"orderDate",width:120},{name:"requiredDate",width:120},{name:"shippedDate",width:120},"status","comments","customerNumber","orderTotal"],sort:{sortSpecifiers:[{direction:"descending",property:"orderNumber"}]},hilite:[{fieldName:"status",id:"0",criteria:{fieldName:"status",value:"Shipped"},textColor:"#333399"},{fieldName:"status",id:"1",criteria:{fieldName:"status",value:"In Process"},textColor:"#339966"},{fieldName:"status",id:"2",criteria:{operator:"or",criteria:[{fieldName:"status",value:"On Hold"},{fieldName:"status",value:"Disputed"}]},textColor:"#FF0000"}],group:"[No Grouping]",showFilterEditor:true,userCriteria:{status:["Shipped"]}})</data>
+            <searchName>All Shipped Orders</searchName>
+            <componentId>ord_OrderGrid:ord_Order</componentId>
+            <userId></userId>
+        </Record>
+        <Record>
+            <searchName>Held/Disputed/Cancelled Orders</searchName>
+            <componentId>ord_OrderGrid:ord_Order</componentId>
+            <data>({field:["orderNumber",{name:"orderDate",width:120},{name:"requiredDate",width:120},{name:"shippedDate",width:120},"status","comments","customerNumber","orderTotal"],sort:{sortSpecifiers:[{direction:"descending",property:"orderNumber"}]},hilite:[{fieldName:"status",id:"0",criteria:{fieldName:"status",value:"Shipped"},textColor:"#333399"},{fieldName:"status",id:"1",criteria:{fieldName:"status",value:"In Process"},textColor:"#339966"},{fieldName:"status",id:"2",criteria:{operator:"or",criteria:[{fieldName:"status",value:"On Hold"},{fieldName:"status",value:"Disputed"}]},textColor:"#FF0000"}],group:"[No Grouping]",showFilterEditor:true,userCriteria:{status:["Cancelled","Disputed","On Hold"]}})</data>
+            <pk>10006</pk>
+        </Record>
+    </adminSavedSearches>
+    <recordDoubleClick>
+            <Process>
+                <sequence>
+                    <SetTitleTask componentId="addEditOrderLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold;&quot;&gt;Editing Order Number #{ord_OrderGrid.selectedRecord.orderNumber}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditOrderLayout"/>
+                    <HideTask componentId="hdrActionButtonsLayout"/>
+                    <ShowTask componentId="orderDetailLayout"/>
+                    <FormEditSelectedTask selectionComponentId="ord_OrderGrid" componentId="ord_OrderForm"/>
+                    <FetchRelatedDataTask recordSourceComponent="ord_OrderGrid" componentId="ord_OrderLineGrid"/>
+                </sequence>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout overflow="scroll" ID="mainOrderLayout">
+    <members>
+        <Canvas withID="orderStatsLayout"/>
+        <Canvas withID="actionsToolstrip"/>
+        <Canvas withID="savedSearchForm"/>
+        <Canvas withID="ord_OrderGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="addEditOrderLabel" height="20">
+    <contents>&lt;span style="font-size:30px;font-weight:bold;"&gt;Add New Order&lt;/span&gt;</contents>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="shippedOrdersWarnmingLabel" height="30">
+    <contents>&lt;span style="font-weight:bold;font-size:30px;color:red"&gt;Shipped Orders Cannot be Edited&lt;/span&gt;</contents>
+    <title>Label0</title>
+    <visibleWhen fieldName="ord_OrderForm.values.status" operator="equals" value="Shipped"/>
+</Label>
+
+
+<DynamicForm dataSource="ord_Order" autoID="ord_OrderForm" numCols="4" overflow="hidden" width="900" height="250">
+    <fields>
+        <TextItem name="orderNumber" canEdit="false"/>
+        <SelectItem name="customerNumber" title="Customer" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="status" operator="equals" value="Shipped"/>
+        </SelectItem>
+        <DateItem useTextField="true" name="orderDate" canEdit="false" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+        </DateItem>
+        <DateItem useTextField="true" name="requiredDate" readOnlyDisplay="static">
+            <readOnlyWhen fieldName="status" operator="equals" value="Shipped"/>
+        </DateItem>
+        <TextAreaItem name="comments" readOnlyDisplay="static" width="800" colSpan="4">
+            <readOnlyWhen fieldName="status" operator="equals" value="Shipped"/>
+        </TextAreaItem>
+        <DateItem name="shippedDate" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+            <visibleWhen fieldName="status" operator="equals" value="Shipped"/>
+        </DateItem>
+        <SelectItem name="status" readOnlyDisplay="static" endRow="true"/>
+        <FloatItem name="orderTotal" readOnlyDisplay="static">
+            <readOnlyWhen fixedValue="true"/>
+            <dynamicProperties>
+                <property name="defaultValue" dataPath="ord_OrderLineGrid.summaryRecord.Line_Total1"/>
+            </dynamicProperties>
+        </FloatItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton ID="addOrderHeader" width="130">
+    <title>Add Order Header</title>
+    <visibleWhen fieldName="orderForm.values.orderNumber" operator="isBlank"/>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" componentId="ord_OrderForm"/>
+                    <ShowNotificationTask description="Show notification: &quot;Order number #{_lastTask. ...&quot;">
+                        <textFormula text="Order Number #{_lastTask.orderNumber} added successfully"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="orderDetailLayout"/>
+                    <HideTask componentId="hdrActionButtonsLayout"/>
+                    <GridFetchDataTask componentId="ord_OrderLineGrid">
+                        <criteria operator="and" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="orderNumber" operator="equals">
+                                    <value xsi:type="xsd:text">$ruleScope.ord_OrderForm.values.orderNumber</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                    </GridFetchDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton ID="cancelorderHeader" width="130">
+    <title>Cancel</title>
+    <visibleWhen fieldName="orderForm.values.orderNumber" operator="isBlank"/>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="mainOrderLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="hdrActionButtonsLayout" height="25">
+    <members>
+        <Canvas withID="addOrderHeader"/>
+        <Canvas withID="cancelorderHeader"/>
+    </members>
+    <visibleWhen fieldName="ord_OrderForm.values.orderNumber" operator="isBlank"/>
+</HLayout>
+
+
+<IButton ID="addOrderLInes">
+    <title>Add Order Lines</title>
+    <visibleWhen fieldName="ord_Order.status" operator="notEqual" value="Shipped"/>
+    <click>
+            <Process>
+                <sequence>
+                    <GridEditRecordTask componentId="ord_OrderLineGrid">
+                        <initialValues>
+                            <orderNumber>$ruleScope.ord_OrderForm.values.orderNumber</orderNumber>
+                        </initialValues>
+                    </GridEditRecordTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<ListGrid dataSource="ord_OrderLine" autoID="ord_OrderLineGrid" canEdit="true" autoFetchData="true" canRemoveRecords="true" showGridSummary="true" minHeight="250">
+    <fields>
+        <LGField name="orderLineId" hidden="true"/>
+        <LGField name="orderLineNumber" title="Line#" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="productCode" title="Product" width="300"/>
+        <LGField name="quantityOrdered" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="priceEach" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="Line_Total1" type="float" title="Line Total" width="120">
+            <canEditFormula>true</canEditFormula>
+            <userFormula text="quantityOrdered*priceEach"/>
+            <format>$,#.00</format>
+        </LGField>
+    </fields>
+    <autoSaveEdits>true</autoSaveEdits>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <enableWhen fieldName="ord_OrderForm.values.status" operator="notEqual" value="Shipped"/>
+    <rowEditorExit>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="orderTotal" componentId="ord_OrderForm">
+                        <value xsi:type="xsd:text">$ruleScope.ord_OrderLineGrid.summaryRecord.Line_Total1</value>
+                    </FormSetFieldValueTask>
+                </sequence>
+            </Process>
+    </rowEditorExit>
+</ListGrid>
+
+
+<IButton ID="saveOrder">
+    <title>Save</title>
+    <enableWhen fieldName="ord_OrderForm.values.status" operator="notEqual" value="Shipped"/>
+    <click>
+            <Process>
+                <sequence>
+                    <GridSaveAllEditsTask componentId="ord_OrderLineGrid"/>
+                    <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="ord_OrderForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Order #{_lastTask.orderNumber} has been added or updated successfully"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="mainOrderLayout"/>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Shipped</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="shippedOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:purple&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">In Process</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch ord_Order where &lt;ul&gt;&lt;li&gt;Status equals On Hold&lt;/li&gt;&lt;li&gt; or Status equals Disputed&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">On Hold</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Disputed</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Cancelled</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="heldOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton ID="cancelOrder">
+    <title>Cancel Changes</title>
+    <click>
+            <Process>
+                <sequence>
+                    <GridDiscardAllEditsTask componentId="ord_OrderLineGrid"/>
+                    <FormResetValuesTask componentId="ord_OrderForm"/>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="mainOrderLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="shipNowButton">
+    <title>Ship Now</title>
+    <enableWhen fieldName="ord_OrderForm.values.status" operator="notEqual" value="Shipped"/>
+    <visibleWhen operator="and">
+        <criteria>
+            <Criterion fieldName="ord_OrderForm.values.orderNumber" operator="notBlank"/>
+            <Criterion fieldName="ord_OrderForm.values.status" operator="notEqual" value="Shipped"/>
+        </criteria>
+    </visibleWhen>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="status" componentId="ord_OrderForm">
+                        <value xsi:type="xsd:text">Shipped</value>
+                    </FormSetFieldValueTask>
+                    <FormSetFieldValueTask targetField="shippedDate" componentId="ord_OrderForm"/>
+                    <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="ord_OrderForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Order #{_lastTask.orderNumber} has been shipped successfully"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="mainOrderLayout"/>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Shipped</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="shippedOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:purple&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">In Process</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:green&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Order" failureElement="next" description="Fetch ord_Order where &lt;ul&gt;&lt;li&gt;Status equals On Hold&lt;/li&gt;&lt;li&gt; or Status equals Disputed&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">On Hold</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Disputed</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Cancelled</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="heldOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:red&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="visible" membersMargin="5" ID="orderLineActionButtons" height="25">
+    <members>
+        <Canvas withID="saveOrder"/>
+        <Canvas withID="cancelOrder"/>
+        <Canvas withID="shipNowButton"/>
+    </members>
+</HLayout>
+
+
+<VLayout overflow="visible" membersMargin="5" ID="orderDetailLayout">
+    <members>
+        <Canvas withID="addOrderLInes"/>
+        <Canvas withID="ord_OrderLineGrid"/>
+        <Canvas withID="orderLineActionButtons"/>
+    </members>
+</VLayout>
+
+
+<VLayout overflow="scroll" membersMargin="10" ID="addEditOrderLayout">
+    <members>
+        <Canvas withID="addEditOrderLabel"/>
+        <Canvas withID="shippedOrdersWarnmingLabel"/>
+        <Canvas withID="ord_OrderForm"/>
+        <Canvas withID="hdrActionButtonsLayout"/>
+        <Canvas withID="orderDetailLayout"/>
+    </members>
+    <layoutMargin>50</layoutMargin>
+    <layoutTopMargin>50</layoutTopMargin>
+</VLayout>
+
+
+<Deck ID="ordersDeck">
+    <panes>
+        <Canvas withID="mainOrderLayout"/>
+        <Canvas withID="addEditOrderLayout"/>
+    </panes>
+</Deck>
+
+
+<FacetChart dataSource="ord_Order" autoFetchData="true" autoID="orderTotalsByCustomersFacetChart" width="*">
+    <chartType>Column</chartType>
+    <filled>true</filled>
+    <title>Order Totals by Customers</title>
+    <drawTitleBackground>false</drawTitleBackground>
+    <drawTitleBoundary>false</drawTitleBoundary>
+    <titleAlign>center</titleAlign>
+    <titlePadding>10</titlePadding>
+    <titleRectHeight>38</titleRectHeight>
+    <showValueAxisLabel>true</showValueAxisLabel>
+    <showDataAxisLabel>true</showDataAxisLabel>
+    <showDataLabels>true</showDataLabels>
+    <showDataValuesMode>inHoverOnly</showDataValuesMode>
+    <canZoom>false</canZoom>
+    <zoomStartPosition>start</zoomStartPosition>
+    <zoomStartValue>Online Diecast Creations Co.</zoomStartValue>
+    <zoomEndValue>Danish Wholesale Imports</zoomEndValue>
+    <facets>
+        <facet id="ord_CustomerCustomerName" title="Customer Name"/>
+    </facets>
+
+    <valueProperty>orderTotal</valueProperty>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <GridFetchDataTask componentId="orderTotalsByCustomersFacetChart">
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                        <groupBy>
+                            <value>customerNumber</value>
+                        </groupBy>
+                    </GridFetchDataTask>
+                </sequence>
+            </Process>
+    </drawn>
+</FacetChart>
+
+
+<Label ID="totalCustomersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total Customers:&lt;/span&gt;</contents>
+    <title>Label8</title>
+</Label>
+
+
+<Label ID="totalCustomersCount" height="20">
+    <contents>Label</contents>
+    <title>Label9</title>
+</Label>
+
+
+<Label ID="uSCustomersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total US Customers:&lt;/span&gt;</contents>
+    <title>Label10</title>
+</Label>
+
+
+<Label ID="uSCustomersCount" height="20">
+    <contents>Label</contents>
+    <title>Label11</title>
+</Label>
+
+
+<Label ID="nonUSCustomersLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total International Customers:&lt;/span&gt;</contents>
+    <title>Label12</title>
+</Label>
+
+
+<Label ID="nonUSCustomersCount" height="20">
+    <contents>Label</contents>
+    <title>Label13</title>
+</Label>
+
+
+<VLayout overflow="visible" membersMargin="10" ID="customerStats" width="320" height="200">
+    <members>
+        <Canvas withID="totalCustomersLabel"/>
+        <Canvas withID="totalCustomersCount"/>
+        <Canvas withID="uSCustomersLabel"/>
+        <Canvas withID="uSCustomersCount"/>
+        <Canvas withID="nonUSCustomersLabel"/>
+        <Canvas withID="nonUSCustomersCount"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next"/>
+                    <SetTitleTask componentId="totalCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="uSCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="notEqual" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="nonUSCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</VLayout>
+
+
+<HLayout membersMargin="10" ID="customerStatsLayout" height="20%" minHeight="350">
+    <members>
+        <Canvas withID="orderTotalsByCustomersFacetChart"/>
+        <Canvas withID="customerStats"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+</HLayout>
+
+
+<IconImgButton ID="addNewCustomer">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/plus.png</_base>
+    </src>
+    <title>IconButton3</title>
+    <prompt>Add New Customer</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <FormEditNewRecordTask componentId="ord_CustomerForm"/>
+                    <ShowTask componentId="addEditCustomerLayout" description="Show &apos;&apos;"/>
+                    <SetTitleTask componentId="addEditCustomerLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold;&quot;&gt;Add New Customer&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printCustomers">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton4</title>
+    <prompt>Print all Customers</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Print functions not available in this starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportCustomers">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton5</title>
+    <prompt>Export Customers</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="ord_CustomerGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="customerActionsToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="addNewCustomer"/>
+        <Canvas withID="printCustomers"/>
+        <Canvas withID="exportCustomers"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="ord_Customer" autoID="ord_CustomerGrid" showFilterEditor="true" autoFetchData="true" minHeight="300">
+    <fields>
+        <LGField name="customerNumber"/>
+        <LGField name="customerName"/>
+        <LGField name="contactLastName"/>
+        <LGField name="contactFirstName"/>
+        <LGField name="phone"/>
+        <LGField name="country"/>
+        <LGField name="salesRepEmployeeNumber"/>
+        <LGField name="creditLimit"/>
+        <LGField name="addressLine1" hidden="true"/>
+        <LGField name="addressLine2" hidden="true"/>
+        <LGField name="city" hidden="true"/>
+        <LGField name="state" hidden="true"/>
+        <LGField name="postalCode" hidden="true"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <canExpandRecords>true</canExpandRecords>
+    <expansionMode>details</expansionMode>
+    <recordDoubleClick>
+            <Process>
+                <sequence>
+                    <FormEditSelectedTask selectionComponentId="ord_CustomerGrid" componentId="ord_CustomerForm"/>
+                    <ShowTask componentId="addEditCustomerLayout" description="Show &apos;&apos;"/>
+                    <SetTitleTask componentId="addEditCustomerLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;&quot;&gt;Editing Customer  #{ord_CustomerGrid.selectedRecord.customerNumber} / #{ord_CustomerGrid.selectedRecord.customerName}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout overflow="scroll" ID="customersLayout">
+    <members>
+        <Canvas withID="customerStatsLayout"/>
+        <Canvas withID="customerActionsToolstrip"/>
+        <Canvas withID="ord_CustomerGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="addEditCustomerLabel" height="20">
+    <contents>&lt;span style="font-size:30px;font-weight:bold;"&gt;Add New Customer&lt;/span&gt;</contents>
+    <title>Label20</title>
+</Label>
+
+
+<Header autoID="contactDetailsHeader">
+    <title>Contact Details</title>
+</Header>
+
+
+<DynamicForm dataSource="ord_Customer" autoID="ord_CustomerForm" numCols="4" height="275">
+    <fields>
+        <TextItem name="customerNumber"/>
+        <TextItem name="customerName"/>
+        <SelectItem name="salesRepEmployeeNumber" title="salesperson"/>
+        <FloatItem name="creditLimit"/>
+        <CanvasItem autoName="CanvasItem0" showTitle="false" width="*" colSpan="*" startRow="true" endRow="true">
+            <canvas withID="contactDetailsHeader"/>
+        </CanvasItem>
+        <TextItem name="contactLastName"/>
+        <TextItem name="contactFirstName"/>
+        <TextItem name="phone"/>
+        <TextItem name="addressLine1"/>
+        <TextItem name="addressLine2"/>
+        <TextItem name="city"/>
+        <TextItem name="state"/>
+        <TextItem name="postalCode"/>
+        <TextItem name="country"/>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton autoID="saveButton">
+    <title>Save</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask componentId="ord_CustomerForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Customer #{_lastTask.customerNumber} /  #{_lastTask.customerName} has been added or updated"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="customersLayout"/>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next"/>
+                    <SetTitleTask componentId="totalCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="uSCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="notEqual" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="nonUSCustomersCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="customersLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="customerButtonLayout" height="25">
+    <members>
+        <Canvas withID="saveButton"/>
+        <Canvas withID="cancelButton"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="10" ID="addEditCustomerLayout" height="100%">
+    <members>
+        <Canvas withID="addEditCustomerLabel"/>
+        <Canvas withID="ord_CustomerForm"/>
+        <Canvas withID="customerButtonLayout"/>
+    </members>
+    <layoutMargin>50</layoutMargin>
+</VLayout>
+
+
+<Deck ID="customersDeck">
+    <panes>
+        <Canvas withID="customersLayout"/>
+        <Canvas withID="addEditCustomerLayout"/>
+    </panes>
+</Deck>
+
+
+<FacetChart dataSource="ord_Product" autoID="stockholdingByVendorFacetChart" width="*">
+    <title>Stockholding by Vendor</title>
+    <drawTitleBackground>false</drawTitleBackground>
+    <drawTitleBoundary>false</drawTitleBoundary>
+    <titleAlign>center</titleAlign>
+    <showDataValuesMode>inHoverOnly</showDataValuesMode>
+    <facetFields>
+        <value>productVendor</value>
+    </facetFields>
+
+    <valueProperty>quantityInStock</valueProperty>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <GridFetchDataTask componentId="stockholdingByVendorFacetChart">
+                        <summaryFunctions>
+                            <quantityInStock>sum</quantityInStock>
+                        </summaryFunctions>
+                        <groupBy>
+                            <value>productVendor</value>
+                        </groupBy>
+                    </GridFetchDataTask>
+                </sequence>
+            </Process>
+    </drawn>
+</FacetChart>
+
+
+<Label ID="totalProductsLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;"&gt;Total Products:&lt;/span&gt;</contents>
+    <title>Label14</title>
+</Label>
+
+
+<Label ID="totalProductsCount" height="20">
+    <title>Label15</title>
+</Label>
+
+
+<Label ID="moreThan100Label" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;"&gt;Products more than $100 per unit:&lt;/span&gt;</contents>
+    <title>Label16</title>
+</Label>
+
+
+<Label ID="moreThan100Count" height="20">
+    <contents>Label</contents>
+    <title>Label17</title>
+</Label>
+
+
+<Label ID="lessThan100Label" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold;"&gt; Products less than $100 per unit:&lt;/span&gt;</contents>
+    <title>Label18</title>
+</Label>
+
+
+<Label ID="lessThan100Count" height="20">
+    <contents>Label</contents>
+    <title>Label19</title>
+</Label>
+
+
+<VLayout overflow="visible" membersMargin="10" ID="productCountsLayout" width="320" height="200">
+    <members>
+        <Canvas withID="totalProductsLabel"/>
+        <Canvas withID="totalProductsCount"/>
+        <Canvas withID="moreThan100Label"/>
+        <Canvas withID="moreThan100Count"/>
+        <Canvas withID="lessThan100Label"/>
+        <Canvas withID="lessThan100Count"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next"/>
+                    <SetTitleTask componentId="totalProductsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next">
+                        <criteria fieldName="msrp" operator="greaterThan" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:float">100</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="moreThan100Count">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next">
+                        <criteria fieldName="msrp" operator="lessOrEqual" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:float">100</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="lessThan100Count">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</VLayout>
+
+
+<HLayout membersMargin="10" ID="productStatsLayout" height="20%" minHeight="350">
+    <members>
+        <Canvas withID="stockholdingByVendorFacetChart"/>
+        <Canvas withID="productCountsLayout"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <layoutBottomMargin>10</layoutBottomMargin>
+</HLayout>
+
+
+<IconImgButton ID="addNewProduct">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/plus.png</_base>
+    </src>
+    <title>IconButton6</title>
+    <prompt>Add New Product</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <FormEditNewRecordTask componentId="ord_ProductForm"/>
+                    <SetTitleTask componentId="addEditProductLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold;&quot;&gt;Add New Product&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditProductLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printProducts">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton7</title>
+    <prompt>Print Products</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Print functions not available in this starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportProducts">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton8</title>
+    <prompt>Export Products List</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="ord_ProductGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="productActionsToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="addNewProduct"/>
+        <Canvas withID="printProducts"/>
+        <Canvas withID="exportProducts"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="ord_Product" autoID="ord_ProductGrid" showFilterEditor="true" autoFetchData="true" height="*" minHeight="300">
+    <fields>
+        <LGField name="productCode">
+            <canEdit>true</canEdit>
+        </LGField>
+        <LGField name="productName"/>
+        <LGField name="productScale"/>
+        <LGField name="productVendor"/>
+        <LGField name="productDescription"/>
+        <LGField name="quantityInStock"/>
+        <LGField name="buyPrice"/>
+        <LGField name="msrp"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <groupByField>
+        <value>productVendor</value>
+    </groupByField>
+
+    <recordDoubleClick>
+            <Process>
+                <sequence>
+                    <FormEditSelectedTask selectionComponentId="ord_ProductGrid" componentId="ord_ProductForm"/>
+                    <SetTitleTask componentId="addEditProductLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold;&quot;&gt;Editing Product #{ord_ProductGrid.selectedRecord.productCode} / #{ord_ProductGrid.selectedRecord.productName}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditProductLayout"/>
+                </sequence>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout overflow="scroll" ID="productsLayout">
+    <members>
+        <Canvas withID="productStatsLayout"/>
+        <Canvas withID="productActionsToolstrip"/>
+        <Canvas withID="ord_ProductGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="addEditProductLabel" height="20">
+    <contents>&lt;span style="font-size:30px;font-weight:bold;"&gt;Add New Product&lt;/span&gt;</contents>
+    <title>Label0</title>
+</Label>
+
+
+<DynamicForm dataSource="ord_Product" autoID="ord_ProductForm" numCols="4">
+    <fields>
+        <TextItem name="productCode" canEdit="true"/>
+        <TextItem name="productName"/>
+        <SelectItem name="productScale"/>
+        <TextItem name="productVendor"/>
+        <TextAreaItem name="productDescription" width="850" colSpan="4"/>
+        <TextItem name="quantityInStock" endRow="true"/>
+        <FloatItem name="buyPrice"/>
+        <FloatItem name="msrp" title="MSRP"/>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton ID="saveProductButton">
+    <title>Save</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" componentId="ord_ProductForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Product #{_lastTask.productCode} / #{_lastTask.productName} has been added or updated successfully"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="productsLayout"/>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next"/>
+                    <SetTitleTask componentId="totalProductsCount">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next">
+                        <criteria fieldName="msrp" operator="greaterThan" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:float">100</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="moreThan100Count">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="ord_Product" failureElement="next">
+                        <criteria fieldName="msrp" operator="lessOrEqual" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:float">100</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="lessThan100Count">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton ID="cancelProductButton">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="productsLayout" description="Show &apos;productLayout&apos;"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="productButtonsLayout" height="25">
+    <members>
+        <Canvas withID="saveProductButton"/>
+        <Canvas withID="cancelProductButton"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="20" ID="addEditProductLayout">
+    <members>
+        <Canvas withID="addEditProductLabel"/>
+        <Canvas withID="ord_ProductForm"/>
+        <Canvas withID="productButtonsLayout"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+    <layoutTopMargin>50</layoutTopMargin>
+</VLayout>
+
+
+<Deck ID="productsDeck">
+    <panes>
+        <Canvas withID="productsLayout"/>
+        <Canvas withID="addEditProductLayout"/>
+    </panes>
+</Deck>
+
+
+<NavPanel navigationPaneWidth="12%" autoID="NavPanel0">
+    <isTree>false</isTree>
+    <navItems>
+        <NavItem autoId="ordersNavItem" title="Orders">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/groupby.png</icon>
+            <pane withID="ordersDeck"/>
+        </NavItem>
+        <NavItem autoId="customersNavItem" title="Customers">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/drag.png</icon>
+            <pane withID="customersDeck"/>
+        </NavItem>
+        <NavItem autoId="productsNavItem" title="Products">
+            <icon>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/color_swatch.png</icon>
+            <pane withID="productsDeck"/>
+        </NavItem>
+    </navItems>
+    <defaultToFirstItem>true</defaultToFirstItem>
+</NavPanel>
+
+
+<DataView overflow="hidden" ID="orderManagementApp" width="100%" height="100%" autoDraw="true">
+    <members>
+        <Canvas withID="headerLayout"/>
+        <Canvas withID="NavPanel0"/>
+    </members>
+</DataView>
+
+
+</isomorphicXML>

@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+
+	<description>
+	    Support for automated testing and Continuous Integration, as documented at
+	    http://www.smartclient.com/smartgwtee/javadoc/com/smartgwt/client/docs/AutomatedTesting.html 
+	</description>
+
+	<groupId>com.isomorphic.smartclient.eval</groupId>
+	<artifactId>isomorphic-autotest</artifactId>
+	<version>14.1-p20250614</version>
+
+	<dependencies>
+		
+		<dependency>
+			<groupId>com.isomorphic.smartclient.eval</groupId>
+			<artifactId>isomorphic-core-rpc</artifactId>
+			<version>14.1-p20250614</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-server</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+		
+		<!-- Required if you choose to use the com.isomorphic.autotest.TestRunner command line interface -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils-core</artifactId>
+			<version>1.9.4</version>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+</project>

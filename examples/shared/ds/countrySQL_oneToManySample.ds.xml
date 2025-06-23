@@ -1,0 +1,22 @@
+<DataSource isSampleDS="true"
+    ID="countrySQL_oneToManySample"
+    serverType="sql"
+    tableName="country"
+>
+    <fields>
+        <field name="countryId" hidden="true" primaryKey="true" />
+        <field name="countryName"   type="text"       title="Country"          required="true"   />
+        <!-- One-to-many foreignKey relationship with city records.
+             See reciprocal foreignKey on city DS for one-to-many relationship in the other direction.
+        -->
+        <field name="cities" multiple="true" 
+            foreignKey="citySQL_oneToManySample.countryId" 
+            displayField="cityNames" foreignDisplayField="cityName"
+            hidden="false" />
+
+        <field name="cityNames" multiple="true" 
+            includeFrom="citySQL_oneToManySample.cityName" hidden="true" />
+
+    </fields>
+</DataSource>
+

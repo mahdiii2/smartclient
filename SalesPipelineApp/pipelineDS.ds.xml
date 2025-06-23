@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataSource
+    ID="pipelineDS"
+    clientOnly="true"
+    dataURL="pipelineData.xml"
+    autoDeriveSchema="false">
+
+  <fields>
+    <!-- Primary key -->
+    <field name="id"             type="integer" primaryKey="true" title="ID"/>
+
+    <!-- Date the proposal was raised -->
+    <field name="dateRaised"     type="date"    title="Date Raised"/>
+
+    <!-- Link to customerDS -->
+    <field name="Customer"       type="integer"
+           foreignKey="customerDS.customerNumber"
+           title="Customer #"/>
+    <field name="customerName"   type="text"
+           includeFrom="customerDS.customerName"
+           title="Customer Name"/>
+
+    <!-- Free-text comments -->
+    <field name="comments"       type="text"    title="Comments"/>
+
+    <!-- Financials -->
+    <field name="potentialValue" type="float"   title="Potential Value"/>
+    <field name="chance"         type="float"   title="Win Probability"/>
+
+    <!-- Status of the proposal -->
+    <field name="status"         type="text"    title="Status"/>
+
+    <!-- Link to employeeDS -->
+    <field name="salesman"       type="integer"
+           foreignKey="employeeDS.employeeNumber"
+           title="Sales Rep #"/>
+    <field name="salesRepName"   type="text"
+           includeFrom="employeeDS.firstName"
+           title="Sales Rep First Name"/>
+    <field name="salesRepLast"   type="text"
+           includeFrom="employeeDS.lastName"
+           title="Sales Rep Last Name"/>
+
+    <!-- Internal bookkeeping (optional) -->
+    <field name="internalId"     type="integer"
+           hidden="true"/>
+  </fields>
+</DataSource>

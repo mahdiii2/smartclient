@@ -1,0 +1,29 @@
+
+<MockDataSource fromServer="true" ID="iss_Priority" clientOnly="true">
+    <fields>
+        <field name="priorityId" type="integer" primaryKey="true"/>
+        <field name="Priority" type="text"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <priorityId>1</priorityId>
+            <Priority>High</Priority>
+            <internalId>1</internalId>
+        </Object>
+        <Object>
+            <priorityId>2</priorityId>
+            <Priority>Medium</Priority>
+            <internalId>2</internalId>
+        </Object>
+        <Object>
+            <priorityId>3</priorityId>
+            <Priority>Low</Priority>
+            <internalId>3</internalId>
+        </Object>
+        <Object>
+            <priorityId>4</priorityId>
+            <Priority>Emergency</Priority>
+            <internalId>4</internalId>
+        </Object>
+    </cacheData>
+</MockDataSource>

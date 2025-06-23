@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Dashboard Starter App</title>
+  <style>
+    html, body {
+      height:100%; margin:0; background:#f2f2f2;
+      font-family:Helvetica,Arial,sans-serif;
+    }
+    .appHeader {
+      background:#f2f2f2; font-size:28px; font-weight:600;
+      line-height:46px; text-align:center; color:#444;
+    }
+    .card {
+      border:1px solid #ccc; border-radius:8px;
+      background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.08);
+    }
+    .kpi-value { font-size:1.8em; margin-top:6px; }
+    .kpi-green { color:#009a32; } .kpi-red { color:#c40000; }
+    .chart-title {
+      font-weight:600; font-size:.95em;
+      text-align:center; padding:10px 0 4px;
+    }
+    .section-header {
+      font-size:1.2em; font-weight:600;
+      color:#444; margin:8px 0 4px;
+    }
+    .statusWon  { background:#f37000!important; color:#000!important; }
+    .statusLost { background:#d60000!important; color:#fff!important; }
+    .statusPot  { background:#199f4b!important; color:#fff!important; }
+
+    /* —— new rule: limit chart‐placeholder size —— */
+    .chart-img {
+      display: block;
+      max-width: 80%;
+      height: auto;
+      margin: 0 auto;
+    }
+  </style>
+
+  <script>window.isomorphicDir="isomorphic";</script>
+  <script src="isomorphic/system/modules/ISC_Core.js"></script>
+  <script src="isomorphic/system/modules/ISC_Foundation.js"></script>
+  <script src="isomorphic/system/modules/ISC_Containers.js"></script>
+  <script src="isomorphic/system/modules/ISC_Grids.js"></script>
+  <script src="isomorphic/system/modules/ISC_DataBinding.js"></script>
+  <script src="isomorphic/system/modules/ISC_Forms.js"></script>
+  <script src="isomorphic/system/modules/ISC_Drawing.js"></script>
+  <script src="isomorphic/skins/Tahoe/load_skin.js"></script>
+</head>
+<body>
+<script>
+  // — DataSources —
+  isc.DataSource.create({
+    ID:"forecastDS", clientOnly:true,
+    fields:[
+      {name:"month", type:"text"},
+      {name:"firstName", title:"Forecast First Name"},
+      {name:"lastName",  title:"Last Name"},
+      {name:"target",    type:"integer"},
+      {name:"actual",    type:"integer"}
+    ],
+    testData:[
+      {month:"Jan", firstName:"Leslie", lastName:"Jennings", target:60000, actual:56000},
+      {month:"Jan", firstName:"Jeff",   lastName:"Firrelli", target:70000, actual:72000},
+      {month:"Jan", firstName:"Foon Yue",lastName:"Tseng",  target:65000, actual:64000}
+    ]
+  });
+  isc.DataSource.create({
+    ID:"pipelineDS", clientOnly:true,
+    fields:[
+      {name:"date",        title:"Date Raised",   type:"date"},
+      {name:"customer",    title:"Customer Name"},
+      {name:"comments",    title:"Comments"},
+      {name:"chance",      title:"%age Chance",    type:"float"},
+      {name:"status",      title:"Status"},
+      {name:"salesperson", title:"Pipeline Last Name"},
+      {name:"value",       title:"Potential Value",type:"float"}
+    ],
+    testData:[
+      {date:"2022-01-23",customer:"Atelier graphique",comments:"Quarterly order",chance:75,  status:"Won",      salesperson:"Jennings", value:10000},
+      {date:"2022-01-25",customer:"Signal Gift Stores",comments:"Quarterly order",chance:50,  status:"Lost",     salesperson:"Firrelli", value:8250},
+      {date:"2022-02-03",customer:"Mini Gifts Dist.",   comments:"Expanding lines",   chance:95,  status:"Won",      salesperson:"Marsh",    value:14000},
+      {date:"2022-02-26",customer:"Mini Wheels Co.",    comments:"Catalogue quote",   chance:100,status:"Bidding", salesperson:"Tseng",    value:120000},
+      {date:"2022-02-28",customer:"Australian Collectors, Co.",comments:"Stock upkeep",chance:70,status:"Delayed", salesperson:"Bott",    value:75000},
+      {date:"2022-03-01",customer:"Land of Toys Inc.",  comments:"Quarterly order",   chance:85,  status:"On Hold", salesperson:"Tseng",   value:3000}
+    ]
+  });
+
+  // — KPI row —
+  function kpiRow() {
+    const KPIs = [
+      { title:"Pipeline Potential Orders", value:"$353,833.00" },
+      { title:"Pipeline Orders Won",       value:"$154,225.50", cls:"kpi-green" },
+      { title:"Pipeline Orders Lost",      value:"$84,526.75",  cls:"kpi-red"   }
+    ];
+    return isc.HLayout.create({
+      width:"100%", height:110, membersMargin:15,
+      members: KPIs.map(k=>
+        isc.Canvas.create({
+          width:"*", styleName:"card", padding:10,
+          contents:
+            `<div style="font-weight:600;font-size:1.1em">${k.title}</div>`+
+            `<div class="kpi-value ${k.cls||""}">${k.value}</div>`
+        })
+      )
+    });
+  }
+
+  // — Chart card (uses .chart-img) —
+  function chartCard(src,title) {
+    return isc.VLayout.create({
+      width:"*", height:340, styleName:"card", membersMargin:8, padding:6,
+      members:[
+        isc.Label.create({contents:title, styleName:"chart-title"}),
+        isc.HTMLFlow.create({
+          contents:`<img src="${src}" class="chart-img" alt="${title}">`
+        })
+      ]
+    });
+  }
+
+  // — Forecast grid —
+  function forecastGrid(){
+    return isc.ListGrid.create({
+      dataSource:"forecastDS", autoFetchData:true,
+      width:"100%", autoFitData:"vertical", leaveScrollbarGap:false,
+      headerHeight:30, cellHeight:24, summaryRowHeight:26,
+      showGridSummary:true, gridSummaryFunction:"sum",
+      alternateRecordStyles:true,
+      fields:[
+        {name:"month",  width:60},
+        {name:"firstName"},
+        {name:"lastName"},
+        {name:"target",
+          formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0")
+        },
+        {name:"actual",
+          formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0")
+        }
+      ]
+    });
+  }
+
+  // — Dashboard pane —
+  const dashboardPane = isc.VLayout.create({
+    width:"100%", height:"100%",
+    layoutMargin:12, membersMargin:10,
+    members:[
+      kpiRow(),
+      isc.HLayout.create({
+        width:"100%", height:340, membersMargin:20,
+        members:[
+          chartCard("images/pipeline-pie.png","Pipeline Value by Salesperson"),
+          chartCard("images/performance-stack.png","Performance by Salesperson")
+        ]
+      }),
+      isc.Label.create({
+        contents:"Sales Forecast Statistics",
+        styleName:"section-header"
+      }),
+      forecastGrid()
+    ]
+  });
+
+  // — Pipeline filtering form —
+  function radioFilter(grid){
+    return isc.DynamicForm.create({
+      numCols:8, cellPadding:2, width:"100%",
+      fields:[{
+        name:"view", type:"radioGroup", vertical:false, defaultValue:"all",
+        valueMap:{
+          all:"All Orders",
+          potential:"Potential Orders",
+          won:"Won Orders",
+          lost:"Lost Orders"
+        },
+        changed(f,i,val){
+          // clear or set criteria + fetchData
+          if(val==="all") grid.clearCriteria();
+          else if(val==="won") grid.setCriteria({status:"Won"});
+          else if(val==="lost") grid.setCriteria({status:"Lost"});
+          else grid.setCriteria({status:["Bidding","On Hold","Delayed"]});
+          grid.fetchData();
+          isc.EH.setFocusCanvas(grid);
+        }
+      }]
+    });
+  }
+
+  // — Pipeline grid —
+  function pipelineGrid(){
+    return isc.ListGrid.create({
+      dataSource:"pipelineDS", autoFetchData:true,
+      width:"100%", height:"100%", alternateRecordStyles:true,
+      cellStyleGenerator(rec,r,c){
+        if(this.getFieldName(c)!=="status") return null;
+        return rec.status==="Won"  ? "statusWon"
+             : rec.status==="Lost" ? "statusLost"
+             :                       "statusPot";
+      },
+      fields:[
+        {name:"date",       width:90,  formatCellValue:v=>isc.DateUtil.format(v,"MM/dd/yyyy")},
+        {name:"customer",   width:200},
+        {name:"comments"},
+        {name:"chance",     width:90,  formatCellValue:v=>isc.NumberUtil.format(v,"##0.00'%'")},
+        {name:"status",     width:80},
+        {name:"salesperson",width:120, title:"Pipeline Last Name"},
+        {name:"value",      width:120,
+          title:"Potential Value",
+          formatCellValue:v=>isc.NumberUtil.format(v,"$#,##0.00")
+        }
+      ]
+    });
+  }
+
+  const pGrid = pipelineGrid();
+  const pipelinePane = isc.VLayout.create({
+    width:"100%", height:"100%", layoutMargin:12, membersMargin:10,
+    members:[ radioFilter(pGrid), pGrid ]
+  });
+
+  // — Navigation + TabSet —
+  const navTree = isc.Tree.create({
+    modelType:"children",
+    root:{children:[
+      {id:"dashboard",title:"Dashboard",icon:"[SKINIMG]Tree/folder.png"},
+      {id:"pipeline", title:"Pipeline", icon:"[SKINIMG]Tree/folder.png"}
+    ]}
+  });
+  const nav = isc.TreeGrid.create({
+    width:180, showHeader:false, data:navTree, animateFolders:false,
+    nodeClick(node){ tabSet.selectTab(node.id==="dashboard"?0:1); }
+  });
+  const tabSet = isc.TabSet.create({
+    width:"100%", height:"100%",
+    tabs:[
+      {title:"Dashboard", pane:dashboardPane},
+      {title:"Pipeline",  pane:pipelinePane}
+    ]
+  });
+
+  isc.VLayout.create({
+    width:"100%", height:"100%",
+    members:[
+      isc.HLayout.create({
+        width:"100%", height:50, styleName:"appHeader",
+        members:[
+          isc.Img.create({src:"logo.png",width:36,height:36,layoutAlign:"center",left:10}),
+          isc.LayoutSpacer.create({width:"*"}),
+          isc.Label.create({contents:"Dashboard Starter App",styleName:"appHeader",width:"*"}),
+          isc.LayoutSpacer.create({width:"*"})
+        ]
+      }),
+      isc.HLayout.create({width:"100%",height:"*",members:[nav, tabSet]})
+    ]
+  });
+</script>
+</body>
+</html>

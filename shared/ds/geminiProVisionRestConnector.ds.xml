@@ -1,0 +1,14 @@
+<DataSource ID="geminiProVisionRestConnector"
+            inheritsFrom="geminiProRestConnector"
+            serverType="rest"
+>
+    <serverConfig>
+        <requestFormat>json</requestFormat>
+        <fetchHttpMethod>POST</fetchHttpMethod>
+        <dataURL>https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key=$config['Gemini.api.key']</dataURL>
+        <!-- Require the full response so that we can parse any error(s) (such as response blocked because of safety settings) -->
+        <requiresCompleteRESTResponse>true</requiresCompleteRESTResponse>
+        <recordXPath>candidates</recordXPath>
+    </serverConfig>
+    <!-- fields are the same as geminiProRestConnector -->
+</DataSource>

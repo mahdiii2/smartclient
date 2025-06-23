@@ -1,0 +1,12 @@
+<DataSource isSampleDS="true"
+    ID="agency"
+    serverType="sql"
+    tableName="agency"
+    recordName="agency"
+    testFileName="/examples/shared/ds/test_data/agency.data.xml"
+>
+    <fields>
+        <field name="agencyId"        title="Agency ID"       type="integer" />
+        <field name="agencyName"      title="Agency Name"     type="text" />
+    </fields>
+</DataSource>

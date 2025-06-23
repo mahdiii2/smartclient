@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- 1) Skin & density -->
+  <link rel="stylesheet" href="isomorphic/skins/Shiva/skin_styles.css"/>
+  <script>
+    isc.setSkin("Shiva");
+    isc.setDensity("Dense");
+  </script>
+  <!-- 2) Core + All modules -->
+  <script src="isomorphic/system/modules/ISC_Core.js"></script>
+  <script src="isomorphic/system/modules/ISC_All.js"></script>
+</head>
+<body>
+  <!-- 3) Dashboard JS -->
+  <script>
+  // Filter form
+  var filterForm = isc.DynamicForm.create({
+    ID: "filterForm", width: 350, numCols: 3, colWidths: ["*", 50, "*"],
+    fields: [
+      { name: "officeCode", title: "Office", editorType: "SelectItem",
+        optionDataSource: "officeDS", valueField: "officeCode", displayField: "city" },
+      { name: "salesRep",   title: "Sales Rep", editorType: "SelectItem",
+        optionDataSource: "employeeDS", valueField: "employeeNumber",
+        displayField: "firstName" },
+      { name: "dateRange",  title: "Date Range", editorType: "DateRangeItem" }
+    ],
+    itemChanged: applyFilters
+  });
+
+  // Summary panel
+  var summaryPanel = isc.HLayout.create({
+    membersMargin: 20,
+    members: [
+      isc.Label.create({ contents: "Total Pipeline: <b>$0</b>" }),
+      isc.Label.create({ contents: "Total Forecast: <b>$0</b>" }),
+      isc.Label.create({ contents: "Actual vs Forecast: <b>0%</b>" })
+    ]
+  });
+
+  // Charts
+  var pipelineByRepChart = isc.Chart.create({
+    dataSource: "pipelineDS", autoFetchData: true,
+    categoryField: "employeeNumber", valueProperty: "pipelineAmount",
+    chartType: "Column", showLegend: false, title: "Pipeline by Rep",
+    getCategoryTitle: function (val) {
+      var rec = isc.DataSource.get("employeeDS")
+                   .getCacheData({employeeNumber: val})[0];
+      return rec ? rec.firstName : val;
+    }
+  });
+
+  var pipelineByStageChart = isc.PieChart.create({
+    dataSource: "pipelineDS", autoFetchData: true,
+    categoryField: "stage", valueProperty: "pipelineAmount",
+    title: "Pipeline by Stage", showLabels: true
+  });
+
+  // Detail grid
+  var detailsGrid = isc.ListGrid.create({
+    dataSource: "pipelineDS", autoFetchData: true,
+    showFilterEditor: false,
+    fields: [
+      { name: "orderId",        title: "Order #" },
+      { name: "accountName",    title: "Customer" },
+      { name: "employeeNumber", title: "Rep",
+        getCellValue: function (rec) {
+          return isc.DataSource.get("employeeDS")
+                     .getCacheData({employeeNumber: rec.employeeNumber})[0]
+                     .firstName;
+        }
+      },
+      { name: "pipelineAmount", title: "Amount",
+        formatCellValue:"$" + Math.round(value) },
+      { name: "stage",          title: "Stage" },
+      { name: "createDate",     title: "Date", type: "date" }
+    ]
+  });
+
+  // Layout
+  isc.VLayout.create({
+    width: "100%", height: "100%",
+    membersMargin: 5, padding: 5,
+    members: [
+      isc.HLayout.create({ height: 60, membersMargin: 10,
+        members: [ filterForm, summaryPanel ] }),
+      isc.HLayout.create({ height: "40%", membersMargin: 10,
+        members: [ pipelineByRepChart, pipelineByStageChart ] }),
+      detailsGrid
+    ]
+  });
+
+  // Filtering + summary refresh
+  function applyFilters() {
+    var crit = filterForm.getValuesAsCriteria();
+    pipelineByRepChart.fetchData(crit);
+    pipelineByStageChart.fetchData(crit);
+    detailsGrid.fetchData(crit);
+
+    isc.DataSource.get("pipelineDS").executeCustomOperation(
+      "getSummary", crit,
+      { callback: function (r) {
+          var d = r.data[0]||{};
+          summaryPanel.getMember(0)
+            .setContents("Total Pipeline: <b>$" + d.totalPipeline + "</b>");
+          summaryPanel.getMember(1)
+            .setContents("Total Forecast: <b>$" + d.totalForecast + "</b>");
+          summaryPanel.getMember(2)
+            .setContents("Actual vs Forecast: <b>" +
+              Math.round(100 * d.totalActual / d.totalForecast) + "%</b>");
+        }
+      }
+    );
+  }
+  </script>
+</body>
+</html>

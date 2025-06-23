@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<description>
+	  The Smart GWT SQLDataSource.
+	</description>
+	
+	<groupId>com.isomorphic.smartclient.eval</groupId>
+	<artifactId>isomorphic-sql</artifactId>
+	<version>14.1-p20250614</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.isomorphic.smartclient.eval</groupId>
+			<artifactId>isomorphic-core-rpc</artifactId>
+			<version>14.1-p20250614</version>
+		</dependency>
+
+		<!-- 
+			Required even when other pooling implementations, or none at all, are configured
+		 -->
+		<dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+	</dependencies>
+
+</project>

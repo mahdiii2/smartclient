@@ -1,0 +1,57 @@
+<DataSource
+    isSampleDS="true"
+    ID="employeeDS"
+    serverType="sql"
+    tableName="employee"
+    recordName="employee"
+    testFileName="/examples/shared/ds/test_data/employeeData.xml"
+    titleField="lastName">
+  <fields>
+    <!-- Primary key -->
+    <field
+        name="employeeNumber"
+        type="integer"
+        primaryKey="true"
+        hidden="true"
+        required="true"
+        title="Employee #"/>
+
+    <!-- Name -->
+    <field
+        name="lastName"
+        type="text"
+        title="Last Name"/>
+    <field
+        name="firstName"
+        type="text"
+        title="First Name"/>
+
+    <!-- Contact -->
+    <field
+        name="extension"
+        type="text"
+        title="Phone Ext."/>
+    <field
+        name="email"
+        type="text"
+        title="Email"/>
+
+    <!-- Org structure -->
+    <field
+        name="officeCode"
+        type="integer"
+        title="Office ID"
+        foreignKey="officeDS.officeCode"/>
+    <field
+        name="reportsTo"
+        type="integer"
+        title="Reports To"
+        foreignKey="employeeDS.employeeNumber"/>
+
+    <!-- Role -->
+    <field
+        name="jobTitle"
+        type="text"
+        title="Job Title"/>
+  </fields>
+</DataSource>

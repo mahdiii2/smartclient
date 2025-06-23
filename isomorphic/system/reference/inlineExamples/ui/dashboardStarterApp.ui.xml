@@ -1,0 +1,478 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="kpi_Customer,kpi_Employee,kpi_Office,kpi_Pipeline,kpi_Forecast"/>
+
+
+<Img width="75" height="75" ID="companyLogo">
+    <imageType>center</imageType>
+    <imageHeight>75</imageHeight>
+    <imageWidth>75</imageWidth>
+    <src>logo.png</src>
+    <title>Image0</title>
+    <showMenuOnClick>true</showMenuOnClick>
+</Img>
+
+
+<Label ID="appTitle" width="100%" height="75">
+    <contents>&lt;span style="font-weight:bold;font-size:35px""&gt;Dashboard Starter App&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label0</title>
+</Label>
+
+
+<HLayout overflow="hidden" ID="headerLayout" height="75">
+    <members>
+        <Canvas withID="companyLogo"/>
+        <Canvas withID="appTitle"/>
+    </members>
+</HLayout>
+
+
+<Label ID="potentialOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Pipeline Potential Orders&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="potentialOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label2</title>
+</Label>
+
+
+<VLayout membersMargin="10" ID="potentialOrderLayout">
+    <members>
+        <Canvas withID="potentialOrdersTitle"/>
+        <Canvas withID="potentialOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="wonOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Pipeline Orders Won&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label3</title>
+</Label>
+
+
+<Label ID="wonOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label4</title>
+</Label>
+
+
+<VLayout membersMargin="10" ID="wonOrdersLayout">
+    <members>
+        <Canvas withID="wonOrdersTitle"/>
+        <Canvas withID="wonOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="lostOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Pipeline Orders Lost&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label5</title>
+</Label>
+
+
+<Label ID="lostOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label6</title>
+</Label>
+
+
+<VLayout membersMargin="10" ID="lostOrdersLayout">
+    <members>
+        <Canvas withID="lostOrdersTitle"/>
+        <Canvas withID="lostOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="statsLayout" height="85">
+    <members>
+        <Canvas withID="potentialOrderLayout"/>
+        <Canvas withID="wonOrdersLayout"/>
+        <Canvas withID="lostOrdersLayout"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="kpi_Pipeline" failureElement="next" description="Fetch Pipeline where &lt;ul&gt;&lt;li&gt;Status equals Bidding&lt;/li&gt;&lt;li&gt; or Status equals On Hold&lt;/li&gt;&lt;li&gt; or Status equals Delayed&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Bidding</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">On Hold</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Delayed</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <potentialValue>sum</potentialValue>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="potentialOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;#{_lastTask.potentialValue}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="kpi_Pipeline" failureElement="next" description="Fetch Pipeline where &lt;ul&gt;&lt;li&gt;Status equals Won&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Won</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <potentialValue>sum</potentialValue>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="wonOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:green&quot;&gt;#{_lastTask.potentialValue}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="kpi_Pipeline" failureElement="next" description="Fetch Pipeline where &lt;ul&gt;&lt;li&gt;Status equals Lost&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value xsi:type="xsd:text">Lost</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <potentialValue>sum</potentialValue>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="lostOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:red&quot;&gt;#{_lastTask.potentialValue}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<FacetChart dataSource="kpi_Pipeline" autoID="pipelineValueBySalespersonFacetChart" height="295">
+    <chartType>Pie</chartType>
+    <title>Pipeline Value by Salesperson</title>
+    <padding>10</padding>
+    <centerTitle>true</centerTitle>
+    <drawTitleBackground>false</drawTitleBackground>
+    <drawTitleBoundary>false</drawTitleBoundary>
+    <titleAlign>bottom</titleAlign>
+    <showDataValuesMode>inHoverOnly</showDataValuesMode>
+    <legendAlign>center</legendAlign>
+    <facetFields>
+        <value>pipeIneLastName</value>
+    </facetFields>
+
+    <valueProperty>potentialValue</valueProperty>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <GridFetchDataTask componentId="pipelineValueBySalespersonFacetChart">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Bidding</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">On Hold</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value xsi:type="xsd:text">Delayed</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <potentialValue>sum</potentialValue>
+                        </summaryFunctions>
+                        <groupBy>
+                            <value>pipeIneLastName</value>
+                        </groupBy>
+                    </GridFetchDataTask>
+                </sequence>
+            </Process>
+    </drawn>
+</FacetChart>
+
+
+<FacetChart dataSource="kpi_Forecast" autoFetchData="true" autoID="performanceBySalespersonFacetChart" height="295">
+    <chartType>Bar</chartType>
+    <padding>10</padding>
+    <title>Performance by Salesperson</title>
+    <drawTitleBackground>false</drawTitleBackground>
+    <drawTitleBoundary>false</drawTitleBoundary>
+    <titleAlign>center</titleAlign>
+    <showDataValuesMode>inHoverOnly</showDataValuesMode>
+    <legendAlign>center</legendAlign>
+    <facetFields>
+        <value>month</value>
+        <value>forecastLastName</value>
+    </facetFields>
+
+    <valueProperty>actual</valueProperty>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+</FacetChart>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="salesAndPipellineLayout" height="300">
+    <members>
+        <Canvas withID="pipelineValueBySalespersonFacetChart"/>
+        <Canvas withID="performanceBySalespersonFacetChart"/>
+    </members>
+</HLayout>
+
+
+<Label ID="salesStatsLabel" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Sales Forecast Statistics&lt;/span&gt;</contents>
+    <title>Label7</title>
+</Label>
+
+
+<ListGrid dataSource="kpi_Forecast" autoID="kpi_ForecastGrid" canEdit="true" autoFetchData="true" showGridSummary="true" showGroupSummary="true">
+    <fields>
+        <LGField name="month"/>
+        <LGField name="kpi_EmployeeFirstName"/>
+        <LGField name="forecastLastName" title="Last Name"/>
+        <LGField name="target"/>
+        <LGField name="actual"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <hilites>
+        <Hilite id="0" fieldName="target">
+            <criteria fieldName="target" operator="lessThanField">
+                <value xsi:type="xsd:text">actual</value>
+            </criteria>
+            <textColor>#339966</textColor>
+            <cssText>color:#339966;</cssText>
+            <icon>[SKINIMG]/actions/approve.png</icon>
+        </Hilite>
+        <Hilite id="1" fieldName="target">
+            <criteria fieldName="target" operator="greaterOrEqualField">
+                <value xsi:type="xsd:text">actual</value>
+            </criteria>
+            <textColor>#FFFF00</textColor>
+            <backgroundColor>#FF0000</backgroundColor>
+            <cssText>color:#FFFF00;background-color:#FF0000;</cssText>
+            <icon>[SKINIMG]/Dialog/warn.png</icon>
+        </Hilite>
+    </hilites>
+</ListGrid>
+
+
+<VLayout membersMargin="10" ID="mainLayout">
+    <members>
+        <Canvas withID="statsLayout"/>
+        <Canvas withID="salesAndPipellineLayout"/>
+        <Canvas withID="salesStatsLabel"/>
+        <Canvas withID="kpi_ForecastGrid"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+</VLayout>
+
+
+<DynamicForm ID="searchForm" width="500">
+    <fields>
+        <RadioGroupItem title="View" defaultValue="All Orders" value="All Orders" autoName="viewField">
+            <valueMap>
+                    <value>All Orders</value>
+                    <value>Potential Orders</value>
+                    <value>Won Orders</value>
+                    <value>Lost Orders</value>
+            </valueMap>
+            <vertical>false</vertical>
+            <changed>
+                    <Process>
+                        <elements>
+                            <MultiDecisionTask>
+                                <decisionList>
+                                    <DecisionBranch targetTask="GridFetchData0">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="searchForm.values.viewField" operator="equals">
+                                                    <value xsi:type="xsd:text">All Orders</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                    <DecisionBranch targetTask="GridFetchData1">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="searchForm.values.viewField" operator="equals">
+                                                    <value xsi:type="xsd:text">Potential Orders</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                    <DecisionBranch targetTask="GridFetchData2">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="searchForm.values.viewField" operator="equals">
+                                                    <value xsi:type="xsd:text">Won Orders</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                    <DecisionBranch targetTask="GridFetchData3">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="searchForm.values.viewField" operator="equals">
+                                                    <value xsi:type="xsd:text">Lost Orders</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                </decisionList>
+                            </MultiDecisionTask>
+                            <GridFetchDataTask componentId="kpi_PipelineGrid" ID="GridFetchData0"/>
+                            <GridFetchDataTask componentId="kpi_PipelineGrid" ID="GridFetchData1">
+                                <criteria operator="or" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="status" operator="equals">
+                                            <value xsi:type="xsd:text">Bidding</value>
+                                        </Criterion>
+                                        <Criterion fieldName="status" operator="equals">
+                                            <value xsi:type="xsd:text">On Hold</value>
+                                        </Criterion>
+                                        <Criterion fieldName="status" operator="equals">
+                                            <value xsi:type="xsd:text">Delayed</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <GridFetchDataTask componentId="kpi_PipelineGrid" ID="GridFetchData2">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="status" operator="equals">
+                                            <value xsi:type="xsd:text">Won</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                            <GridFetchDataTask componentId="kpi_PipelineGrid" ID="GridFetchData3">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="status" operator="equals">
+                                            <value xsi:type="xsd:text">Lost</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                        </elements>
+                    </Process>
+            </changed>
+        </RadioGroupItem>
+    </fields>
+</DynamicForm>
+
+
+<ToolStrip ID="searchToolstrip" overflow="hidden">
+    <members>
+        <Canvas withID="searchForm"/>
+    </members>
+</ToolStrip>
+
+
+<ListGrid dataSource="kpi_Pipeline" autoID="kpi_PipelineGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="true">
+    <fields>
+        <LGField name="dateRaised" width="125"/>
+        <LGField name="Customer" hidden="true"/>
+        <LGField name="customerName"/>
+        <LGField name="comments"/>
+        <LGField name="chance" showGridSummary="false" showGroupSummary="false">
+            <canEditSummary>false</canEditSummary>
+        </LGField>
+        <LGField name="status"/>
+        <LGField name="salesman"/>
+        <LGField name="pipeIneLastName" hidden="true"/>
+        <LGField name="potentialValue"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <hilites>
+        <Hilite id="0" fieldName="status">
+            <criteria fieldName="status" operator="equals">
+                <value xsi:type="xsd:text">Won</value>
+            </criteria>
+            <textColor>#000000</textColor>
+            <backgroundColor>#FF6600</backgroundColor>
+            <cssText>color:#000000;background-color:#FF6600;</cssText>
+            <icon>[SKINIMG]/actions/approve.png</icon>
+        </Hilite>
+        <Hilite id="1" fieldName="status">
+            <criteria operator="or">
+                <criteria>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">Bidding</value>
+                    </Criterion>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">On Hold</value>
+                    </Criterion>
+                    <Criterion fieldName="status" operator="equals">
+                        <value xsi:type="xsd:text">Delayed</value>
+                    </Criterion>
+                </criteria>
+            </criteria>
+            <textColor>#FFFFFF</textColor>
+            <backgroundColor>#339966</backgroundColor>
+            <cssText>color:#FFFFFF;background-color:#339966;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="2" fieldName="status">
+            <criteria fieldName="status" operator="equals">
+                <value xsi:type="xsd:text">Lost</value>
+            </criteria>
+            <textColor>#FFFF00</textColor>
+            <backgroundColor>#FF0000</backgroundColor>
+            <cssText>color:#FFFF00;background-color:#FF0000;</cssText>
+            <icon>[SKINIMG]/Dialog/warn.png</icon>
+        </Hilite>
+    </hilites>
+</ListGrid>
+
+
+<VLayout ID="pipelineMainLayout">
+    <members>
+        <Canvas withID="searchToolstrip"/>
+        <Canvas withID="kpi_PipelineGrid"/>
+    </members>
+</VLayout>
+
+
+<NavPanel ID="dashboardNavPanel">
+    <isTree>false</isTree>
+    <navItems>
+        <NavItem autoId="dashboardNavItem" title="Dashboard">
+            <pane withID="mainLayout"/>
+        </NavItem>
+        <NavItem autoId="pipelineNavItem" title="Pipeline">
+            <pane withID="pipelineMainLayout"/>
+        </NavItem>
+    </navItems>
+    <defaultToFirstItem>true</defaultToFirstItem>
+</NavPanel>
+
+
+<DataView overflow="hidden" autoID="dashboardStarterApp" width="100%" height="100%" autoDraw="true">
+    <members>
+        <Canvas withID="headerLayout"/>
+        <Canvas withID="dashboardNavPanel"/>
+    </members>
+</DataView>
+
+
+</isomorphicXML>

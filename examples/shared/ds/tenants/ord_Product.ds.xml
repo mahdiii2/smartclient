@@ -1,0 +1,30 @@
+<DataSource ID="ord_Product" serverType="sql">
+    <fields>
+        <field name="productCode" type="text" required="true" length="15" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="productName" type="text" required="true" length="70"/>
+        <field name="productLine" type="text" required="true" length="50" title="ProductLine"
+               foreignKey="ord_ProductLine.productLine" displayField="ord_ProductLineProductLine"
+               joinType="outer"/>
+        <field name="productScale" type="enum" required="true" length="10">
+            <valueMap>
+                    <value>1:10</value>
+                    <value>1:12</value>
+                    <value>1:18</value>
+                    <value>1:24</value>
+                    <value>1:32</value>
+                    <value>1:50</value>
+                    <value>1:72</value>
+                    <value>1:700</value>
+            </valueMap>
+        </field>
+        <field name="productVendor" type="text" required="true" length="50"/>
+        <field name="productDescription" type="text" required="true" length="4000"/>
+        <field name="quantityInStock" type="integer" required="true"/>
+        <field name="buyPrice" type="float" required="true" format="$,#.00"/>
+        <field name="msrp" type="float" required="true" title="MSRP" format="$,#.00"/>
+        <field name="ord_ProductLineProductLine" hidden="true"
+               includeFrom="ord_ProductLine.productLine"/>
+    </fields>
+</DataSource>

@@ -1,0 +1,56 @@
+/* Auto-Generated React */
+import React from 'react';
+import 'smartclient-eval/release';
+import 'smartclient-eval/skins/Tahoe';
+
+import { SC, IButton, Label, ListGrid } from 'smartclient-eval/react';
+
+// a "render target" can be defined to allow JSX to be loaded dynamically into an existing application.  This Showcase sets a
+// render target of "showcaseSample" so each JSX file can be loaded and later removed when the user is done with the sample.
+let target = SC.getRenderTarget() || "showcaseSample";
+
+let onFormatButtonClick = function () {
+    employeeGrid.addSummaryField();
+};
+let onServerCountIncrementAndUpdate = function (totalRows, startRow, endRow) {
+    this.count++;
+    this.setContents('<b>Number of server trips: ' + this.count + '<br/>Total rows in this filter set: ' + totalRows + '<br/>Last range of records returned: ' + startRow + ' to ' + endRow + '</b>');
+};
+
+// SC.render() calls ReactDOM.render() in React pre-18, and
+// ReactDOM.createRoot().render() in React 18+, to avoid deprecation warnings.
+SC.render(
+    <>
+        <IButton autoFit="true" title="Define client-side format" ID="formatButton" click={onFormatButtonClick}/>
+
+        <ListGrid ID="employeeGrid" dataSource="employees_template" showFilterEditor="true" filterOnKeypress="true" autoFetchData="true" canAddSummaryFields="true" width="900" height="300" top="40" showAllColumns="true"/>
+
+        <Label contents="&lt;b&gt;Number of server trips: 0&lt;/b&gt;" padding="10" title="serverCount" ID="serverCount" width="500" height="40" top="350" border="1px solid grey" count="0" incrementAndUpdate={onServerCountIncrementAndUpdate}/>
+    </>,
+    document.getElementById(target)
+);
+
+var origBGColor, restoreBGColorTimerID;
+employees_template.addProperties({
+    transformResponse: function (dsResponse) {
+        if (this.dataFormat == 'iscServer')
+            this.updateRowCountLabel(dsResponse);
+    },
+    getClientOnlyResponse: function (dsRequest) {
+        var dsResponse = this.Super('getClientOnlyResponse', arguments);
+        this.updateRowCountLabel(dsResponse);
+        return dsResponse;
+    },
+    updateRowCountLabel: function (dsResponse) {
+        serverCount.incrementAndUpdate(dsResponse.totalRows, dsResponse.startRow, dsResponse.endRow);
+        if (restoreBGColorTimerID == null)
+            origBGColor = serverCount.backgroundColor;
+        else
+            isc.Timer.clear(restoreBGColorTimerID);
+        serverCount.setBackgroundColor('#ffff77');
+        restoreBGColorTimerID = isc.Timer.setTimeout(function () {
+            restoreBGColorTimerID = null;
+            serverCount.setBackgroundColor(origBGColor);
+        }, 500);
+    }
+});

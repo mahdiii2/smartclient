@@ -1,0 +1,20 @@
+>> internal notes <<
+
+>> change type (One of "bugfix" (or "b"), "feature" (or "f"), "doc change" (or "d") - leave blank for "other") <<
+
+>> public notes <<
+
+>> back compatibility (also public) <<
+
+>> reference <<
+
+>> SGWT vs SmartClient Only? Most changes apply to both SGWT and SC (Enter "SGWT" if this change has release notes that should only show up for SGWT builds, or "SC" if they should only show up for SmartClient builds) <<
+
+CVS: ** Please visit http://wiki.isomorphic.com/cvsCommitTemplate for detailed
+CVS:     instructions on how to populate this template **
+CVS: We use this information to automatically assemble public change-log files
+CVS: so it is important developers use the template correctly.
+CVS: Reminders:
+CVS: - "Public Notes" and "Back Compatibility Notes" are made public as part of a change log with each release
+CVS: - Each section should be populated *below* the header line
+CVS: - SC vs SGWT - only populate this if your change effects *only* one product line

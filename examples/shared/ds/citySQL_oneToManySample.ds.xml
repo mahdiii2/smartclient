@@ -1,0 +1,17 @@
+<DataSource isSampleDS="true"
+    ID="citySQL_oneToManySample"
+    serverType="sql"
+    tableName="city"
+    useAnsiJoins="true"
+
+>
+    <fields>
+        <field name="cityId"        type="sequence" hidden="true"   primaryKey="true" />
+        <field name="cityName"      type="text"     title="City"    required="true"   />
+        <!-- Many-to-one foreignKey relationship with country records. 
+             See reciprocal foreignKey on country DS for one-to-many relationship in the other direction.
+         -->
+        <field name="countryId"     type="integer" foreignKey="countrySQL_oneToManySample.countryId"/>
+    </fields>
+</DataSource>
+

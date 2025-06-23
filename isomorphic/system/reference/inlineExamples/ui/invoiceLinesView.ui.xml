@@ -1,0 +1,39 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="acc_Payment,acc_ProductLine,acc_Product,acc_OrderLine,acc_Order,acc_Office,acc_Employee,acc_Customer,acc_Invoice,acc_invoiceLine"/>
+
+
+<ListGrid dataSource="acc_invoiceLine" autoID="acc_invoiceLineGrid" autoFetchData="true" showGridSummary="true" showGroupSummary="false" width="80%">
+    <fields>
+        <field name="invoiceNumber" hidden="true"/>
+        <field name="line" showGridSummary="false"/>
+        <field name="Description"/>
+        <field name="qty" showGridSummary="false"/>
+        <field name="priceEach" showGridSummary="false" showGroupSummary="false">
+            <format>$,#.00</format>
+        </field>
+        <field name="total"/>
+    </fields>
+    <initialSort>
+        <SortSpecifier>
+            <direction>ascending</direction>
+            <property>line</property>
+            <normalizer>integer</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <autoPopulateData>true</autoPopulateData>
+</ListGrid>
+
+
+<DataView overflow="hidden" ID="invoiceLinesView" width="100%" height="300" autoDraw="true">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas ref="acc_invoiceLineGrid"/>
+    </members>
+    <autoPopulateData>false</autoPopulateData>
+</DataView>
+
+
+</isomorphicXML>

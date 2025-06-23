@@ -1,0 +1,8 @@
+
+/* stateful style - start grey and change to red on rollover */
+.chatStyle { color: grey; }
+.chatStyleOver { color: red; }
+
+/* simple styles - one grey and one red */
+.chatGrey { color: grey; }
+.chatRed { color: red; }

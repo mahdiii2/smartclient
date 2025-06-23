@@ -1,0 +1,44 @@
+{
+  "name": "react-isc-showcase-samples",
+  "version": "1.0.0",
+  "description": "React Showcase Samples",
+  "scripts": {
+    "links": "node create-links.js",
+    "build": "webpack --mode production",
+    "tryit": "webpack --mode development --watch"
+  },
+  "engines": {
+    "npm": ">=6.14.12",
+    "node": ">=14.16.1"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.7.0",
+    "babel-loader": "^8.2.3",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/runtime": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/plugin-transform-runtime": "^7.17.0",
+    "@types/react": "^18.2.23",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.29.3",
+    "file-loader": "^6.2.0",
+    "replace-in-file": "^6.3.5",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "dependencies": {
+    "eslint-import-resolver-alias": "^1.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "smartclient-eval": "^0.9.20"
+  }
+}

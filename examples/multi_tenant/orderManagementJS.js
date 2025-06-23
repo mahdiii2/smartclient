@@ -1,0 +1,2372 @@
+isc.Img.create({
+    ID:"companyLogo",
+    height:75,
+    overflow:"hidden",
+    width:75,
+    imageType:"center",
+    imageHeight:75,
+    imageWidth:75,
+    src:"[ISOMORPHIC_DOCS]/exampleImages/logo.png",
+    title:"Image0",
+    showMenuOnClick:true
+})
+
+isc.Label.create({
+    ID:"appTitle",
+    height:75,
+    width:"100%",
+    contents:"<span style=\"font-size:35px;font-weight:bold\">Order Management App</span> ",
+    align:"center",
+    wrap:false,
+    title:"Label0"
+})
+
+isc.HLayout.create({
+    ID:"headerLayout",
+    height:75,
+    overflow:"hidden",
+    align:"center",
+    members:[
+        companyLogo,
+        appTitle
+    ]
+})
+
+isc.Label.create({
+    ID:"totalOrderLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold\">Totals Orders</span>",
+    align:"center",
+    title:"Label0"
+})
+
+isc.Label.create({
+    ID:"totalOrdersValue",
+    height:20,
+    contents:"Label",
+    align:"center",
+    title:"Label1"
+})
+
+isc.VLayout.create({
+    ID:"totalOrdersLayout",
+    height:75,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        totalOrderLabel,
+        totalOrdersValue
+    ],
+    layoutTopMargin:10,
+    border:"1px solid grey",
+    borderRadius:"10px"
+})
+
+isc.Label.create({
+    ID:"shippedOrdersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;color:purple\">Shipped Orders</span>",
+    align:"center",
+    title:"Label2"
+})
+
+isc.Label.create({
+    ID:"shippedOrdersValue",
+    height:20,
+    contents:"Label",
+    align:"center",
+    title:"Label3"
+})
+
+isc.VLayout.create({
+    ID:"totalShippedOrdersLayout",
+    height:75,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        shippedOrdersLabel,
+        shippedOrdersValue
+    ],
+    layoutTopMargin:10,
+    border:"1px solid gray",
+    borderRadius:"10px"
+})
+
+isc.Label.create({
+    ID:"openOrdersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;color:green\">Open Orders</span>",
+    align:"center",
+    title:"Label4"
+})
+
+isc.Label.create({
+    ID:"openOrdersValue",
+    height:20,
+    contents:"Label",
+    align:"center",
+    title:"Label5"
+})
+
+isc.VLayout.create({
+    ID:"totalOpenOrdersLayout",
+    height:75,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        openOrdersLabel,
+        openOrdersValue
+    ],
+    layoutTopMargin:10,
+    border:"1px solid grey",
+    borderRadius:"10px"
+})
+
+isc.Label.create({
+    ID:"heldOrdersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;color:red\">Held Orders</span>",
+    align:"center",
+    title:"Label6"
+})
+
+isc.Label.create({
+    ID:"heldOrdersValue",
+    height:20,
+    contents:"Label",
+    align:"center",
+    title:"Label7"
+})
+
+isc.VLayout.create({
+    ID:"totalHeldOrdersLayout",
+    height:75,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        heldOrdersLabel,
+        heldOrdersValue
+    ],
+    layoutTopMargin:10,
+    border:"1px solid grey",
+    borderRadius:"10px"
+})
+
+isc.HLayout.create({
+    ID:"orderStatsLayout",
+    height:100,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        totalOrdersLayout,
+        totalShippedOrdersLayout,
+        totalOpenOrdersLayout,
+        totalHeldOrdersLayout
+    ],
+    layoutLeftMargin:10,
+    layoutRightMargin:10,
+    layoutTopMargin:10,
+    layoutBottomMargin:10,
+    drawn:{
+        sequence:[
+            {
+                dataSource:"ord_Order",
+                description:"Fetch all Order records",
+                failureElement:"next",
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                description:"Fetch Order where <ul><li>Status equals Shipped</li></ul>",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"Shipped"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"shippedOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:purple\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                description:"Fetch Order where <ul><li>Status equals In Process</li></ul>",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"In Process"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"openOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:green\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                description:"Fetch Order where <ul><li>Status equals On Hold</li><li> or Status equals Disputed</li></ul>",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    operator:"or",
+                    criteria:[
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"On Hold"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Disputed"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Cancelled"
+                        }
+                    ]
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"heldOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:red\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"addNewOrderButton",
+    src:{
+        _base:"[SKIN]/actions/plus.png"
+    },
+    title:"IconButton0",
+    prompt:"Add New Order",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"addEditOrderLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:30px;font-weight:bold;\">Add New Order</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                componentId:"ord_OrderForm",
+                initialValues:{
+                    status:"In Process"
+                },
+                _constructor:"FormEditNewRecordTask"
+            },
+            {
+                componentId:"ord_OrderForm",
+                targetField:"orderDate",
+                value:{
+                    _constructor:"RelativeDate",
+                    value:"$today"
+                },
+                _constructor:"FormSetFieldValueTask"
+            },
+            {
+                ID:"Show0",
+                componentId:"addEditOrderLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"hdrActionButtonsLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"orderDetailLayout",
+                _constructor:"HideTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"printOrdersButton",
+    src:{
+        _base:"[SKIN]/actions/print.png"
+    },
+    title:"IconButton1",
+    prompt:"Print Orders",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                message:"Print functions not available in this starter app",
+                _constructor:"ShowMessageTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"exportOrdersButton",
+    src:{
+        _base:"[SKIN]/actions/export.png"
+    },
+    title:"IconButton2",
+    prompt:"Export Order List",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_OrderGrid",
+                requestProperties:{
+                    exportAs:"csv",
+                    exportDisplay:"download"
+                },
+                _constructor:"GridExportClientDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.ToolStrip.create({
+    ID:"actionsToolstrip",
+    membersMargin:10,
+    align:"right",
+    members:[
+        addNewOrderButton,
+        printOrdersButton,
+        exportOrdersButton
+    ],
+    layoutRightMargin:10
+})
+
+isc.DynamicForm.create({
+    ID:"savedSearchForm",
+    height:26,
+    fields:[
+        {
+            autoName:"SavedSearchItem0",
+            targetComponent:"ord_OrderGrid",
+            hint:"Select a Saved View",
+            _constructor:"SavedSearchItem"
+        }
+    ]
+})
+
+isc.ListGrid.create({
+    autoFetchData:true,
+    autoID:"ord_OrderGrid",
+    dataSource:"ord_Order",
+    showFilterEditor:true,
+    showGridSummary:true,
+    initialCriteria:{
+    },
+    fields:[
+        {
+            name:"orderNumber"
+        },
+        {
+            name:"orderDate",
+            width:120
+        },
+        {
+            name:"requiredDate",
+            width:120
+        },
+        {
+            name:"shippedDate",
+            width:120
+        },
+        {
+            name:"status"
+        },
+        {
+            name:"comments"
+        },
+        {
+            name:"customerNumber",
+            title:"Customer"
+        },
+        {
+            name:"orderTotal"
+        }
+    ],
+    cellHeight:40,
+    initialSort:[
+        {
+            direction:"descending",
+            property:"orderNumber",
+            normalizer:"sequence"
+        }
+    ],
+
+    hilites:[
+        {
+            fieldName:"status",
+            id:"0",
+            criteria:{
+                fieldName:"status",
+                operator:"equals",
+                value:"Shipped"
+            },
+            textColor:"#333399",
+            cssText:"color:#333399;",
+            icon:""
+        },
+        {
+            fieldName:"status",
+            id:"1",
+            criteria:{
+                fieldName:"status",
+                operator:"equals",
+                value:"In Process"
+            },
+            textColor:"#339966",
+            cssText:"color:#339966;",
+            icon:""
+        },
+        {
+            fieldName:"status",
+            id:"2",
+            criteria:{
+                operator:"or",
+                criteria:[
+                    {
+                        fieldName:"status",
+                        operator:"equals",
+                        value:"On Hold"
+                    },
+                    {
+                        fieldName:"status",
+                        operator:"equals",
+                        value:"Disputed"
+                    },
+                    {
+                        fieldName:"status",
+                        operator:"equals",
+                        value:"Cancelled"
+                    }
+                ]
+            },
+            textColor:"#FF0000",
+            cssText:"color:#FF0000;",
+            icon:""
+        }
+    ],
+
+    canExpandRecords:true,
+    productComponents: [],
+
+    getExpansionComponent: function (record) {
+        var innerGrid = isc.ListGrid.create({
+            autoFetchData:true,
+            dataSource:"ord_OrderLine",
+            showGridSummary:true,
+            showGroupSummary:false,
+            fields:[
+                {
+                    hidden:true,
+                    name:"orderLineId"
+                },
+                {
+                    hidden:true,
+                    name:"orderNumber"
+                },
+                {
+                    name:"orderLineNumber",
+                    showGridSummary:false,
+                    showGroupSummary:false
+                },
+                {
+                    name:"productCode",
+                    width:300
+                },
+                {
+                    name:"quantityOrdered",
+                    showGridSummary:false,
+                    showGroupSummary:false
+                },
+                {
+                    name:"priceEach",
+                    showGridSummary:false,
+                    showGroupSummary:false
+                },
+                {
+                    name:"Line_Total1",
+                    title:"Line Total",
+                    type:"float",
+                    width:120,
+                    canEditFormula:true,
+                    userFormula:{
+                        text:"priceEach*quantityOrdered"
+                    },
+                    format:"$,#.00"
+                }
+            ],
+
+            initialSort:[
+                {
+                    direction:"ascending",
+                    property:"orderLineNumber",
+                    normalizer:"integer"
+                }
+            ],
+            autoPopulateData:true
+        });
+        innerGrid.fetchRelatedData(record, "ord_Order");
+
+        var topWidget = isc.VLayout.create({
+            autoDraw:true,
+            height:250,
+            overflow:"hidden",
+            width:"80%",
+            align:"center",
+            defaultLayoutAlign:"center",
+            members:[innerGrid],
+
+            destroy : function () {
+                this.Super("destroy",arguments);
+                console.log("AAA");
+            },
+
+            layoutLeftMargin:50
+        });
+        this.productComponents[record.orderNumber] = topWidget;
+
+        return topWidget;
+    },
+
+    collapseRecord : function (record) {
+        this.Super("collapseRecord", arguments);
+
+        var orderNumber = record.orderNumber,
+            component = this.productComponents[orderNumber];
+        if (component) component.destroy();
+        debugger;
+        delete this.productComponents[orderNumber];
+    },
+
+    adminSavedSearches:[
+        {
+            pk:"10000",
+            data:"({field:[\"orderNumber\",{name:\"orderDate\",width:120},{name:\"requiredDate\",width:120},{name:\"shippedDate\",width:120},\"status\",\"comments\",\"customerNumber\",\"orderTotal\"],sort:{sortSpecifiers:[{direction:\"descending\",property:\"orderNumber\"}]},hilite:[{fieldName:\"status\",id:\"0\",criteria:{fieldName:\"status\",value:\"Shipped\"},textColor:\"#333399\"},{fieldName:\"status\",id:\"1\",criteria:{fieldName:\"status\",value:\"In Process\"},textColor:\"#339966\"},{fieldName:\"status\",id:\"2\",criteria:{operator:\"or\",criteria:[{fieldName:\"status\",value:\"On Hold\"},{fieldName:\"status\",value:\"Disputed\"}]},textColor:\"#FF0000\"}],group:[{fieldName:\"customerNumber\"}],showFilterEditor:true,userCriteria:\"[No Criteria]\"})",
+            searchName:"Orders by Customer",
+            componentId:"ord_OrderGrid:ord_Order",
+            userId:"",
+            isSharedDefault:"true"
+        },
+        {
+            pk:"10001",
+            data:"({field:[\"orderNumber\",{name:\"orderDate\",width:120},{name:\"requiredDate\",width:120},{name:\"shippedDate\",width:120},\"status\",\"comments\",\"customerNumber\",\"orderTotal\"],sort:{sortSpecifiers:[{direction:\"descending\",property:\"orderNumber\"}]},hilite:[{fieldName:\"status\",id:\"0\",criteria:{fieldName:\"status\",value:\"Shipped\"},textColor:\"#333399\"},{fieldName:\"status\",id:\"1\",criteria:{fieldName:\"status\",value:\"In Process\"},textColor:\"#339966\"},{fieldName:\"status\",id:\"2\",criteria:{operator:\"or\",criteria:[{fieldName:\"status\",value:\"On Hold\"},{fieldName:\"status\",value:\"Disputed\"}]},textColor:\"#FF0000\"}],group:\"[No Grouping]\",showFilterEditor:true,userCriteria:\"[No Criteria]\"})",
+            searchName:"All Orders Descending",
+            componentId:"ord_OrderGrid:ord_Order",
+            userId:""
+        },
+        {
+            pk:"10002",
+            data:"({field:[\"orderNumber\",{name:\"orderDate\",width:120},{name:\"requiredDate\",width:120},{name:\"shippedDate\",width:120},\"status\",\"comments\",\"customerNumber\",\"orderTotal\"],sort:{sortSpecifiers:[{direction:\"descending\",property:\"orderNumber\"}]},hilite:[{fieldName:\"status\",id:\"0\",criteria:{fieldName:\"status\",value:\"Shipped\"},textColor:\"#333399\"},{fieldName:\"status\",id:\"1\",criteria:{fieldName:\"status\",value:\"In Process\"},textColor:\"#339966\"},{fieldName:\"status\",id:\"2\",criteria:{operator:\"or\",criteria:[{fieldName:\"status\",value:\"On Hold\"},{fieldName:\"status\",value:\"Disputed\"}]},textColor:\"#FF0000\"}],group:\"[No Grouping]\",showFilterEditor:true,userCriteria:{status:[\"In Process\"]}})",
+            searchName:"In Process Orders",
+            componentId:"ord_OrderGrid:ord_Order",
+            userId:""
+        },
+        {
+            pk:"10003",
+            data:"({field:[\"orderNumber\",{name:\"orderDate\",width:120},{name:\"requiredDate\",width:120},{name:\"shippedDate\",width:120},\"status\",\"comments\",\"customerNumber\",\"orderTotal\"],sort:{sortSpecifiers:[{direction:\"descending\",property:\"orderNumber\"}]},hilite:[{fieldName:\"status\",id:\"0\",criteria:{fieldName:\"status\",value:\"Shipped\"},textColor:\"#333399\"},{fieldName:\"status\",id:\"1\",criteria:{fieldName:\"status\",value:\"In Process\"},textColor:\"#339966\"},{fieldName:\"status\",id:\"2\",criteria:{operator:\"or\",criteria:[{fieldName:\"status\",value:\"On Hold\"},{fieldName:\"status\",value:\"Disputed\"}]},textColor:\"#FF0000\"}],group:\"[No Grouping]\",showFilterEditor:true,userCriteria:{status:[\"Shipped\"]}})",
+            searchName:"All Shipped Orders",
+            componentId:"ord_OrderGrid:ord_Order",
+            userId:""
+        },
+        {
+            searchName:"Held/Disputed/Cancelled Orders",
+            componentId:"ord_OrderGrid:ord_Order",
+            data:"({field:[\"orderNumber\",{name:\"orderDate\",width:120},{name:\"requiredDate\",width:120},{name:\"shippedDate\",width:120},\"status\",\"comments\",\"customerNumber\",\"orderTotal\"],sort:{sortSpecifiers:[{direction:\"descending\",property:\"orderNumber\"}]},hilite:[{fieldName:\"status\",id:\"0\",criteria:{fieldName:\"status\",value:\"Shipped\"},textColor:\"#333399\"},{fieldName:\"status\",id:\"1\",criteria:{fieldName:\"status\",value:\"In Process\"},textColor:\"#339966\"},{fieldName:\"status\",id:\"2\",criteria:{operator:\"or\",criteria:[{fieldName:\"status\",value:\"On Hold\"},{fieldName:\"status\",value:\"Disputed\"}]},textColor:\"#FF0000\"}],group:\"[No Grouping]\",showFilterEditor:true,userCriteria:{status:[\"Cancelled\",\"Disputed\",\"On Hold\"]}})",
+            pk:"10006"
+        }
+    ],
+    recordDoubleClick:{
+        sequence:[
+            {
+                componentId:"addEditOrderLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:30px;font-weight:bold;\">Editing Order Number #{ord_OrderGrid.selectedRecord.orderNumber}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                componentId:"addEditOrderLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"hdrActionButtonsLayout",
+                _constructor:"HideTask"
+            },
+            {
+                componentId:"orderDetailLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"ord_OrderForm",
+                selectionComponentId:"ord_OrderGrid",
+                _constructor:"FormEditSelectedTask"
+            },
+            {
+                componentId:"ord_OrderLineGrid",
+                recordSourceComponent:"ord_OrderGrid",
+                _constructor:"FetchRelatedDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.VLayout.create({
+    ID:"mainOrderLayout",
+    membersMargin:5,
+    members:[
+        orderStatsLayout,
+        actionsToolstrip,
+        savedSearchForm,
+        ord_OrderGrid
+    ]
+})
+
+isc.Label.create({
+    ID:"addEditOrderLabel",
+    height:20,
+    contents:"<span style=\"font-size:30px;font-weight:bold;\">Add New Order</span>",
+    title:"Label1"
+})
+
+isc.Label.create({
+    ID:"shippedOrdersWarnmingLabel",
+    height:30,
+    contents:"<span style=\"font-weight:bold;font-size:30px;color:red\">Shipped Orders Cannot be Edited</span>",
+    title:"Label0",
+    visibleWhen:{
+        fieldName:"ord_OrderForm.values.status",
+        operator:"equals",
+        value:"Shipped"
+    }
+})
+
+isc.DynamicForm.create({
+    autoID:"ord_OrderForm",
+    dataSource:"ord_Order",
+    height:250,
+    numCols:4,
+    overflow:"hidden",
+    width:900,
+    fields:[
+        {
+            canEdit:false,
+            name:"orderNumber",
+            _constructor:"TextItem"
+        },
+        {
+            name:"customerNumber",
+            readOnlyDisplay:"static",
+            title:"Customer",
+            readOnlyWhen:{
+                fieldName:"status",
+                operator:"equals",
+                value:"Shipped"
+            },
+            _constructor:"SelectItem"
+        },
+        {
+            canEdit:false,
+            name:"orderDate",
+            readOnlyDisplay:"static",
+            useTextField:true,
+            readOnlyWhen:{
+                fixedValue:true
+            },
+            _constructor:"DateItem"
+        },
+        {
+            name:"requiredDate",
+            readOnlyDisplay:"static",
+            useTextField:true,
+            readOnlyWhen:{
+                fieldName:"status",
+                operator:"equals",
+                value:"Shipped"
+            },
+            _constructor:"DateItem"
+        },
+        {
+            colSpan:"4",
+            name:"comments",
+            readOnlyDisplay:"static",
+            width:800,
+            readOnlyWhen:{
+                fieldName:"status",
+                operator:"equals",
+                value:"Shipped"
+            },
+            _constructor:"TextAreaItem"
+        },
+        {
+            name:"shippedDate",
+            readOnlyDisplay:"static",
+            readOnlyWhen:{
+                fixedValue:true
+            },
+            visibleWhen:{
+                fieldName:"status",
+                operator:"equals",
+                value:"Shipped"
+            },
+            _constructor:"DateItem"
+        },
+        {
+            endRow:true,
+            name:"status",
+            readOnlyDisplay:"static",
+            _constructor:"SelectItem"
+        },
+        {
+            name:"orderTotal",
+            readOnlyDisplay:"static",
+            readOnlyWhen:{
+                fixedValue:true
+            },
+            dynamicProperties:[
+                {
+                    dataPath:"ord_OrderLineGrid.summaryRecord.Line_Total1",
+                    name:"defaultValue",
+                    _constructor:"DynamicProperty"
+                }
+            ],
+            _constructor:"FloatItem"
+        }
+    ],
+    wrapItemTitles:false
+})
+
+isc.IButton.create({
+    ID:"addOrderHeader",
+    title:"Add Order Header",
+    visibleWhen:{
+        fieldName:"orderForm.values.orderNumber",
+        operator:"isBlank"
+    },
+    click:{
+        sequence:[
+            {
+                clearAfterSave:false,
+                componentId:"ord_OrderForm",
+                _constructor:"FormSaveDataTask"
+            },
+            {
+                description:"Show notification: \"Order number #{_lastTask. ...\"",
+                textFormula:{
+                    text:"Order Number #{_lastTask.orderNumber} added successfully"
+                },
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"orderDetailLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"hdrActionButtonsLayout",
+                _constructor:"HideTask"
+            },
+            {
+                componentId:"ord_OrderLineGrid",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    operator:"and",
+                    criteria:[
+                        {
+                            fieldName:"orderNumber",
+                            operator:"equals",
+                            value:"$ruleScope.ord_OrderForm.values.orderNumber"
+                        }
+                    ]
+                },
+                _constructor:"GridFetchDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    ID:"cancelorderHeader",
+    title:"Cancel",
+    visibleWhen:{
+        fieldName:"orderForm.values.orderNumber",
+        operator:"isBlank"
+    },
+    click:{
+        sequence:[
+            {
+                message:"Action Cancelled",
+                notifyType:"warn",
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"mainOrderLayout",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"hdrActionButtonsLayout",
+    height:25,
+    membersMargin:5,
+    overflow:"hidden",
+    members:[
+        addOrderHeader,
+        cancelorderHeader
+    ],
+    visibleWhen:{
+        fieldName:"ord_OrderForm.values.orderNumber",
+        operator:"isBlank"
+    }
+})
+
+isc.IButton.create({
+    ID:"addOrderLInes",
+    title:"Add Order Lines",
+    visibleWhen:{
+        fieldName:"ord_Order.status",
+        operator:"notEqual",
+        value:"Shipped"
+    },
+    click:{
+        sequence:[
+            {
+                componentId:"ord_OrderLineGrid",
+                initialValues:{
+                    orderNumber:"$ruleScope.ord_OrderForm.values.orderNumber"
+                },
+                _constructor:"GridEditRecordTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.ListGrid.create({
+    autoFetchData:true,
+    autoID:"ord_OrderLineGrid",
+    canEdit:true,
+    canRemoveRecords:true,
+    dataSource:"ord_OrderLine",
+    showGridSummary:true,
+    fields:[
+        {
+            hidden:true,
+            name:"orderLineId"
+        },
+        {
+            name:"orderLineNumber",
+            showGridSummary:false,
+            showGroupSummary:false,
+            title:"Line#"
+        },
+        {
+            name:"productCode",
+            title:"Product",
+            width:300
+        },
+        {
+            name:"quantityOrdered",
+            showGridSummary:false,
+            showGroupSummary:false
+        },
+        {
+            name:"priceEach",
+            showGridSummary:false,
+            showGroupSummary:false
+        },
+        {
+            name:"Line_Total1",
+            title:"Line Total",
+            type:"float",
+            width:120,
+            canEditFormula:true,
+            userFormula:{
+                text:"quantityOrdered*priceEach"
+            },
+            format:"$,#.00"
+        }
+    ],
+    autoSaveEdits:true,
+    autoFitFieldWidths:true,
+    autoFitWidthApproach:"both",
+    enableWhen:{
+        fieldName:"ord_OrderForm.values.status",
+        operator:"notEqual",
+        value:"Shipped"
+    },
+    rowEditorExit:{
+        sequence:[
+            {
+                componentId:"ord_OrderForm",
+                targetField:"orderTotal",
+                value:"$ruleScope.ord_OrderLineGrid.summaryRecord.Line_Total1",
+                _constructor:"FormSetFieldValueTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    ID:"saveOrder",
+    title:"Save",
+    enableWhen:{
+        fieldName:"ord_OrderForm.values.status",
+        operator:"notEqual",
+        value:"Shipped"
+    },
+    click:{
+        sequence:[
+            {
+                clearAfterSave:false,
+                componentId:"ord_OrderForm",
+                failureElement:"next",
+                _constructor:"FormSaveDataTask"
+            },
+            {
+                textFormula:{
+                    text:"Order #{_lastTask.orderNumber} has been added or updated successfully"
+                },
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"mainOrderLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"Shipped"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"shippedOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px;color:purple\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"In Process"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"openOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px;color:green\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                description:"Fetch ord_Order where <ul><li>Status equals On Hold</li><li> or Status equals Disputed</li></ul>",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    operator:"or",
+                    criteria:[
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"On Hold"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Disputed"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Cancelled"
+                        }
+                    ]
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"heldOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px;color:red\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    ID:"cancelOrder",
+    title:"Cancel Changes",
+    click:{
+        sequence:[
+            {
+                message:"Action Cancelled",
+                notifyType:"warn",
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"mainOrderLayout",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    autoID:"shipNowButton",
+    title:"Ship Now",
+    enableWhen:{
+        fieldName:"ord_OrderForm.values.status",
+        operator:"notEqual",
+        value:"Shipped"
+    },
+    visibleWhen:{
+        fieldName:"ord_OrderForm.values.orderNumber",
+        operator:"notBlank"
+    },
+    click:{
+        sequence:[
+            {
+                componentId:"ord_OrderForm",
+                targetField:"status",
+                value:"Shipped",
+                _constructor:"FormSetFieldValueTask"
+            },
+            {
+                componentId:"ord_OrderForm",
+                targetField:"shippedDate",
+                _constructor:"FormSetFieldValueTask"
+            },
+            {
+                clearAfterSave:false,
+                componentId:"ord_OrderForm",
+                failureElement:"next",
+                _constructor:"FormSaveDataTask"
+            },
+            {
+                textFormula:{
+                    text:"Order #{_lastTask.orderNumber} has been shipped successfully"
+                },
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"mainOrderLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"Shipped"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"shippedOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:purple\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"status",
+                    operator:"equals",
+                    value:"In Process"
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"openOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:green\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Order",
+                description:"Fetch ord_Order where <ul><li>Status equals On Hold</li><li> or Status equals Disputed</li></ul>",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    operator:"or",
+                    criteria:[
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"On Hold"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Disputed"
+                        },
+                        {
+                            fieldName:"status",
+                            operator:"equals",
+                            value:"Cancelled"
+                        }
+                    ]
+                },
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"heldOrdersValue",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;color:red\">#{_lastTask.orderTotal}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"orderLineActionButtons",
+    height:25,
+    membersMargin:5,
+    overflow:"hidden",
+    members:[
+        saveOrder,
+        cancelOrder,
+        shipNowButton
+    ]
+})
+
+isc.VLayout.create({
+    ID:"orderDetailLayout",
+    membersMargin:5,
+    overflow:"hidden",
+    members:[
+        addOrderLInes,
+        ord_OrderLineGrid,
+        orderLineActionButtons
+    ]
+})
+
+isc.VLayout.create({
+    ID:"addEditOrderLayout",
+    membersMargin:10,
+    members:[
+        addEditOrderLabel,
+        shippedOrdersWarnmingLabel,
+        ord_OrderForm,
+        hdrActionButtonsLayout,
+        orderDetailLayout
+    ],
+    layoutMargin:50,
+    layoutTopMargin:50
+})
+
+isc.Deck.create({
+    ID:"ordersDeck",
+    panes:[
+        mainOrderLayout,
+        addEditOrderLayout
+    ]
+})
+
+isc.FacetChart.create({
+    autoFetchData:true,
+    autoID:"orderTotalsByCustomersFacetChart",
+    dataSource:"ord_Order",
+    height:395,
+    width:"75%",
+    chartType:"Column",
+    filled:true,
+    title:"Order Totals by Customers",
+    drawTitleBackground:false,
+    drawTitleBoundary:false,
+    titleAlign:"center",
+    titlePadding:10,
+    titleRectHeight:38,
+    showValueAxisLabel:true,
+    showDataAxisLabel:true,
+    showDataLabels:true,
+    showDataValuesMode:"inHoverOnly",
+    canZoom:false,
+    zoomStartPosition:"start",
+    zoomStartValue:"Online Diecast Creations Co.",
+    zoomEndValue:"Danish Wholesale Imports",
+    facetFields:[
+        "ord_CustomerCustomerName"
+    ],
+    valueProperty:"orderTotal",
+    border:"1px solid grey",
+    borderRadius:"10px",
+    drawn:{
+        sequence:[
+            {
+                componentId:"orderTotalsByCustomersFacetChart",
+                summaryFunctions:{
+                    orderTotal:"sum"
+                },
+                groupBy:[
+                    "customerNumber"
+                ],
+                _constructor:"GridFetchDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.Label.create({
+    ID:"totalCustomersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold\">Total Customers:</span>",
+    title:"Label8"
+})
+
+isc.Label.create({
+    ID:"totalCustomersCount",
+    height:20,
+    contents:"Label",
+    title:"Label9"
+})
+
+isc.Label.create({
+    ID:"uSCustomersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold\">Total US Customers:</span>",
+    title:"Label10"
+})
+
+isc.Label.create({
+    ID:"uSCustomersCount",
+    height:20,
+    contents:"Label",
+    title:"Label11"
+})
+
+isc.Label.create({
+    ID:"nonUSCustomersLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold\">Total International Customers:</span>",
+    title:"Label12"
+})
+
+isc.Label.create({
+    ID:"nonUSCustomersCount",
+    height:20,
+    contents:"Label",
+    title:"Label13"
+})
+
+isc.VLayout.create({
+    ID:"customerStats",
+    height:230,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        totalCustomersLabel,
+        totalCustomersCount,
+        uSCustomersLabel,
+        uSCustomersCount,
+        nonUSCustomersLabel,
+        nonUSCustomersCount
+    ],
+    layoutLeftMargin:10,
+    layoutTopMargin:10,
+    border:"1px solid gray",
+    borderRadius:"10px",
+    drawn:{
+        sequence:[
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"country",
+                    operator:"equals",
+                    value:"USA"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"uSCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"country",
+                    operator:"notEqual",
+                    value:"USA"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"nonUSCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"customerStatsLayout",
+    height:400,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        orderTotalsByCustomersFacetChart,
+        customerStats
+    ],
+    layoutLeftMargin:10,
+    layoutRightMargin:10
+})
+
+isc.IconImgButton.create({
+    ID:"addNewCustomer",
+    src:{
+        _base:"[SKIN]/actions/plus.png"
+    },
+    title:"IconButton3",
+    prompt:"Add New Customer",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_CustomerForm",
+                _constructor:"FormEditNewRecordTask"
+            },
+            {
+                componentId:"addEditCustomerLayout",
+                description:"Show ''",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"addEditCustomerLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:30px;font-weight:bold;\">Add New Customer</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"printCustomers",
+    src:{
+        _base:"[SKIN]/actions/print.png"
+    },
+    title:"IconButton4",
+    prompt:"Print all Customers",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                message:"Print functions not available in this starter app",
+                _constructor:"ShowMessageTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"exportCustomers",
+    src:{
+        _base:"[SKIN]/actions/export.png"
+    },
+    title:"IconButton5",
+    prompt:"Export Customers",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_CustomerGrid",
+                requestProperties:{
+                    exportAs:"csv",
+                    exportDisplay:"download"
+                },
+                _constructor:"GridExportClientDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.ToolStrip.create({
+    ID:"customerActionsToolstrip",
+    membersMargin:10,
+    align:"right",
+    members:[
+        addNewCustomer,
+        printCustomers,
+        exportCustomers
+    ],
+    layoutRightMargin:10
+})
+
+isc.ListGrid.create({
+    autoFetchData:true,
+    autoID:"ord_CustomerGrid",
+    dataSource:"ord_Customer",
+    showFilterEditor:true,
+    fields:[
+        {
+            name:"customerNumber"
+        },
+        {
+            name:"customerName"
+        },
+        {
+            name:"contactLastName"
+        },
+        {
+            name:"contactFirstName"
+        },
+        {
+            name:"phone"
+        },
+        {
+            name:"country"
+        },
+        {
+            name:"salesRepEmployeeNumber"
+        },
+        {
+            name:"creditLimit"
+        },
+        {
+            hidden:true,
+            name:"addressLine1"
+        },
+        {
+            hidden:true,
+            name:"addressLine2"
+        },
+        {
+            hidden:true,
+            name:"city"
+        },
+        {
+            hidden:true,
+            name:"state"
+        },
+        {
+            hidden:true,
+            name:"postalCode"
+        }
+    ],
+    cellHeight:40,
+    canExpandRecords:true,
+    expansionMode:"details",
+    recordDoubleClick:{
+        sequence:[
+            {
+                componentId:"ord_CustomerForm",
+                selectionComponentId:"ord_CustomerGrid",
+                _constructor:"FormEditSelectedTask"
+            },
+            {
+                componentId:"addEditCustomerLayout",
+                description:"Show ''",
+                _constructor:"ShowTask"
+            },
+            {
+                componentId:"addEditCustomerLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:20px;font-weight:bold;\">Editing Customer  #{ord_CustomerGrid.selectedRecord.customerNumber} / #{ord_CustomerGrid.selectedRecord.customerName}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.VLayout.create({
+    ID:"customersLayout",
+    members:[
+        customerStatsLayout,
+        customerActionsToolstrip,
+        ord_CustomerGrid
+    ],
+    layoutTopMargin:20
+})
+
+isc.Label.create({
+    ID:"addEditCustomerLabel",
+    height:20,
+    contents:"<span style=\"font-size:30px;font-weight:bold;\">Add New Customer</span>",
+    title:"Label20"
+})
+
+isc.Header.create({
+    autoID:"contactDetailsHeader",
+    title:"Contact Details"
+})
+
+isc.DynamicForm.create({
+    autoID:"ord_CustomerForm",
+    dataSource:"ord_Customer",
+    height:275,
+    numCols:4,
+    fields:[
+        {
+            name:"customerNumber",
+            _constructor:"TextItem"
+        },
+        {
+            name:"customerName",
+            _constructor:"TextItem"
+        },
+        {
+            name:"salesRepEmployeeNumber",
+            title:"salesperson",
+            _constructor:"SelectItem"
+        },
+        {
+            name:"creditLimit",
+            _constructor:"FloatItem"
+        },
+        {
+            autoName:"CanvasItem0",
+            colSpan:"*",
+            endRow:true,
+            showTitle:false,
+            startRow:true,
+            width:"*",
+            canvas:contactDetailsHeader,
+            _constructor:"CanvasItem"
+        },
+        {
+            name:"contactLastName",
+            _constructor:"TextItem"
+        },
+        {
+            name:"contactFirstName",
+            _constructor:"TextItem"
+        },
+        {
+            name:"phone",
+            _constructor:"TextItem"
+        },
+        {
+            name:"addressLine1",
+            _constructor:"TextItem"
+        },
+        {
+            name:"addressLine2",
+            _constructor:"TextItem"
+        },
+        {
+            name:"city",
+            _constructor:"TextItem"
+        },
+        {
+            name:"state",
+            _constructor:"TextItem"
+        },
+        {
+            name:"postalCode",
+            _constructor:"TextItem"
+        },
+        {
+            name:"country",
+            _constructor:"TextItem"
+        }
+    ],
+    wrapItemTitles:false
+})
+
+isc.IButton.create({
+    autoID:"saveButton",
+    title:"Save",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_CustomerForm",
+                _constructor:"FormSaveDataTask"
+            },
+            {
+                textFormula:{
+                    text:"Customer #{_lastTask.customerNumber} /  #{_lastTask.customerName} has been added or updated"
+                },
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"customersLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"country",
+                    operator:"equals",
+                    value:"USA"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"uSCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Customer",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"country",
+                    operator:"notEqual",
+                    value:"USA"
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"nonUSCustomersCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    autoID:"cancelButton",
+    title:"Cancel",
+    click:{
+        sequence:[
+            {
+                message:"Action Cancelled",
+                notifyType:"warn",
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"customersLayout",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"customerButtonLayout",
+    height:25,
+    membersMargin:5,
+    overflow:"hidden",
+    members:[
+        saveButton,
+        cancelButton
+    ]
+})
+
+isc.VLayout.create({
+    ID:"addEditCustomerLayout",
+    height:"100%",
+    membersMargin:10,
+    members:[
+        addEditCustomerLabel,
+        ord_CustomerForm,
+        customerButtonLayout
+    ],
+    layoutMargin:50
+})
+
+isc.Deck.create({
+    ID:"customersDeck",
+    panes:[
+        customersLayout,
+        addEditCustomerLayout
+    ]
+})
+
+isc.FacetChart.create({
+    autoID:"stockholdingByVendorFacetChart",
+    dataSource:"ord_Product",
+    width:"70%",
+    title:"Stockholding by Vendor",
+    drawTitleBackground:false,
+    drawTitleBoundary:false,
+    titleAlign:"center",
+    showDataValuesMode:"inHoverOnly",
+    facetFields:[
+        "productVendor"
+    ],
+    valueProperty:"quantityInStock",
+    border:"1px solid grey",
+    borderRadius:"10px",
+    dataProperties: {
+        dropCacheOnUpdate:true
+    },
+    dataChanged : function () {
+        this.Super("dataChanged", arguments);
+        this.requestVisibleChartData();
+    },
+    drawn:{
+        sequence:[
+            {
+                componentId:"stockholdingByVendorFacetChart",
+                summaryFunctions:{
+                    quantityInStock:"sum"
+                },
+                groupBy:[
+                    "productVendor"
+                ],
+                _constructor:"GridFetchDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.Label.create({
+    ID:"totalProductsLabel",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;\">Total Products:</span>",
+    title:"Label14"
+})
+
+isc.Label.create({
+    ID:"totalProductsCount",
+    height:20,
+    title:"Label15"
+})
+
+isc.Label.create({
+    ID:"moreThan100Label",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;\">Products more than $100 per unit:</span>",
+    title:"Label16"
+})
+
+isc.Label.create({
+    ID:"moreThan100Count",
+    height:20,
+    contents:"Label",
+    title:"Label17"
+})
+
+isc.Label.create({
+    ID:"lessThan100Label",
+    height:20,
+    contents:"<span style=\"font-size:20px;font-weight:bold;\"> Products less than $100 per unit:</span>",
+    title:"Label18"
+})
+
+isc.Label.create({
+    ID:"lessThan100Count",
+    height:20,
+    contents:"Label",
+    title:"Label19"
+})
+
+isc.VLayout.create({
+    ID:"productCountsLayout",
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        totalProductsLabel,
+        totalProductsCount,
+        moreThan100Label,
+        moreThan100Count,
+        lessThan100Label,
+        lessThan100Count
+    ],
+    layoutLeftMargin:10,
+    layoutTopMargin:10,
+    border:"1px solid gray",
+    borderRadius:"10px",
+    drawn:{
+        sequence:[
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalProductsCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"msrp",
+                    operator:"greaterThan",
+                    value:100.0
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"moreThan100Count",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"msrp",
+                    operator:"lessOrEqual",
+                    value:100.0
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"lessThan100Count",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"productStatsLayout",
+    height:350,
+    membersMargin:10,
+    overflow:"hidden",
+    members:[
+        stockholdingByVendorFacetChart,
+        productCountsLayout
+    ],
+    layoutLeftMargin:10,
+    layoutRightMargin:10,
+    layoutTopMargin:10,
+    layoutBottomMargin:10
+})
+
+isc.IconImgButton.create({
+    ID:"addNewProduct",
+    src:{
+        _base:"[SKIN]/actions/plus.png"
+    },
+    title:"IconButton6",
+    prompt:"Add New Product",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_ProductForm",
+                _constructor:"FormEditNewRecordTask"
+            },
+            {
+                componentId:"addEditProductLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:30px;font-weight:bold;\">Add New Product</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                componentId:"addEditProductLayout",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"printProducts",
+    src:{
+        _base:"[SKIN]/actions/print.png"
+    },
+    title:"IconButton7",
+    prompt:"Print Products",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                message:"Print functions not available in this starter app",
+                _constructor:"ShowMessageTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IconImgButton.create({
+    ID:"exportProducts",
+    src:{
+        _base:"[SKIN]/actions/export.png"
+    },
+    title:"IconButton8",
+    prompt:"Export Products List",
+    vertical:"false",
+    click:{
+        sequence:[
+            {
+                componentId:"ord_ProductGrid",
+                requestProperties:{
+                    exportAs:"csv",
+                    exportDisplay:"download"
+                },
+                _constructor:"GridExportClientDataTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.ToolStrip.create({
+    ID:"productActionsToolstrip",
+    membersMargin:10,
+    align:"right",
+    members:[
+        addNewProduct,
+        printProducts,
+        exportProducts
+    ],
+    layoutRightMargin:10
+})
+
+isc.ListGrid.create({
+    autoFetchData:true,
+    autoID:"ord_ProductGrid",
+    dataSource:"ord_Product",
+    showFilterEditor:true,
+    fields:[
+        {
+            name:"productCode",
+            canEdit:true
+        },
+        {
+            name:"productName"
+        },
+        {
+            name:"productScale"
+        },
+        {
+            name:"productVendor"
+        },
+        {
+            name:"productDescription"
+        },
+        {
+            name:"quantityInStock"
+        },
+        {
+            name:"buyPrice"
+        },
+        {
+            name:"msrp"
+        }
+    ],
+    cellHeight:40,
+    groupByField:[
+        "productVendor"
+    ],
+    recordDoubleClick:{
+        sequence:[
+            {
+                componentId:"ord_ProductForm",
+                selectionComponentId:"ord_ProductGrid",
+                _constructor:"FormEditSelectedTask"
+            },
+            {
+                componentId:"addEditProductLabel",
+                textFormula:{
+                    text:"<span style=\"font-size:30px;font-weight:bold;\">Editing Product #{ord_ProductGrid.selectedRecord.productCode} / #{ord_ProductGrid.selectedRecord.productName}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                componentId:"addEditProductLayout",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.VLayout.create({
+    ID:"productsLayout",
+    membersMargin:10,
+    members:[
+        productStatsLayout,
+        productActionsToolstrip,
+        ord_ProductGrid
+    ]
+})
+
+isc.Label.create({
+    ID:"addEditProductLabel",
+    height:20,
+    contents:"<span style=\"font-size:30px;font-weight:bold;\">Add New Product</span>",
+    title:"Label0"
+})
+
+isc.DynamicForm.create({
+    autoID:"ord_ProductForm",
+    dataSource:"ord_Product",
+    numCols:4,
+    fields:[
+        {
+            canEdit:true,
+            name:"productCode",
+            _constructor:"TextItem"
+        },
+        {
+            name:"productName",
+            _constructor:"TextItem"
+        },
+        {
+            name:"productScale",
+            _constructor:"SelectItem"
+        },
+        {
+            name:"productVendor",
+            _constructor:"TextItem"
+        },
+        {
+            colSpan:"4",
+            name:"productDescription",
+            width:850,
+            _constructor:"TextAreaItem"
+        },
+        {
+            endRow:true,
+            name:"quantityInStock",
+            _constructor:"TextItem"
+        },
+        {
+            name:"buyPrice",
+            _constructor:"FloatItem"
+        },
+        {
+            name:"msrp",
+            title:"MSRP",
+            _constructor:"FloatItem"
+        }
+    ],
+    wrapItemTitles:false
+})
+
+isc.IButton.create({
+    ID:"saveProductButton",
+    title:"Save",
+    click:{
+        sequence:[
+            {
+                clearAfterSave:false,
+                componentId:"ord_ProductForm",
+                _constructor:"FormSaveDataTask"
+            },
+            {
+                textFormula:{
+                    text:"Product #{_lastTask.productCode} / #{_lastTask.productName} has been added or updated successfully"
+                },
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"productsLayout",
+                _constructor:"ShowTask"
+            },
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"totalProductsCount",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"msrp",
+                    operator:"greaterThan",
+                    value:100.0
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"moreThan100Count",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            },
+            {
+                dataSource:"ord_Product",
+                failureElement:"next",
+                criteria:{
+                    _constructor:"AdvancedCriteria",
+                    fieldName:"msrp",
+                    operator:"lessOrEqual",
+                    value:100.0
+                },
+                _constructor:"DSFetchTask"
+            },
+            {
+                componentId:"lessThan100Count",
+                textFormula:{
+                    text:"<span style=\"font-weight:bold;font-size:20px\">#{_lastResponse.totalRows}</span>"
+                },
+                _constructor:"SetTitleTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.IButton.create({
+    ID:"cancelProductButton",
+    title:"Cancel",
+    click:{
+        sequence:[
+            {
+                message:"Action Cancelled",
+                notifyType:"warn",
+                _constructor:"ShowNotificationTask"
+            },
+            {
+                componentId:"productsLayout",
+                description:"Show 'productLayout'",
+                _constructor:"ShowTask"
+            }
+        ],
+        _constructor:"Process"
+    }
+})
+
+isc.HLayout.create({
+    ID:"productButtonsLayout",
+    height:25,
+    membersMargin:5,
+    overflow:"hidden",
+    members:[
+        saveProductButton,
+        cancelProductButton
+    ]
+})
+
+isc.VLayout.create({
+    ID:"addEditProductLayout",
+    membersMargin:20,
+    members:[
+        addEditProductLabel,
+        ord_ProductForm,
+        productButtonsLayout
+    ],
+    layoutLeftMargin:50,
+    layoutTopMargin:50
+})
+
+isc.Deck.create({
+    ID:"productsDeck",
+    panes:[
+        productsLayout,
+        addEditProductLayout
+    ]
+})
+
+isc.NavPanel.create({
+    autoID:"NavPanel0",
+    navigationPaneWidth:"12%",
+    isTree:false,
+    navItems:[
+        {
+            autoId:"ordersNavItem",
+            title:"Orders",
+            icon:"[SKIN]/../actions/groupby.png",
+            pane:ordersDeck
+        },
+        {
+            autoId:"customersNavItem",
+            title:"Customers",
+            icon:"[SKIN]/../actions/drag.png",
+            pane:customersDeck
+        },
+        {
+            autoId:"productsNavItem",
+            title:"Products",
+            icon:"[SKIN]/../actions/color_swatch.png",
+            pane:productsDeck
+        }
+    ],
+    defaultToFirstItem:true
+})
+
+isc.VLayout.create({
+    ID:"orderManagementApp",
+    autoDraw:true,
+    height:"100%",
+    overflow:"hidden",
+    width:"100%",
+    members:[
+        headerLayout,
+        NavPanel0
+    ]
+})

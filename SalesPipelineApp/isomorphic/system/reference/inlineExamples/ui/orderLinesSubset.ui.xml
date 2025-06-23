@@ -1,0 +1,41 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="ord_ProductLine,ord_Product,ord_Order,ord_Employee,ord_Office,ord_Customer,ord_OrderLine"/>
+
+
+<ListGrid dataSource="ord_OrderLine" autoID="ord_OrderLineGrid" autoFetchData="true" showGridSummary="true" showGroupSummary="false">
+    <fields>
+        <LGField name="orderLineId" hidden="true"/>
+        <LGField name="orderNumber" hidden="true"/>
+        <LGField name="orderLineNumber" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="productCode" width="300"/>
+        <LGField name="quantityOrdered" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="priceEach" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="Line_Total1" type="float" title="Line Total" width="120">
+            <canEditFormula>true</canEditFormula>
+            <userFormula text="priceEach*quantityOrdered"/>
+            <format>$,#.00</format>
+        </LGField>
+    </fields>
+    <initialSort>
+        <SortSpecifier>
+            <direction>ascending</direction>
+            <property>orderLineNumber</property>
+            <normalizer>integer</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <autoPopulateData>true</autoPopulateData>
+</ListGrid>
+
+
+<DataView overflow="hidden" autoID="newScreen138" width="80%" height="250" autoDraw="true">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="ord_OrderLineGrid"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+</DataView>
+
+
+</isomorphicXML>

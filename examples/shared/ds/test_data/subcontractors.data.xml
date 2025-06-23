@@ -1,0 +1,86 @@
+<List>
+	<subcontractor>
+		<fullName>Bafetimbi Diallo</fullName>
+		<Job>Design Engineer</Job>
+		<Email>bafetimbi.diallo@server.com</Email>
+		<contractStartDate>2020-10-19</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Amaniti Gueye</fullName>
+		<Job>Database Administrator</Job>
+		<Email>agueye@server.com</Email>
+		<contractStartDate>2019-12-01</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Mick Kelly</fullName>
+		<Job>Software Engineer</Job>
+		<Email>michael.kelly@server.com</Email>
+		<contractStartDate>2021-05-05</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Grace Barrett</fullName>
+		<Job>Data Scientist</Job>
+		<Email>gracebarrett@server.com</Email>
+		<contractStartDate>2021-10-09</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Zach Delaney</fullName>
+		<Job>Web Designer</Job>
+		<Email>zach@wedesigntheweb.com</Email>
+		<contractStartDate>2021-04-18</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Precious Nkosi</fullName>
+		<Job>Software Engineer</Job>
+		<Email>nkosi@independentsoftwareinc.com</Email>
+		<contractStartDate>2020-02-02</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Andrew Ross</fullName>
+		<Job>Software Engineer</Job>
+		<Email>ross@independentsoftwareinc.com</Email>
+		<contractStartDate>2020-02-02</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Emma Montrose</fullName>
+		<Job>Graphic Designer</Job>
+		<Email>emma@wedesigntheweb.com</Email>
+		<contractStartDate>2022-01-02</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Walter Werner</fullName>
+		<Job>Design Engineer</Job>
+		<Email>walter.werner@server.com</Email>
+		<contractStartDate>2018-07-06</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Bernardo Garcia</fullName>
+		<Job>Software Development Manager</Job>
+		<Email>bernardo@bernardogarcia.com</Email>
+		<contractStartDate>2020-05-09</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>James Thatcher</fullName>
+		<Job>Software Developer</Job>
+		<Email>jthatcher@server.com</Email>
+		<contractStartDate>2020-07-07</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Margot Sondergard</fullName>
+		<Job>Software Developer</Job>
+		<Email>msondergard@server.com</Email>
+		<contractStartDate>2017-06-10</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Cerys Jones</fullName>
+		<Job>Software Developer</Job>
+		<Email>cjones@server.com</Email>
+		<contractStartDate>2021-10-09</contractStartDate>
+	</subcontractor>
+	<subcontractor>
+		<fullName>Akari Yakamura</fullName>
+		<Job>Engineering Lead</Job>
+		<Email>akari@wilsonsoftware.org</Email>
+		<contractStartDate>2020-01-14</contractStartDate>
+	</subcontractor>
+</List>

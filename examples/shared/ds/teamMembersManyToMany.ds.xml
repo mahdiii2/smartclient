@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Many-to-many pivot table mapping Teams ↔ Employees -->
+<DataSource isSampleDS="true"
+    ID="teamMembersManyToMany"
+    serverType="sql"
+    tableName="teamMembersManyToMany"
+    testFileName="/examples/shared/ds/test_data/teamMembersManyToMany.data.xml"
+>
+    <fields>
+        <field name="EmployeeId" type="integer" hidden="true" foreignKey="employeesManyToMany.EmployeeId"/>
+        <field name="TeamId"     type="integer" hidden="true" foreignKey="teamsManyToMany.TeamId"/>
+    </fields>
+</DataSource>

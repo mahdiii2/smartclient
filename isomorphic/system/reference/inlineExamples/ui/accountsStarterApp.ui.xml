@@ -1,0 +1,2251 @@
+<isomorphicXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:List">
+
+<DataSources loadID="acc_ProductLine,acc_Product,acc_Office,acc_Employee,acc_Invoice,acc_invoiceLine,acc_Payment,acc_Customer,acc_Order,acc_OrderLine"/>
+
+
+<Img width="75" height="75" ID="companyLogo">
+    <imageType>center</imageType>
+    <imageHeight>75</imageHeight>
+    <imageWidth>75</imageWidth>
+    <src>logo.png</src>
+    <title>Image0</title>
+    <showMenuOnClick>true</showMenuOnClick>
+</Img>
+
+
+<Label ID="appTitle" width="100%" height="50">
+    <contents>&lt;span style="font-size:40px;font-weight:bold"&gt;Accounting Starter App&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label0</title>
+</Label>
+
+
+<HLayout overflow="hidden" ID="headerLayout" height="75">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="companyLogo"/>
+        <Canvas withID="appTitle"/>
+    </members>
+</HLayout>
+
+
+<Label ID="allInvoicesTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;All Invoice Totals&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label7</title>
+</Label>
+
+
+<Label ID="allInvoicesValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label8</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="allInvoicesLayout" height="75">
+    <members>
+        <Canvas withID="allInvoicesTitle"/>
+        <Canvas withID="allInvoicesValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="openInvoicesTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Open Invoice Totals&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label9</title>
+</Label>
+
+
+<Label ID="openInvoicesValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label10</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="openInvoicesLayout" height="75">
+    <members>
+        <Canvas withID="openInvoicesTitle"/>
+        <Canvas withID="openInvoicesValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="paidInvoicesTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Paid Invoice Totals&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label11</title>
+</Label>
+
+
+<Label ID="paidInvoicesValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label12</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="paidInvoicesLayout" height="75">
+    <members>
+        <Canvas withID="paidInvoicesTitle"/>
+        <Canvas withID="paidInvoicesValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="invoicesStatsLayout" height="95">
+    <members>
+        <Canvas withID="allInvoicesLayout"/>
+        <Canvas withID="openInvoicesLayout"/>
+        <Canvas withID="paidInvoicesLayout"/>
+    </members>
+    <layoutMargin>10</layoutMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="allInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Draft</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Submitted</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Overdue</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:red&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Paid</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="paidInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:green&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<IconImgButton ID="addInvoice">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/add.png</_base>
+    </src>
+    <title>IconButton0</title>
+    <prompt>Add New Invoice</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <SetTitleTask componentId="addEditInvoiceTitle">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;Add New Invoice&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditInvoiceLayout"/>
+                    <ShowTask componentId="headerButtonLayout"/>
+                    <HideTask componentId="addEditDetailLayout"/>
+                    <FormEditNewRecordTask componentId="acc_InvoiceForm">
+                        <initialValues>
+                            <SubTotal>0</SubTotal>
+                            <Tax>0</Tax>
+                            <total>0</total>
+                        </initialValues>
+                    </FormEditNewRecordTask>
+                    <FormSetFieldValueTask targetField="invoiceDate" componentId="acc_InvoiceForm">
+                        <value xsi:type="xsd:Object">
+                        	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                        	<value xsi:type="xsd:string">$today</value>
+                        </value>
+                    </FormSetFieldValueTask>
+                    <FormSetFieldValueTask targetField="dueDate" componentId="acc_InvoiceForm">
+                        <value xsi:type="xsd:Object">
+                        	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                        	<value xsi:type="xsd:string">+30d</value>
+                        </value>
+                    </FormSetFieldValueTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportInvoice">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton1</title>
+    <prompt>Export Invoices</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="acc_InvoiceGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printInvoice">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton2</title>
+    <prompt>Print Invoice</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <defaultWaitDuration>300</defaultWaitDuration>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Invoice Print not available in this starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="actionsToolStrip">
+    <align>right</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="addInvoice"/>
+        <Canvas withID="exportInvoice"/>
+        <Canvas withID="printInvoice"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="acc_Invoice" autoID="acc_InvoiceGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="false">
+    <fields>
+        <LGField name="invoiceId" title="Invoice Number"/>
+        <LGField name="invoiceDate" width="125"/>
+        <LGField name="customer" title="Customer Name"/>
+        <LGField name="paymentTerms"/>
+        <LGField name="dueDate" width="125"/>
+        <LGField name="Status"/>
+        <LGField name="SubTotal"/>
+        <LGField name="Tax"/>
+        <LGField name="total"/>
+        <LGField name="acc_CustomerCustomerName" hidden="true"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <initialSort>
+        <SortSpecifier>
+            <direction>descending</direction>
+            <property>invoiceId</property>
+            <normalizer>integer</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <hilites>
+        <Hilite id="0" fieldName="Status">
+            <criteria fieldName="Status" operator="equals">
+                <value>Paid</value>
+            </criteria>
+            <textColor>#FFFFFF</textColor>
+            <backgroundColor>#339966</backgroundColor>
+            <cssText>color:#FFFFFF;background-color:#339966;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="1" fieldName="Status">
+            <criteria fieldName="Status" operator="equals">
+                <value>Overdue</value>
+            </criteria>
+            <textColor>#FFFF00</textColor>
+            <backgroundColor>#FF0000</backgroundColor>
+            <cssText>color:#FFFF00;background-color:#FF0000;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="2" fieldName="Status">
+            <criteria operator="or">
+                <criteria>
+                    <Criterion fieldName="Status" operator="equals">
+                        <value>Draft</value>
+                    </Criterion>
+                    <Criterion fieldName="Status" operator="equals">
+                        <value>Submitted</value>
+                    </Criterion>
+                </criteria>
+            </criteria>
+            <textColor>#000000</textColor>
+            <backgroundColor>#FF6600</backgroundColor>
+            <cssText>color:#000000;background-color:#FF6600;</cssText>
+            <icon></icon>
+        </Hilite>
+    </hilites>
+    <canExpandRecords>true</canExpandRecords>
+    <expansionScreen>invoiceLinesView</expansionScreen>
+    <recordDoubleClick>
+            <Process>
+                <sequence>
+                    <FormEditSelectedTask selectionComponentId="acc_InvoiceGrid" componentId="acc_InvoiceForm"/>
+                    <SetTitleTask componentId="addEditInvoiceTitle">
+                        <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold&quot;&gt;Editing Invoice #{acc_InvoiceGrid.selectedRecord.invoiceId} for Customer #{acc_InvoiceGrid.selectedRecord.acc_CustomerCustomerName}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <FetchRelatedDataTask recordSourceComponent="acc_InvoiceGrid" componentId="acc_invoiceLineGrid"/>
+                    <HideTask componentId="actionsToolStrip"/>
+                    <HideTask componentId="acc_InvoiceGrid"/>
+                    <ShowTask componentId="addEditInvoiceLayout"/>
+                    <HideTask componentId="headerButtonLayout"/>
+                    <ShowTask componentId="addEditDetailLayout"/>
+                    <FetchRelatedDataTask recordSourceComponent="acc_InvoiceGrid" componentId="acc_invoiceLineGrid"/>
+                </sequence>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout ID="invoicesListLayout">
+    <members>
+        <Canvas withID="actionsToolStrip"/>
+        <Canvas withID="acc_InvoiceGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="addEditInvoiceTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Add New Invoice&lt;/span&gt;</contents>
+    <title>Label0</title>
+</Label>
+
+
+<Label ID="paidInvoiceWarningLabel" height="30">
+    <contents>&lt;span style="font-size:30px;font-weight:bold;color:red"&gt;Paid Invoices cannot be edited&lt;/span&gt;</contents>
+    <title>Label0</title>
+    <visibleWhen fieldName="acc_InvoiceForm.values.Status" operator="equals" value="Paid"/>
+</Label>
+
+
+<DynamicForm dataSource="acc_Invoice" autoID="acc_InvoiceForm" numCols="4" overflow="hidden" height="180">
+    <fields>
+        <TextItem name="invoiceId" canEdit="false" readOnlyDisplay="static" endRow="true">
+            <visible>true</visible>
+        </TextItem>
+        <SelectItem name="customer" title="Customer Name">
+            <required>true</required>
+        </SelectItem>
+        <TextItem name="customerRef">
+            <required>true</required>
+        </TextItem>
+        <FloatItem name="SubTotal" canEdit="false" readOnlyDisplay="static">
+            <formula text="acc_invoiceLineGrid.summaryRecord.total"/>
+        </FloatItem>
+        <DateItem useTextField="true" name="invoiceDate" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="taxRate" defaultValue="0.06" canEdit="false" readOnlyDisplay="static">
+            <valueMap>
+                    <value id="0">Exempt</value>
+                    <value id="0.06">6%</value>
+                    <value id="0.09">9%</value>
+                    <value id="0.195">19.5%</value>
+            </valueMap>
+        </SelectItem>
+        <SelectItem name="paymentTerms" defaultValue="30">
+            <valueMap>
+                    <value id="0">Immediate</value>
+                    <value id="30">30 Days</value>
+                    <value id="60">60 Days</value>
+            </valueMap>
+            <changed>
+                    <Process>
+                        <elements>
+                            <MultiDecisionTask>
+                                <decisionList>
+                                    <DecisionBranch targetTask="FormSetFieldValue0">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="acc_Invoice.paymentTerms" operator="equals">
+                                                    <value>0</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                    <DecisionBranch targetTask="FormSetFieldValue1">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="acc_Invoice.paymentTerms" operator="equals">
+                                                    <value>30</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                    <DecisionBranch targetTask="FormSetFieldValue2">
+                                        <criteria operator="and" _constructor="AdvancedCriteria">
+                                            <criteria>
+                                                <Criterion fieldName="acc_Invoice.paymentTerms" operator="equals">
+                                                    <value>60</value>
+                                                </Criterion>
+                                            </criteria>
+                                        </criteria>
+                                    </DecisionBranch>
+                                </decisionList>
+                            </MultiDecisionTask>
+                            <FormSetFieldValueTask targetField="dueDate" componentId="acc_InvoiceForm" ID="FormSetFieldValue0">
+                                <value xsi:type="xsd:Object">
+                                	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                                	<value xsi:type="xsd:string">$today</value>
+                                </value>
+                            </FormSetFieldValueTask>
+                            <FormSetFieldValueTask targetField="dueDate" componentId="acc_InvoiceForm" ID="FormSetFieldValue1">
+                                <value xsi:type="xsd:Object">
+                                	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                                	<value xsi:type="xsd:string">+30d</value>
+                                </value>
+                            </FormSetFieldValueTask>
+                            <FormSetFieldValueTask targetField="dueDate" componentId="acc_InvoiceForm" ID="FormSetFieldValue2">
+                                <value xsi:type="xsd:Object">
+                                	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                                	<value xsi:type="xsd:string">+60d</value>
+                                </value>
+                            </FormSetFieldValueTask>
+                        </elements>
+                    </Process>
+            </changed>
+        </SelectItem>
+        <FloatItem name="Tax" canEdit="false" readOnlyDisplay="static">
+            <formula text="SubTotal*0.06"/>
+        </FloatItem>
+        <DateItem useTextField="true" name="dueDate" canEdit="false" readOnlyDisplay="static"/>
+        <FloatItem name="total" canEdit="false" readOnlyDisplay="static">
+            <formula text="SubTotal+Tax"/>
+        </FloatItem>
+        <SelectItem name="Status">
+            <defaultToFirstOption>true</defaultToFirstOption>
+        </SelectItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+    <enableWhen fieldName="Status" operator="notEqual" value="Paid"/>
+</DynamicForm>
+
+
+<IButton autoID="addInvoiceHeaderButton">
+    <autoFit>true</autoFit>
+    <title>Add Invoice Header</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" componentId="acc_InvoiceForm"/>
+                    <SetTitleTask componentId="assignOrderLinesWindow">
+                        <textFormula text="Assign Order Lines to invoice #{acc_InvoiceForm.values.invoiceId} for Customer #{acc_InvoiceForm.values.customer}"/>
+                    </SetTitleTask>
+                    <ShowNotificationTask>
+                        <textFormula text="Invoice #{_lastTask.invoiceId} for Customer #{_lastTask.acc_CustomerCustomerName} added"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="addEditDetailLayout"/>
+                    <ShowTask componentId="assignOrderLinesWindow"/>
+                    <GridFetchDataTask componentId="acc_OrderLineGrid" description="Fetch data on &apos;orderLineGrid&apos; where &lt;ul&gt;&lt;li&gt;Customer Number equals $last.customerName&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="and" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="acc_OrderCustomerNumber" operator="equals">
+                                    <value>$ruleScope.acc_InvoiceForm.values.customer</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                    </GridFetchDataTask>
+                    <FetchRelatedDataTask recordSourceComponent="acc_InvoiceForm" componentId="acc_invoiceLineGrid"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <UserConfirmationTask failureElement="placeHolder0">
+                                <message>Are you sure wish to cancel adding this Invoice?</message>
+                            </UserConfirmationTask>
+                            <HideTask componentId="addEditInvoiceLayout"/>
+                            <ShowTask componentId="actionsToolStrip"/>
+                            <ShowTask componentId="acc_InvoiceGrid"/>
+                            <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <EndProcessTask ID="placeHolder0"/>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="headerButtonLayout" height="30">
+    <members>
+        <Canvas withID="addInvoiceHeaderButton"/>
+        <Canvas withID="cancelButton"/>
+    </members>
+    <visibleWhen fieldName="acc_InvoiceForm.values.invoiceId" operator="isBlank"/>
+</HLayout>
+
+
+<IButton autoID="addLineButton">
+    <title>Add Line</title>
+    <enableWhen fieldName="acc_InvoiceForm.values.Status" operator="notEqual" value="Paid"/>
+    <click>
+            <Process>
+                <sequence>
+                    <GridEditRecordTask componentId="acc_invoiceLineGrid">
+                        <initialValues>
+                            <invoiceNumber>$ruleScope.acc_InvoiceForm.values.invoiceId</invoiceNumber>
+                        </initialValues>
+                    </GridEditRecordTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<ListGrid dataSource="acc_invoiceLine" autoID="acc_invoiceLineGrid" canEdit="true" autoFetchData="true" canRemoveRecords="true" showGridSummary="true" width="80%" height="100%">
+    <fields>
+        <LGField name="invoiceNumber" hidden="true"/>
+        <LGField name="line" showGridSummary="false" showGroupSummary="false" width="75"/>
+        <LGField name="Description" width="500"/>
+        <LGField name="qty" showGridSummary="false" showGroupSummary="false" width="100"/>
+        <LGField name="priceEach" showGridSummary="false" showGroupSummary="false" width="100"/>
+        <LGField name="total" width="100">
+            <canEdit>false</canEdit>
+            <userFormula text="qty*priceEach">
+                <formulaVars>
+                        <value id="priceEach">priceEach</value>
+                        <value id="qty">qty</value>
+                </formulaVars>
+            </userFormula>
+        </LGField>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <confirmCancelEditing>false</confirmCancelEditing>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <enableWhen fieldName="acc_InvoiceForm.values.Status" operator="notEqual" value="Paid"/>
+    <editComplete>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="SubTotal" componentId="acc_InvoiceForm">
+                        <value xsi:type="xsd:text">$ruleScope.acc_invoiceLineGrid.summaryRecord.total</value>
+                    </FormSetFieldValueTask>
+                </sequence>
+            </Process>
+    </editComplete>
+</ListGrid>
+
+
+<IButton autoID="saveAsDraftButton">
+    <title>Save as Draft</title>
+    <visibleWhen fieldName="acc_InvoiceForm.values.Status" operator="notEqual" value="Paid"/>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask failureElement="next" componentId="acc_InvoiceForm"/>
+                    <ShowNotificationTask description="Show notification: &quot;Invoice #{invoiceHdrForm. ...&quot;">
+                        <textFormula text="Invoice #{_lastTask.invoiceId} has been submitted as Draft"/>
+                    </ShowNotificationTask>
+                    <HideTask componentId="addEditInvoiceLayout"/>
+                    <ShowTask componentId="actionsToolStrip"/>
+                    <ShowTask componentId="acc_InvoiceGrid"/>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next" description="Fetch all Invoices records">
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="allInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next" description="Fetch Invoices where &lt;ul&gt;&lt;li&gt;Status equals Submitted&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Draft</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Submitted</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Overdue</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Paid</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="paidInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.total}"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="submitButton">
+    <title>Submit</title>
+    <visibleWhen fieldName="acc_InvoiceForm.values.Status" operator="notEqual" value="Paid"/>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="Status" componentId="acc_InvoiceForm">
+                        <value xsi:type="xsd:text">Submitted</value>
+                    </FormSetFieldValueTask>
+                    <FormSaveDataTask failureElement="next" componentId="acc_InvoiceForm"/>
+                    <HideTask componentId="addEditInvoiceLayout"/>
+                    <ShowTask componentId="actionsToolStrip"/>
+                    <ShowTask componentId="acc_InvoiceGrid"/>
+                    <ShowNotificationTask description="Show notification: &quot;Invoice #{invoiceHdrForm. ...&quot;">
+                        <textFormula text="Invoice #{_lastTask.invoiceId} has been submitted successfully"/>
+                    </ShowNotificationTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="allInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next" description="Fetch acc_Invoice where &lt;ul&gt;&lt;li&gt;Status equals Draft&lt;/li&gt;&lt;li&gt; or Status equals Submitted&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Draft</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Submitted</value>
+                                </Criterion>
+                                <Criterion fieldName="Status" operator="equals">
+                                    <value>Overdue</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="openInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Invoice" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Paid</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="paidInvoicesValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.total}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton2">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormClearValuesTask componentId="acc_InvoiceForm"/>
+                    <HideTask componentId="addEditInvoiceLayout"/>
+                    <ShowTask componentId="actionsToolStrip"/>
+                    <ShowTask componentId="acc_InvoiceGrid"/>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="invoiceActionButtons" height="25">
+    <align>center</align>
+    <defaultLayoutAlign>left</defaultLayoutAlign>
+    <members>
+        <Canvas withID="saveAsDraftButton"/>
+        <Canvas withID="submitButton"/>
+        <Canvas withID="cancelButton2"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="15" ID="addEditDetailLayout" height="100%">
+    <members>
+        <Canvas withID="addLineButton"/>
+        <Canvas withID="acc_invoiceLineGrid"/>
+        <Canvas withID="invoiceActionButtons"/>
+    </members>
+    <layoutLeftMargin>100</layoutLeftMargin>
+    <layoutRightMargin>100</layoutRightMargin>
+</VLayout>
+
+
+<VLayout membersMargin="10" ID="addEditInvoiceLayout">
+    <members>
+        <Canvas withID="addEditInvoiceTitle"/>
+        <Canvas withID="paidInvoiceWarningLabel"/>
+        <Canvas withID="acc_InvoiceForm"/>
+        <Canvas withID="headerButtonLayout"/>
+        <Canvas withID="addEditDetailLayout"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+    <layoutTopMargin>25</layoutTopMargin>
+    <visibility>hidden</visibility>
+</VLayout>
+
+
+<Deck ID="invoicesDeck">
+    <currentPane>invoicesListLayout</currentPane>
+    <panes>
+        <Canvas withID="invoicesListLayout"/>
+        <Canvas withID="addEditInvoiceLayout"/>
+    </panes>
+</Deck>
+
+
+<VLayout membersMargin="10" ID="invoicesMainLayout">
+    <members>
+        <Canvas withID="invoicesStatsLayout"/>
+        <Canvas withID="invoicesDeck"/>
+    </members>
+</VLayout>
+
+
+<Label ID="totalPaymentsTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Totals Payments&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label13</title>
+</Label>
+
+
+<Label ID="totalPaymentsValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label14</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalPaymentsLayout" height="75">
+    <members>
+        <Canvas withID="totalPaymentsTitle"/>
+        <Canvas withID="totalPaymentsValue"/>
+    </members>
+    <layoutMargin>10</layoutMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="matchedPaymentsTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Matched Payments&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label15</title>
+</Label>
+
+
+<Label ID="matchedPaymentsValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label16</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="matchedPaymentsLayout" height="75">
+    <members>
+        <Canvas withID="matchedPaymentsTitle"/>
+        <Canvas withID="matchedPaymentsValue"/>
+    </members>
+    <layoutMargin>10</layoutMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="unmatchedPaymentsTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Unmatched Payments&lt;/span&gt;</contents>
+    <align>center</align>
+    <title>Label17</title>
+</Label>
+
+
+<Label ID="unmatchedPaymentsValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label18</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="unmatchedPaymentsLayout" height="75">
+    <members>
+        <Canvas withID="unmatchedPaymentsTitle"/>
+        <Canvas withID="unmatchedPaymentsValue"/>
+    </members>
+    <layoutMargin>10</layoutMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="paymentsStatsLayout" height="95">
+    <members>
+        <Canvas withID="totalPaymentsLayout"/>
+        <Canvas withID="matchedPaymentsLayout"/>
+        <Canvas withID="unmatchedPaymentsLayout"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Open</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="unmatchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Reconciled</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="matchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<IconImgButton ID="addPayment">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/add.png</_base>
+    </src>
+    <title>IconButton3</title>
+    <prompt>Add Payment</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <FormEditNewRecordTask componentId="acc_PaymentForm"/>
+                    <SetTitleTask componentId="addEditPaymentLabel">
+                        <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold&quot;&gt;Add New Payment&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditVoidPayments"/>
+                    <HideTask componentId="voidPaymentsButtons"/>
+                    <ShowTask componentId="paymentButtonsLayout"/>
+                    <FormSetFieldValueTask targetField="paymentDate" componentId="acc_PaymentForm">
+                        <value xsi:type="xsd:Object">
+                        	<_constructor xsi:type="xsd:string">RelativeDate</_constructor>
+                        	<value xsi:type="xsd:string">$today</value>
+                        </value>
+                    </FormSetFieldValueTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="assignPayment">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/approve.png</_base>
+    </src>
+    <title>IconButton4</title>
+    <prompt>Assign Payment</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <DecisionTask failureElement="ShowMessage0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_PaymentGrid.numSelected" operator="equals">
+                                            <value xsi:type="xsd:float">1</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <DecisionTask failureElement="ShowMessage1">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_PaymentGrid.selectedRecord.Status" operator="equals">
+                                            <value>Open</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <FormEditSelectedTask selectionComponentId="acc_PaymentGrid" componentId="assignPaymentsForm"/>
+                            <SetTitleTask componentId="assignViewPaymentsLabel">
+                                <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold&quot;&gt;Assign Invoices to Payment #{acc_PaymentGrid.selectedRecord.paymentId} for Customer #{acc_PaymentGrid.selectedRecord.acc_CustomerCustomerName}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                            <ShowTask componentId="assignViewPaymentsLayout"/>
+                            <GridFetchDataTask componentId="acc_InvoiceGrid2" description="Fetch data on &apos;invoicesGrid2&apos; where &lt;ul&gt;&lt;li&gt;Customer Number equals selectedRecord.fromCustomer from acc_paymentGrid (ListGrid)&lt;/li&gt;&lt;/ul&gt;">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="customer" operator="equals">
+                                            <value>$ruleScope.acc_PaymentGrid.selectedRecord.fromCustomer</value>
+                                        </Criterion>
+                                        <Criterion fieldName="Status" operator="equals">
+                                            <value>Submitted</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <ShowMessageTask ID="ShowMessage0">
+                                <message>Please select one record to assign payments to</message>
+                            </ShowMessageTask>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+                <elements>
+                    <ShowMessageTask type="warning" ID="ShowMessage1" description="Show warning message: &quot;Payment #{paymentsGrid.se ...&quot;">
+                        <textFormula text="Payment #{acc_PaymentGrid.selectedRecord.paymentId} is already #{acc_PaymentGrid.selectedRecord.Status} and cannot be re-assigned&quot;"/>
+                    </ShowMessageTask>
+                </elements>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="voidPayment">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/cancel.png</_base>
+    </src>
+    <title>IconButton5</title>
+    <prompt>Void Payment</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <DecisionTask failureElement="ShowMessage0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_PaymentGrid.numSelected" operator="equals">
+                                            <value xsi:type="xsd:float">1</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <DecisionTask failureElement="ShowMessage1">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_PaymentGrid.selectedRecord.Status" operator="equals">
+                                            <value>Open</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <ShowTask componentId="addEditVoidPayments"/>
+                            <FormEditSelectedTask selectionComponentId="acc_PaymentGrid" componentId="acc_PaymentForm"/>
+                            <SetTitleTask componentId="addEditPaymentLabel">
+                                <textFormula text="&quot;&lt;span style=&quot;font-size:30px;font-weight:bold&quot;&gt;Void Payment #{acc_PaymentGrid.selectedRecord.paymentId} for Customer  #{acc_PaymentGrid.selectedRecord.acc_CustomerCustomerName}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                            <HideTask componentId="paymentButtonsLayout"/>
+                            <ShowTask componentId="voidPaymentsButtons"/>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <ShowMessageTask ID="ShowMessage0">
+                                <message>Select a single record to void </message>
+                            </ShowMessageTask>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+                <elements>
+                    <ShowMessageTask ID="ShowMessage1">
+                        <textFormula text="This payment is already #{acc_PaymentGrid.selectedRecord.Status} and cannot be voided now"/>
+                    </ShowMessageTask>
+                </elements>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportPayment">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton6</title>
+    <prompt>Export Payments</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="acc_PaymentGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printPayment">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton7</title>
+    <prompt>Print Payment</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Print functions are not available in this starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="paymentActionsToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="addPayment"/>
+        <Canvas withID="assignPayment"/>
+        <Canvas withID="voidPayment"/>
+        <Canvas withID="exportPayment"/>
+        <Canvas withID="printPayment"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="acc_Payment" autoID="acc_PaymentGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="false">
+    <fields>
+        <LGField name="paymentDate" width="125"/>
+        <LGField name="transactionNumber"/>
+        <LGField name="acc_CustomerCustomerName" title="Customer"/>
+        <LGField name="paymentType"/>
+        <LGField name="Status"/>
+        <LGField name="reconciled" width="36"/>
+        <LGField name="againstInvoice"/>
+        <LGField name="Amount"/>
+        <LGField name="paymentId" width="125" hidden="true"/>
+        <LGField name="fromCustomer" width="250" hidden="true"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <initialSort>
+        <SortSpecifier>
+            <direction>descending</direction>
+            <property>paymentDate</property>
+            <normalizer>date</normalizer>
+        </SortSpecifier>
+    </initialSort>
+    <hilites>
+        <Hilite id="0" fieldName="Status">
+            <criteria fieldName="Status" operator="equals">
+                <value>Open</value>
+            </criteria>
+            <textColor>#FF0000</textColor>
+            <backgroundColor>#FFFF00</backgroundColor>
+            <cssText>color:#FF0000;background-color:#FFFF00;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="1" fieldName="Status">
+            <criteria fieldName="Status" operator="equals">
+                <value>Reconciled</value>
+            </criteria>
+            <textColor>#FFFFFF</textColor>
+            <backgroundColor>#339966</backgroundColor>
+            <cssText>color:#FFFFFF;background-color:#339966;</cssText>
+            <icon></icon>
+        </Hilite>
+        <Hilite id="2" fieldName="Status">
+            <criteria fieldName="Status" operator="equals">
+                <value>Voided/Cancelled</value>
+            </criteria>
+            <textColor>#800080</textColor>
+            <backgroundColor>#FF6600</backgroundColor>
+            <cssText>color:#800080;background-color:#FF6600;</cssText>
+            <icon></icon>
+        </Hilite>
+    </hilites>
+    <recordDoubleClick>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <DecisionTask failureElement="FormEditSelected0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_PaymentGrid.selectedRecord.Status" operator="equals">
+                                            <value>Open</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <FormEditSelectedTask selectionComponentId="acc_PaymentGrid" componentId="acc_PaymentForm"/>
+                            <SetTitleTask componentId="addEditPaymentLabel">
+                                <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold&quot;&gt;Edit Payment #{acc_PaymentGrid.selectedRecord.paymentId} for Customer  #{acc_PaymentGrid.selectedRecord.acc_CustomerCustomerName}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                            <ShowTask componentId="addEditVoidPayments"/>
+                            <ShowTask componentId="paymentButtonsLayout"/>
+                            <HideTask componentId="voidPaymentsButtons"/>
+                            <HideTask componentId="closedPaymentWarningLaabel"/>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <FormEditSelectedTask selectionComponentId="acc_PaymentGrid" componentId="assignPaymentsForm" ID="FormEditSelected0"/>
+                            <SetTitleTask componentId="assignViewPaymentsLabel">
+                                <textFormula text="&lt;span style=&quot;font-size:30px;font-weight:bold&quot;&gt;Viewing Payment #{acc_PaymentGrid.selectedRecord.paymentId}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                            <HideTask componentId="saveButton2"/>
+                            <ShowTask componentId="assignViewPaymentsLayout"/>
+                            <ShowTask componentId="closedPaymentWarningLaabel"/>
+                            <GridFetchDataTask componentId="acc_InvoiceGrid2">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="invoiceId" operator="equals">
+                                            <value>$ruleScope.assignPaymentsForm.values.againstInvoice</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridFetchDataTask>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout membersMargin="10" ID="paymentsMainLayout">
+    <members>
+        <Canvas withID="paymentsStatsLayout"/>
+        <Canvas withID="paymentActionsToolstrip"/>
+        <Canvas withID="acc_PaymentGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="assignViewPaymentsLabel" height="30">
+    <contents>&lt;span style="font-size:30px;font-weight:bold"&gt;Assign Payments&lt;/span&gt;</contents>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="closedPaymentWarningLaabel" height="30">
+    <contents>&lt;span style="font-weight:bold;font-size:30px;color:red"&gt; Voided or Matched Payments cannot be edited&lt;/span&gt;</contents>
+    <title>Label0</title>
+    <visibility>hidden</visibility>
+</Label>
+
+
+<DynamicForm ID="assignPaymentsForm" dataSource="acc_Payment" numCols="4">
+    <fields>
+        <TextItem name="paymentId" canEdit="false" readOnlyDisplay="static" endRow="true"/>
+        <DateItem useTextField="true" name="paymentDate" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="fromCustomer" title="Customer Name" canEdit="false" readOnlyDisplay="static"/>
+        <TextItem defaultValue="" name="transactionNumber" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="paymentType" canEdit="false" readOnlyDisplay="static"/>
+        <FloatItem name="Amount" title="Amount " canEdit="false" readOnlyDisplay="static"/>
+        <FloatItem name="balance" title="Amount Reconciled" canEdit="false" readOnlyDisplay="static"/>
+        <SelectItem name="Status" canEdit="false" readOnlyDisplay="static" endRow="true"/>
+        <CheckboxItem name="reconciled" title="Fully Reconciled" canEdit="false" readOnlyDisplay="static">
+            <uncheckedImage>sprite:cssClass:checkboxFalse;size:24,25</uncheckedImage>
+            <visible>true</visible>
+            <readOnlyWhen fixedValue="true"/>
+            <visibleWhen fieldName="Status" operator="equals" value="Reconciled"/>
+        </CheckboxItem>
+        <TextItem name="againstInvoice" canEdit="false" readOnlyDisplay="static">
+            <visible>true</visible>
+            <visibleWhen fieldName="Status" operator="equals" value="Reconciled"/>
+        </TextItem>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+    <hiliteRequiredFields>true</hiliteRequiredFields>
+    <groupTitle>Payment Details</groupTitle>
+    <borderRadius>10px</borderRadius>
+</DynamicForm>
+
+
+<ListGrid dataSource="acc_Invoice" autoID="acc_InvoiceGrid2" autoFetchData="true">
+    <fields>
+        <LGField name="invoiceId"/>
+        <LGField name="acc_CustomerCustomerName" title="Customer"/>
+        <LGField name="customerRef"/>
+        <LGField name="invoiceDate" width="120"/>
+        <LGField name="paymentTerms"/>
+        <LGField name="dueDate"/>
+        <LGField name="SubTotal"/>
+        <LGField name="taxRate"/>
+        <LGField name="Tax"/>
+        <LGField name="total"/>
+        <LGField name="Status"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <selectionType>single</selectionType>
+    <selectionAppearance>checkbox</selectionAppearance>
+    <enableWhen fieldName="assignPaymentsForm.values.Status" operator="notEqual" value="Reconciled"/>
+    <selectionUpdated>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="againstInvoice" componentId="assignPaymentsForm">
+                        <value xsi:type="xsd:text">$ruleScope.acc_InvoiceGrid2.selectedRecord.invoiceId</value>
+                    </FormSetFieldValueTask>
+                </sequence>
+            </Process>
+    </selectionUpdated>
+</ListGrid>
+
+
+<IButton autoID="assignButton">
+    <title>Assign</title>
+    <enableWhen fieldName="assignPaymentsForm.values.Status" operator="notEqual" value="Reconciled"/>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <DecisionTask failureElement="ShowMessage0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="assignPaymentsForm.values.Amount" operator="lessThan">
+                                            <value>$ruleScope.acc_InvoiceGrid2.selectedRecord.total</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <FormSetFieldValueTask targetField="Status" componentId="assignPaymentsForm">
+                                <value xsi:type="xsd:text">Reconciled</value>
+                            </FormSetFieldValueTask>
+                            <FormSetFieldValueTask targetField="reconciled" componentId="assignPaymentsForm">
+                                <value xsi:type="xsd:boolean">true</value>
+                            </FormSetFieldValueTask>
+                            <FormSetFieldValueTask targetField="balance" componentId="assignPaymentsForm">
+                                <value xsi:type="xsd:text">$ruleScope.assignPaymentsForm.values.Amount</value>
+                            </FormSetFieldValueTask>
+                            <FormSetFieldValueTask targetField="againstInvoice" componentId="assignPaymentsForm">
+                                <value xsi:type="xsd:text">$ruleScope.acc_InvoiceGrid2.selectedRecord.invoiceId</value>
+                            </FormSetFieldValueTask>
+                            <FormSaveDataTask clearAfterSave="false" failureElement="next" componentId="assignPaymentsForm">
+                                <notifyMessage>Payments assigned successfully</notifyMessage>
+                            </FormSaveDataTask>
+                            <ShowNotificationTask>
+                                <textFormula text="Payment#{assignPaymentsForm.values.paymentId} assigned to Invoice #{assignPaymentsForm.values.againstInvoice} successfully"/>
+                            </ShowNotificationTask>
+                            <DSUpdateTask dataSource="acc_Invoice" failureElement="ShowMessage0">
+                                <values>
+                                    <invoiceId>$last.againstInvoice</invoiceId>
+                                    <Status>Paid</Status>
+                                </values>
+                            </DSUpdateTask>
+                            <ShowTask componentId="paymentsMainLayout"/>
+                            <DSFetchTask dataSource="acc_Payment" failureElement="ShowMessage0" description="Fetch all payments records">
+                                <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                                    <value>Reconciled</value>
+                                </criteria>
+                                <summaryFunctions>
+                                    <Amount>sum</Amount>
+                                </summaryFunctions>
+                            </DSFetchTask>
+                            <SetTitleTask componentId="matchedPaymentsValue">
+                                <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:green&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                            <DSFetchTask dataSource="acc_Payment" failureElement="ShowMessage0">
+                                <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                                    <value>Open</value>
+                                </criteria>
+                                <summaryFunctions>
+                                    <Amount>sum</Amount>
+                                </summaryFunctions>
+                            </DSFetchTask>
+                            <SetTitleTask componentId="unmatchedPaymentsValue">
+                                <textFormula text="&lt;span style=&quot;font-size:20px;font-weight:bold;color:red&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                            </SetTitleTask>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <ShowMessageTask type="warning" ID="ShowMessage0">
+                                <message>The payment is too small to reconcile to this Invoice</message>
+                            </ShowMessageTask>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancel_ReturnButton">
+    <title>Cancel/Return</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="paymentsMainLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="reconcileViewPaymentButtons" height="25">
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="assignButton"/>
+        <Canvas withID="cancel_ReturnButton"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="20" ID="assignViewPaymentsLayout">
+    <members>
+        <Canvas withID="assignViewPaymentsLabel"/>
+        <Canvas withID="closedPaymentWarningLaabel"/>
+        <Canvas withID="assignPaymentsForm"/>
+        <Canvas withID="acc_InvoiceGrid2"/>
+        <Canvas withID="reconcileViewPaymentButtons"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+    <layoutTopMargin>50</layoutTopMargin>
+</VLayout>
+
+
+<Label ID="addEditPaymentLabel" height="30">
+    <contents>&lt;span style="font-size:30px;font-weight:bold"&gt;Add New Payment&lt;/span&gt;</contents>
+    <title>Label0</title>
+</Label>
+
+
+<DynamicForm dataSource="acc_Payment" autoID="acc_PaymentForm" numCols="4">
+    <fields>
+        <TextItem name="paymentId" canEdit="false" readOnlyDisplay="static" endRow="true">
+            <visible>true</visible>
+            <readOnlyWhen fixedValue="true"/>
+        </TextItem>
+        <DateItem defaultValue="2022-08-18" useTextField="true" name="paymentDate"/>
+        <SelectItem name="fromCustomer" title="Customer Name">
+            <required>true</required>
+        </SelectItem>
+        <TextItem name="transactionNumber"/>
+        <SelectItem name="paymentType"/>
+        <FloatItem name="Amount"/>
+        <FloatItem defaultValue="0" name="balance" title="Amount Reconciled" canEdit="false" readOnlyDisplay="static">
+            <format>$,#.00</format>
+        </FloatItem>
+        <SelectItem name="Status" defaultValue="Open"/>
+        <CheckboxItem name="reconciled" canEdit="false" readOnlyDisplay="static">
+            <uncheckedImage>sprite:cssClass:checkboxFalse;size:24,25</uncheckedImage>
+        </CheckboxItem>
+        <TextItem name="againstInvoice" canEdit="false" readOnlyDisplay="static"/>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton autoID="saveButton2">
+    <title>Save</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask clearAfterSave="false" componentId="acc_PaymentForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Payment #{_lastTask.paymentId} for Customer #{_lastTask.acc_CustomerCustomerName} has been added/updated"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="paymentsMainLayout"/>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Reconciled</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="matchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Open</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="unmatchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton5">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="paymentsMainLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="paymentButtonsLayout" height="25">
+    <members>
+        <Canvas withID="saveButton2"/>
+        <Canvas withID="cancelButton5"/>
+    </members>
+</HLayout>
+
+
+<IButton autoID="voidPaymentButton">
+    <title>Void Payment</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSetFieldValueTask targetField="Status" componentId="acc_PaymentForm">
+                        <value xsi:type="xsd:text">Voided/Cancelled</value>
+                    </FormSetFieldValueTask>
+                    <FormSaveDataTask clearAfterSave="false" componentId="acc_PaymentForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Payment #{_lastTask.paymentId} for Customer #{_lastTask.acc_CustomerCustomerName} has been voided"/>
+                    </ShowNotificationTask>
+                    <ShowTask componentId="paymentsMainLayout"/>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next" description="Fetch payments where &lt;ul&gt;&lt;li&gt;Status equals Voided/Cancelled&lt;/li&gt;&lt;li&gt; or Status equals Reconciled&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Reconciled</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="matchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Payment" failureElement="next" description="Fetch payments where &lt;ul&gt;&lt;li&gt;Status equals Open&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="Status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Open</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <Amount>sum</Amount>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="unmatchedPaymentsValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.Amount}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton6">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled"/>
+                    <ShowTask componentId="paymentsMainLayout"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="voidPaymentsButtons" height="25">
+    <members>
+        <Canvas withID="voidPaymentButton"/>
+        <Canvas withID="cancelButton6"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="20" ID="addEditVoidPayments">
+    <members>
+        <Canvas withID="addEditPaymentLabel"/>
+        <Canvas withID="acc_PaymentForm"/>
+        <Canvas withID="paymentButtonsLayout"/>
+        <Canvas withID="voidPaymentsButtons"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+    <layoutTopMargin>50</layoutTopMargin>
+</VLayout>
+
+
+<Deck ID="paymentsDeck">
+    <currentPane>paymentsMainLayout</currentPane>
+    <panes>
+        <Canvas withID="paymentsMainLayout"/>
+        <Canvas withID="assignViewPaymentsLayout"/>
+        <Canvas withID="addEditVoidPayments"/>
+    </panes>
+</Deck>
+
+
+<FacetChart dataSource="acc_Invoice" autoFetchData="false" autoID="invoiceTotalsByCustomerFacetChart">
+    <data>
+    </data>
+    <facets>
+    </facets>
+    <chartType>Bar</chartType>
+    <title>Invoice Totals by Customer</title>
+    <drawTitleBackground>false</drawTitleBackground>
+    <drawTitleBoundary>false</drawTitleBoundary>
+    <titleAlign>center</titleAlign>
+    <showDataLabels>true</showDataLabels>
+    <showDataValuesMode>inHoverOnly</showDataValuesMode>
+    <showLegend>false</showLegend>
+    <facetFields>
+        <value>acc_CustomerCustomerName</value>
+    </facetFields>
+
+    <valueProperty>total</valueProperty>
+    <border>1px solid grey</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <GridFetchDataTask componentId="invoiceTotalsByCustomerFacetChart">
+                        <summaryFunctions>
+                            <total>sum</total>
+                        </summaryFunctions>
+                        <groupBy>
+                            <value>acc_CustomerCustomerName</value>
+                        </groupBy>
+                    </GridFetchDataTask>
+                </sequence>
+            </Process>
+    </drawn>
+</FacetChart>
+
+
+<Label ID="totalCustomersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total Customers:&lt;/span&gt;</contents>
+    <title>Label19</title>
+</Label>
+
+
+<Label ID="totalCustomersValue" height="20">
+    <contents>Label</contents>
+    <title>Label20</title>
+</Label>
+
+
+<Label ID="uSCustomersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total US Customers:&lt;/span&gt;</contents>
+    <title>Label21</title>
+</Label>
+
+
+<Label ID="uSCustomersValue" height="20">
+    <contents>Label</contents>
+    <title>Label22</title>
+</Label>
+
+
+<Label ID="internationalCustomersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total International Customers:&lt;/span&gt;</contents>
+    <title>Label23</title>
+</Label>
+
+
+<Label ID="internationalCustomersValue" height="20">
+    <contents>Label</contents>
+    <title>Label24</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="customerCountsLayout" width="325">
+    <members>
+        <Canvas withID="totalCustomersTitle"/>
+        <Canvas withID="totalCustomersValue"/>
+        <Canvas withID="uSCustomersTitle"/>
+        <Canvas withID="uSCustomersValue"/>
+        <Canvas withID="internationalCustomersTitle"/>
+        <Canvas withID="internationalCustomersValue"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next"/>
+                    <SetTitleTask componentId="totalCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="equals" _constructor="AdvancedCriteria">
+                            <value>USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="uSCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="notEqual" _constructor="AdvancedCriteria">
+                            <value>USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="internationalCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="customerStatsLayout" height="275">
+    <members>
+        <Canvas withID="invoiceTotalsByCustomerFacetChart"/>
+        <Canvas withID="customerCountsLayout"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+</HLayout>
+
+
+<IconImgButton ID="addCustomer">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/add.png</_base>
+    </src>
+    <title>IconButton0</title>
+    <prompt>Add New Customer</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <FormEditNewRecordTask componentId="acc_CustomerForm"/>
+                    <SetTitleTask componentId="addEditCustomerLabel">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;Add New Customer&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditCustomer"/>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="exportCustomer">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/export.png</_base>
+    </src>
+    <title>IconButton1</title>
+    <prompt>Export Customer List</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <sequence>
+                    <GridExportClientDataTask componentId="acc_CustomerGrid">
+                        <requestProperties exportAs="csv" exportDisplay="download"/>
+                    </GridExportClientDataTask>
+                    <ShowNotificationTask message="Customer Data Exported successfully"/>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<IconImgButton ID="printCustomer">
+    <src>
+    	<_base>https://create-test.reify.com/create/isomorphic/skins/Tahoe/images/actions/print.png</_base>
+    </src>
+    <title>IconButton2</title>
+    <prompt>Print Customer</prompt>
+    <vertical>false</vertical>
+    <click>
+            <Process>
+                <defaultWaitDuration>300</defaultWaitDuration>
+                <sequence>
+                    <ShowMessageTask>
+                        <message>Print Customer option not available in this Starter app</message>
+                    </ShowMessageTask>
+                </sequence>
+            </Process>
+    </click>
+</IconImgButton>
+
+
+<ToolStrip membersMargin="10" ID="customersActionToolstrip">
+    <align>right</align>
+    <members>
+        <Canvas withID="addCustomer"/>
+        <Canvas withID="exportCustomer"/>
+        <Canvas withID="printCustomer"/>
+    </members>
+    <layoutRightMargin>10</layoutRightMargin>
+</ToolStrip>
+
+
+<ListGrid dataSource="acc_Customer" autoID="acc_CustomerGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="false">
+    <fields>
+        <LGField name="customerNumber" showGridSummary="false" showGroupSummary="false"/>
+        <LGField name="customerName"/>
+        <LGField name="contactLastName"/>
+        <LGField name="contactFirstName"/>
+        <LGField name="phone"/>
+        <LGField name="salesRepEmployeeNumber"/>
+        <LGField name="creditLimit"/>
+        <LGField name="addressLine1" hidden="true"/>
+        <LGField name="addressLine2" hidden="true"/>
+        <LGField name="city" hidden="true"/>
+        <LGField name="state" hidden="true"/>
+        <LGField name="territory" hidden="true"/>
+        <LGField name="country" hidden="true"/>
+        <LGField name="postalCode" hidden="true"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <canExpandRecords>true</canExpandRecords>
+    <expansionMode>details</expansionMode>
+    <recordDoubleClick>
+            <Process>
+                <sequence>
+                    <FormEditSelectedTask selectionComponentId="acc_CustomerGrid" componentId="acc_CustomerForm"/>
+                    <SetTitleTask componentId="addEditCustomerLabel">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;Editing Customer #{acc_CustomerGrid.selectedRecord.customerNumber}  / #{acc_CustomerGrid.selectedRecord.customerName}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <ShowTask componentId="addEditCustomer"/>
+                    <HideTask componentId="customerStatsLayout"/>
+                    <HideTask componentId="customersActionToolstrip"/>
+                    <HideTask componentId="acc_CustomerGrid"/>
+                </sequence>
+            </Process>
+    </recordDoubleClick>
+</ListGrid>
+
+
+<VLayout ID="customerListLayout">
+    <members>
+        <Canvas withID="customerStatsLayout"/>
+        <Canvas withID="customersActionToolstrip"/>
+        <Canvas withID="acc_CustomerGrid"/>
+    </members>
+</VLayout>
+
+
+<Label ID="addEditCustomerLabel" height="20">
+    <contents>&lt;span style="font-weight:bold;font-size:20px"&gt;Add New Customer&lt;/span&gt;</contents>
+    <title>Label0</title>
+</Label>
+
+
+<DynamicForm dataSource="acc_Customer" autoID="acc_CustomerForm" numCols="4" overflow="hidden" width="90%" height="300">
+    <fields>
+        <TextItem name="customerNumber"/>
+        <TextItem name="customerName"/>
+        <TextItem name="contactLastName"/>
+        <TextItem name="contactFirstName"/>
+        <TextItem name="phone" endRow="true"/>
+        <TextItem name="addressLine1" width="840" colSpan="4" endRow="true"/>
+        <TextItem name="addressLine2" width="840" colSpan="4" endRow="true"/>
+        <TextItem name="city"/>
+        <TextItem name="state"/>
+        <TextItem name="postalCode"/>
+        <TextItem name="country"/>
+        <SelectItem name="salesRepEmployeeNumber" title="Salesperson"/>
+        <FloatItem name="creditLimit"/>
+    </fields>
+    <wrapItemTitles>false</wrapItemTitles>
+</DynamicForm>
+
+
+<IButton ID="saveButton">
+    <title>Save</title>
+    <click>
+            <Process>
+                <sequence>
+                    <FormSaveDataTask componentId="acc_CustomerForm"/>
+                    <ShowNotificationTask>
+                        <textFormula text="Customer #{_lastTask.customerNumber} / #{_lastTask.customerName} succesfully added or updated"/>
+                    </ShowNotificationTask>
+                    <HideTask componentId="addEditCustomer"/>
+                    <ShowTask componentId="customerStatsLayout"/>
+                    <ShowTask componentId="customersActionToolstrip"/>
+                    <ShowTask componentId="acc_CustomerGrid"/>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next"/>
+                    <SetTitleTask componentId="totalCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="equals" _constructor="AdvancedCriteria">
+                            <value>USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="uSCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Customer" failureElement="next">
+                        <criteria fieldName="country" operator="notEqual" _constructor="AdvancedCriteria">
+                            <value>USA</value>
+                        </criteria>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="internationalCustomersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:30px&quot;&gt;#{_lastResponse.totalRows}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton4">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequence>
+                    <ShowNotificationTask notifyType="warn" message="Action Cancelled" description="Show notification: &quot;Customer Action Cancelled&quot;"/>
+                    <HideTask componentId="addEditCustomer"/>
+                    <ShowTask componentId="customerStatsLayout"/>
+                    <ShowTask componentId="customersActionToolstrip"/>
+                    <ShowTask componentId="acc_CustomerGrid"/>
+                </sequence>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="actionButtons" height="25">
+    <members>
+        <Canvas withID="saveButton"/>
+        <Canvas withID="cancelButton4"/>
+    </members>
+</HLayout>
+
+
+<VLayout membersMargin="10" ID="addEditCustomer">
+    <members>
+        <Canvas withID="addEditCustomerLabel"/>
+        <Canvas withID="acc_CustomerForm"/>
+        <Canvas withID="actionButtons"/>
+    </members>
+    <layoutLeftMargin>50</layoutLeftMargin>
+    <layoutTopMargin>50</layoutTopMargin>
+    <visibility>hidden</visibility>
+</VLayout>
+
+
+<Deck ID="customersDeck">
+    <currentPane>customerListLayout</currentPane>
+    <panes>
+        <Canvas withID="customerListLayout"/>
+        <Canvas withID="addEditCustomer"/>
+    </panes>
+</Deck>
+
+
+<VLayout ID="customersMainLayout">
+    <members>
+        <Canvas withID="customersDeck"/>
+    </members>
+</VLayout>
+
+
+<Label ID="totalOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total Orders Value&lt;span&gt;</contents>
+    <align>center</align>
+    <title>Label1</title>
+</Label>
+
+
+<Label ID="totalOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label2</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalOrdersayout" height="75">
+    <members>
+        <Canvas withID="totalOrdersTitle"/>
+        <Canvas withID="totalOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="totalOpenOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total Open Orders Value&lt;span&gt;</contents>
+    <align>center</align>
+    <title>Label3</title>
+</Label>
+
+
+<Label ID="totalOpenOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label4</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalOpenOrdersLayout" height="75">
+    <members>
+        <Canvas withID="totalOpenOrdersTitle"/>
+        <Canvas withID="totalOpenOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<Label ID="totalShippedOrdersTitle" height="20">
+    <contents>&lt;span style="font-size:20px;font-weight:bold"&gt;Total Shipped Orders Value&lt;span&gt;</contents>
+    <align>center</align>
+    <title>Label5</title>
+</Label>
+
+
+<Label ID="totalShippedOrdersValue" height="20">
+    <contents>Label</contents>
+    <align>center</align>
+    <title>Label6</title>
+</Label>
+
+
+<VLayout overflow="hidden" membersMargin="10" ID="totalShippedOrdersLayout" height="75">
+    <members>
+        <Canvas withID="totalShippedOrdersTitle"/>
+        <Canvas withID="totalShippedOrdersValue"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+    <border>1px solid gray</border>
+    <borderRadius>10px</borderRadius>
+</VLayout>
+
+
+<HLayout overflow="hidden" membersMargin="10" ID="ordersStatsLayout" height="95">
+    <members>
+        <Canvas withID="totalOrdersayout"/>
+        <Canvas withID="totalOpenOrdersLayout"/>
+        <Canvas withID="totalShippedOrdersLayout"/>
+    </members>
+    <layoutLeftMargin>10</layoutLeftMargin>
+    <layoutRightMargin>10</layoutRightMargin>
+    <drawn>
+            <Process>
+                <sequence>
+                    <DSFetchTask dataSource="acc_Order" failureElement="next" description="Fetch all Order records">
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Order" failureElement="next" description="Fetch Order where &lt;ul&gt;&lt;li&gt;Status equals In Process&lt;/li&gt;&lt;li&gt; or Status equals Disputed&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria operator="or" _constructor="AdvancedCriteria">
+                            <criteria>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value>In Process</value>
+                                </Criterion>
+                                <Criterion fieldName="status" operator="equals">
+                                    <value>Disputed</value>
+                                </Criterion>
+                            </criteria>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalOpenOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:red&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                    <DSFetchTask dataSource="acc_Order" failureElement="next" description="Fetch Order where &lt;ul&gt;&lt;li&gt;Status equals Shipped&lt;/li&gt;&lt;/ul&gt;">
+                        <criteria fieldName="status" operator="equals" _constructor="AdvancedCriteria">
+                            <value>Shipped</value>
+                        </criteria>
+                        <summaryFunctions>
+                            <orderTotal>sum</orderTotal>
+                        </summaryFunctions>
+                    </DSFetchTask>
+                    <SetTitleTask componentId="totalShippedOrdersValue">
+                        <textFormula text="&lt;span style=&quot;font-weight:bold;font-size:20px;color:green&quot;&gt;#{_lastTask.orderTotal}&lt;/span&gt;"/>
+                    </SetTitleTask>
+                </sequence>
+            </Process>
+    </drawn>
+</HLayout>
+
+
+<ListGrid dataSource="acc_Order" autoID="acc_OrderGrid" showFilterEditor="true" autoFetchData="true" showGridSummary="false">
+    <fields>
+        <LGField name="orderNumber"/>
+        <LGField name="orderDate" width="100"/>
+        <LGField name="requiredDate" width="100"/>
+        <LGField name="shippedDate" width="100"/>
+        <LGField name="status"/>
+        <LGField name="comments"/>
+        <LGField name="customerNumber"/>
+        <LGField name="orderTotal"/>
+    </fields>
+    <cellHeight>40</cellHeight>
+    <initialSort>
+    </initialSort>
+    <autoFitFieldWidths>true</autoFitFieldWidths>
+    <autoFitWidthApproach>both</autoFitWidthApproach>
+    <canExpandRecords>true</canExpandRecords>
+    <expansionScreen>Order Lines View</expansionScreen>
+</ListGrid>
+
+
+<VLayout membersMargin="10" ID="ordersMainLayout">
+    <members>
+        <Canvas withID="ordersStatsLayout"/>
+        <Canvas withID="acc_OrderGrid"/>
+    </members>
+    <layoutTopMargin>10</layoutTopMargin>
+</VLayout>
+
+
+<TabSet ID="mainTabSet">
+    <tabs>
+        <Tab title="Invoices" autoID="invoicesTab">
+            <pane withID="invoicesMainLayout"/>
+        </Tab>
+        <Tab title="Payments" autoID="paymentsTab">
+            <pane withID="paymentsDeck"/>
+        </Tab>
+        <Tab title="Customers" autoID="customersTab">
+            <pane withID="customersMainLayout"/>
+        </Tab>
+        <Tab title="Orders" autoID="ordersTab">
+            <pane withID="ordersMainLayout"/>
+        </Tab>
+    </tabs>
+    <destroyPanes>false</destroyPanes>
+</TabSet>
+
+
+<DataView overflow="hidden" ID="accountsStarterApp" width="100%" height="100%" autoDraw="true">
+    <members>
+        <Canvas withID="headerLayout"/>
+        <Canvas withID="mainTabSet"/>
+    </members>
+</DataView>
+
+
+<IButton autoID="assignOrderLinesButton">
+    <title>Assign Order Lines</title>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <DecisionTask failureElement="ShowMessage0">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="acc_OrderLineGrid.anySelected" operator="equals">
+                                            <value xsi:type="xsd:boolean">true</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </DecisionTask>
+                            <GridSelectRecordsTask selectMultiple="false" keepExistingSelection="true" scrollIntoView="false" componentId="acc_OrderLineGrid">
+                                <criteria operator="and" _constructor="AdvancedCriteria">
+                                    <criteria>
+                                        <Criterion fieldName="orderLineId" operator="equals">
+                                            <value xsi:type="xsd:float">999999999999999</value>
+                                        </Criterion>
+                                    </criteria>
+                                </criteria>
+                            </GridSelectRecordsTask>
+                            <GridEditRecordTask componentId="acc_invoiceLineGrid">
+                                <initialValues>
+                                    <invoiceNumber>$ruleScope.acc_InvoiceForm.values.invoiceId</invoiceNumber>
+                                    <line>$last._index_</line>
+                                    <Description>$last.acc_ProductProductName</Description>
+                                    <qty>$last.quantityOrdered</qty>
+                                    <priceEach>$last.priceEach</priceEach>
+                                    <total>$last.Line_Total1</total>
+                                </initialValues>
+                            </GridEditRecordTask>
+                            <HideTask componentId="headerButtonLayout"/>
+                            <ShowTask componentId="addEditDetailLayout"/>
+                            <HideTask componentId="assignOrderLinesWindow"/>
+                            <FormSetFieldValueTask targetField="SubTotal" componentId="acc_InvoiceForm">
+                                <value xsi:type="xsd:text">$ruleScope.acc_invoiceLineGrid.summaryRecord.total</value>
+                            </FormSetFieldValueTask>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <ShowMessageTask ID="ShowMessage0">
+                                <message>Please select at least one order line to associate with this invoice</message>
+                            </ShowMessageTask>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+            </Process>
+    </click>
+</IButton>
+
+
+<IButton autoID="cancelButton3">
+    <title>Cancel</title>
+    <click>
+            <Process>
+                <sequences>
+                    <ProcessSequence>
+                        <elements>
+                            <UserConfirmationTask failureElement="placeHolder0">
+                                <message>Please confirm you wish to manually assign orders to this Invoice</message>
+                            </UserConfirmationTask>
+                            <HideTask componentId="assignOrderLinesWindow"/>
+                            <ShowTask componentId="addEditDetailLayout"/>
+                            <HideTask componentId="headerButtonLayout"/>
+                        </elements>
+                    </ProcessSequence>
+                    <ProcessSequence>
+                        <elements>
+                            <EndProcessTask ID="placeHolder0"/>
+                        </elements>
+                    </ProcessSequence>
+                </sequences>
+            </Process>
+    </click>
+</IButton>
+
+
+<HLayout overflow="hidden" membersMargin="5" ID="headerControlButtonLayout" width="250">
+    <align>center</align>
+    <defaultLayoutAlign>center</defaultLayoutAlign>
+    <members>
+        <Canvas withID="assignOrderLinesButton"/>
+        <Canvas withID="cancelButton3"/>
+    </members>
+</HLayout>
+
+
+<ListGrid dataSource="acc_OrderLine" autoID="acc_OrderLineGrid" showFilterEditor="true" autoFetchData="true">
+    <fields>
+        <LGField name="orderNumber" title="Order"/>
+        <LGField name="orderLineNumber"/>
+        <LGField name="productCode" title="Product"/>
+        <LGField name="quantityOrdered"/>
+        <LGField name="priceEach"/>
+        <LGField name="Line_Total1" type="float" title="Line Total" summaryFunction="" width="100">
+            <canFilter>false</canFilter>
+            <canEditFormula>false</canEditFormula>
+            <canSortClientOnly>true</canSortClientOnly>
+            <userFormula text="D*E">
+                <formulaVars>
+                        <value id="E">priceEach</value>
+                        <value id="D">quantityOrdered</value>
+                </formulaVars>
+            </userFormula>
+            <format>$,#.00</format>
+            <canFilterOnClient>true</canFilterOnClient>
+            <originalOrder>5</originalOrder>
+        </LGField>
+        <LGField name="orderLineId" hidden="true"/>
+    </fields>
+    <selectionAppearance>checkbox</selectionAppearance>
+</ListGrid>
+
+
+<ModalWindow ID="assignOrderLinesWindow" width="75%" height="275">
+    <headerControls>
+        <WindowHeaderIcon/>
+        <WindowHeaderLabel/>
+        <WindowMinimizeButton/>
+        <WindowMaximizeButton/>
+        <WindowCloseButton/>
+        <Canvas withID="headerControlButtonLayout"/>
+    </headerControls>
+    <title>Window0</title>
+    <items>
+        <Canvas withID="acc_OrderLineGrid"/>
+    </items>
+</ModalWindow>
+
+
+</isomorphicXML>

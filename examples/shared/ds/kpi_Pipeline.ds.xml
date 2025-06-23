@@ -1,0 +1,577 @@
+
+<MockDataSource fromServer="true" ID="kpi_Pipeline" clientOnly="true">
+    <fields>
+        <field name="id" type="integer" title="Id" hidden="true" primaryKey="true"/>
+        <field name="dateRaised" type="date" title="Date Raised">
+            <emptyDisplayValue>0//03/2022</emptyDisplayValue>
+        </field>
+        <field name="Customer" type="integer" title="Customer Name" foreignKey="kpi_Customer.customerNumber" displayField="customerName" joinType="outer"/>
+        <field name="customerName" hidden="false" includeFrom="kpi_Customer.customerName"/>
+        <field name="comments" type="text" title="Comments"/>
+        <field name="chance" type="float" title="%age Chance" format="#.00%"/>
+        <field name="status" type="enum" title="Status">
+            <valueMap>
+                    <value>Bidding</value>
+                    <value>Won</value>
+                    <value>Lost</value>
+                    <value>On Hold</value>
+                    <value>Delayed</value>
+            </valueMap>
+        </field>
+        <field name="salesman" type="integer" title="SalesPerson" foreignKey="kpi_Employee.employeeNumber" displayField="pipeIneLastName" joinType="outer"/>
+        <field name="pipeIneLastName" hidden="false" includeFrom="kpi_Employee.lastName"/>
+        <field name="potentialValue" type="float" title="Potential Value" format="$,#.00"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <id>1</id>
+            <dateRaised>2022-01-23</dateRaised>
+            <Customer>103</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>10000</potentialValue>
+            <chance>0.75</chance>
+            <status>Won</status>
+            <salesman>1165</salesman>
+            <internalId>1</internalId>
+        </Object>
+        <Object>
+            <id>2</id>
+            <dateRaised>2022-01-25</dateRaised>
+            <Customer>112</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>8250</potentialValue>
+            <chance>0.5</chance>
+            <status>Lost</status>
+            <salesman>1076</salesman>
+            <internalId>2</internalId>
+        </Object>
+        <Object>
+            <id>3</id>
+            <dateRaised>2022-01-25</dateRaised>
+            <Customer>112</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>750.75</potentialValue>
+            <chance>0.5</chance>
+            <status>Won</status>
+            <salesman>1076</salesman>
+            <internalId>3</internalId>
+        </Object>
+        <Object>
+            <id>4</id>
+            <dateRaised>2022-01-26</dateRaised>
+            <Customer>114</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>1250</potentialValue>
+            <chance>0.95</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>4</internalId>
+        </Object>
+        <Object>
+            <id>5</id>
+            <dateRaised>2022-01-26</dateRaised>
+            <Customer>124</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>745</potentialValue>
+            <chance>0.75</chance>
+            <status>Won</status>
+            <salesman>1612</salesman>
+            <internalId>5</internalId>
+        </Object>
+        <Object>
+            <id>6</id>
+            <dateRaised>2022-01-26</dateRaised>
+            <Customer>103</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>7850</potentialValue>
+            <chance>0.7</chance>
+            <status>Won</status>
+            <salesman>1165</salesman>
+            <internalId>6</internalId>
+        </Object>
+        <Object>
+            <id>7</id>
+            <dateRaised>2022-01-27</dateRaised>
+            <Customer>124</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>2578.75</potentialValue>
+            <chance>0.6</chance>
+            <status>Lost</status>
+            <salesman>1612</salesman>
+            <internalId>7</internalId>
+        </Object>
+        <Object>
+            <id>8</id>
+            <dateRaised>2022-01-27</dateRaised>
+            <Customer>124</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>15000</potentialValue>
+            <chance>0.25</chance>
+            <status>Lost</status>
+            <salesman>1612</salesman>
+            <internalId>8</internalId>
+        </Object>
+        <Object>
+            <id>9</id>
+            <dateRaised>2022-02-01</dateRaised>
+            <Customer>124</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>22000</potentialValue>
+            <chance>0.9</chance>
+            <status>Lost</status>
+            <salesman>1612</salesman>
+            <internalId>9</internalId>
+        </Object>
+        <Object>
+            <id>10</id>
+            <dateRaised>2022-02-01</dateRaised>
+            <Customer>124</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>14000</potentialValue>
+            <chance>0.9</chance>
+            <status>Won</status>
+            <salesman>1612</salesman>
+            <internalId>10</internalId>
+        </Object>
+        <Object>
+            <id>11</id>
+            <dateRaised>2022-02-03</dateRaised>
+            <Customer>124</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>14500</potentialValue>
+            <chance>0.95</chance>
+            <status>Won</status>
+            <salesman>1612</salesman>
+            <internalId>11</internalId>
+        </Object>
+        <Object>
+            <id>12</id>
+            <dateRaised>2022-02-04</dateRaised>
+            <Customer>121</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>6550</potentialValue>
+            <chance>0.65</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>12</internalId>
+        </Object>
+        <Object>
+            <id>13</id>
+            <dateRaised>2022-02-06</dateRaised>
+            <Customer>103</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>285.5</potentialValue>
+            <chance>0.65</chance>
+            <status>Won</status>
+            <salesman>1165</salesman>
+            <internalId>13</internalId>
+        </Object>
+        <Object>
+            <id>14</id>
+            <dateRaised>2022-02-06</dateRaised>
+            <Customer>121</Customer>
+            <comments>special customer order</comments>
+            <potentialValue>9780</potentialValue>
+            <chance>0.7</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>14</internalId>
+        </Object>
+        <Object>
+            <id>15</id>
+            <dateRaised>2022-02-15</dateRaised>
+            <Customer>103</Customer>
+            <comments>2 year deal</comments>
+            <potentialValue>13250</potentialValue>
+            <chance>0.55</chance>
+            <status>Won</status>
+            <salesman>1165</salesman>
+            <internalId>15</internalId>
+        </Object>
+        <Object>
+            <id>16</id>
+            <dateRaised>2022-02-15</dateRaised>
+            <Customer>161</Customer>
+            <comments>1 year deal</comments>
+            <potentialValue>12500.5</potentialValue>
+            <chance>0.5</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>16</internalId>
+        </Object>
+        <Object>
+            <id>17</id>
+            <dateRaised>2022-02-16</dateRaised>
+            <Customer>128</Customer>
+            <comments>subsiduary order</comments>
+            <potentialValue>11500</potentialValue>
+            <chance>0.25</chance>
+            <status>Lost</status>
+            <salesman>1188</salesman>
+            <internalId>17</internalId>
+        </Object>
+        <Object>
+            <id>18</id>
+            <dateRaised>2022-02-17</dateRaised>
+            <Customer>128</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>7788</potentialValue>
+            <chance>0.4</chance>
+            <status>Won</status>
+            <salesman>1188</salesman>
+            <internalId>18</internalId>
+        </Object>
+        <Object>
+            <id>19</id>
+            <dateRaised>2022-02-17</dateRaised>
+            <Customer>121</Customer>
+            <comments>New Store</comments>
+            <potentialValue>5568</potentialValue>
+            <chance>0.3</chance>
+            <status>Lost</status>
+            <salesman>1501</salesman>
+            <internalId>19</internalId>
+        </Object>
+        <Object>
+            <id>20</id>
+            <dateRaised>2022-02-21</dateRaised>
+            <Customer>103</Customer>
+            <comments>1 year deal</comments>
+            <potentialValue>2250</potentialValue>
+            <chance>0.7</chance>
+            <status>Lost</status>
+            <salesman>1165</salesman>
+            <internalId>20</internalId>
+        </Object>
+        <Object>
+            <id>21</id>
+            <dateRaised>2022-02-21</dateRaised>
+            <Customer>161</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>37500</potentialValue>
+            <chance>0.75</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>21</internalId>
+        </Object>
+        <Object>
+            <id>22</id>
+            <dateRaised>2022-02-21</dateRaised>
+            <Customer>161</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>800</potentialValue>
+            <chance>0.8</chance>
+            <status>Won</status>
+            <salesman>1501</salesman>
+            <internalId>22</internalId>
+        </Object>
+        <Object>
+            <id>23</id>
+            <dateRaised>2022-02-22</dateRaised>
+            <Customer>131</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>950</potentialValue>
+            <chance>0.85</chance>
+            <status>Won</status>
+            <salesman>1286</salesman>
+            <internalId>23</internalId>
+        </Object>
+        <Object>
+            <id>24</id>
+            <dateRaised>2022-02-22</dateRaised>
+            <Customer>131</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>9500</potentialValue>
+            <chance>0.65</chance>
+            <status>Lost</status>
+            <salesman>1286</salesman>
+            <internalId>24</internalId>
+        </Object>
+        <Object>
+            <id>25</id>
+            <dateRaised>2022-02-23</dateRaised>
+            <Customer>121</Customer>
+            <comments>New Store</comments>
+            <potentialValue>7880</potentialValue>
+            <chance>0.35</chance>
+            <status>Lost</status>
+            <salesman>1501</salesman>
+            <internalId>25</internalId>
+        </Object>
+        <Object>
+            <id>26</id>
+            <dateRaised>2022-02-24</dateRaised>
+            <Customer>103</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>6975</potentialValue>
+            <chance>0.5</chance>
+            <status>Won</status>
+            <salesman>1165</salesman>
+            <internalId>26</internalId>
+        </Object>
+        <Object>
+            <id>27</id>
+            <dateRaised>2022-02-25</dateRaised>
+            <Customer>112</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>8750.75</potentialValue>
+            <chance>0.6</chance>
+            <status>Won</status>
+            <salesman>1188</salesman>
+            <internalId>27</internalId>
+        </Object>
+        <Object>
+            <id>28</id>
+            <dateRaised>2022-02-26</dateRaised>
+            <Customer>171</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>4900</potentialValue>
+            <chance>0.7</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>28</internalId>
+        </Object>
+        <Object>
+            <id>29</id>
+            <dateRaised>2022-02-26</dateRaised>
+            <Customer>114</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>7568</potentialValue>
+            <chance>0.9</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>29</internalId>
+        </Object>
+        <Object>
+            <id>30</id>
+            <dateRaised>2022-02-27</dateRaised>
+            <Customer>112</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>22500</potentialValue>
+            <chance>0.99</chance>
+            <status>Bidding</status>
+            <salesman>1188</salesman>
+            <internalId>30</internalId>
+        </Object>
+        <Object>
+            <id>31</id>
+            <dateRaised>2022-02-27</dateRaised>
+            <Customer>129</Customer>
+            <comments>Full Catalogue quote</comments>
+            <potentialValue>120000</potentialValue>
+            <chance>1</chance>
+            <status>Bidding</status>
+            <salesman>1286</salesman>
+            <internalId>31</internalId>
+        </Object>
+        <Object>
+            <id>32</id>
+            <dateRaised>2022-02-28</dateRaised>
+            <Customer>114</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>75000</potentialValue>
+            <chance>0.7</chance>
+            <status>Delayed</status>
+            <salesman>1501</salesman>
+            <internalId>32</internalId>
+        </Object>
+        <Object>
+            <id>33</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>171</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>1750</potentialValue>
+            <chance>0.75</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>33</internalId>
+        </Object>
+        <Object>
+            <id>34</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>131</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>5500</potentialValue>
+            <chance>0.25</chance>
+            <status>Bidding</status>
+            <salesman>1286</salesman>
+            <internalId>34</internalId>
+        </Object>
+        <Object>
+            <id>35</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>114</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>6300</potentialValue>
+            <chance>0.95</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>35</internalId>
+        </Object>
+        <Object>
+            <id>36</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>131</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>3000</potentialValue>
+            <chance>0.85</chance>
+            <status>On Hold</status>
+            <salesman>1286</salesman>
+            <internalId>36</internalId>
+        </Object>
+        <Object>
+            <id>37</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>114</Customer>
+            <comments>Expanding product lines</comments>
+            <potentialValue>2500</potentialValue>
+            <chance>0.5</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>37</internalId>
+        </Object>
+        <Object>
+            <id>38</id>
+            <dateRaised>2022-03-01</dateRaised>
+            <Customer>131</Customer>
+            <comments>Quarterly order</comments>
+            <potentialValue>4580</potentialValue>
+            <chance>0.5</chance>
+            <status>Bidding</status>
+            <salesman>1286</salesman>
+            <internalId>38</internalId>
+        </Object>
+        <Object>
+            <id>39</id>
+            <dateRaised>2022-03-02</dateRaised>
+            <Customer>103</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>8910</potentialValue>
+            <chance>0.5</chance>
+            <status>Bidding</status>
+            <salesman>1165</salesman>
+            <internalId>39</internalId>
+        </Object>
+        <Object>
+            <id>40</id>
+            <dateRaised>2022-03-05</dateRaised>
+            <Customer>171</Customer>
+            <comments>New Store</comments>
+            <potentialValue>4400</potentialValue>
+            <chance>0.5</chance>
+            <status>On Hold</status>
+            <salesman>1501</salesman>
+            <internalId>40</internalId>
+        </Object>
+        <Object>
+            <id>41</id>
+            <dateRaised>2022-03-05</dateRaised>
+            <Customer>171</Customer>
+            <comments>New Store</comments>
+            <potentialValue>8800</potentialValue>
+            <chance>0.75</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>41</internalId>
+        </Object>
+        <Object>
+            <id>42</id>
+            <dateRaised>2022-03-08</dateRaised>
+            <Customer>121</Customer>
+            <comments>New Store</comments>
+            <potentialValue>7700</potentialValue>
+            <chance>0.75</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>42</internalId>
+        </Object>
+        <Object>
+            <id>43</id>
+            <dateRaised>2022-03-08</dateRaised>
+            <Customer>124</Customer>
+            <comments>New Store</comments>
+            <potentialValue>13750</potentialValue>
+            <chance>0.75</chance>
+            <status>Bidding</status>
+            <salesman>1612</salesman>
+            <internalId>43</internalId>
+        </Object>
+        <Object>
+            <id>44</id>
+            <dateRaised>2022-03-11</dateRaised>
+            <Customer>171</Customer>
+            <comments>New Store</comments>
+            <potentialValue>14750</potentialValue>
+            <chance>0.25</chance>
+            <status>Bidding</status>
+            <salesman>1501</salesman>
+            <internalId>44</internalId>
+        </Object>
+        <Object>
+            <id>45</id>
+            <dateRaised>2022-03-11</dateRaised>
+            <Customer>103</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>14000</potentialValue>
+            <chance>0.95</chance>
+            <status>Bidding</status>
+            <salesman>1165</salesman>
+            <internalId>45</internalId>
+        </Object>
+        <Object>
+            <id>46</id>
+            <dateRaised>2022-03-11</dateRaised>
+            <Customer>124</Customer>
+            <comments>New Store</comments>
+            <potentialValue>15000</potentialValue>
+            <chance>0.5</chance>
+            <status>Bidding</status>
+            <salesman>1612</salesman>
+            <internalId>46</internalId>
+        </Object>
+        <Object>
+            <id>47</id>
+            <dateRaised>2022-03-12</dateRaised>
+            <Customer>128</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>2750</potentialValue>
+            <chance>0.75</chance>
+            <status>Bidding</status>
+            <salesman>1188</salesman>
+            <internalId>47</internalId>
+        </Object>
+        <Object>
+            <id>48</id>
+            <dateRaised>2022-03-14</dateRaised>
+            <Customer>128</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>175</potentialValue>
+            <chance>0.7</chance>
+            <status>Bidding</status>
+            <salesman>1188</salesman>
+            <internalId>48</internalId>
+        </Object>
+        <Object>
+            <id>49</id>
+            <dateRaised>2022-03-18</dateRaised>
+            <Customer>103</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>4500</potentialValue>
+            <chance>0.25</chance>
+            <status>Bidding</status>
+            <salesman>1165</salesman>
+            <internalId>49</internalId>
+        </Object>
+        <Object>
+            <id>50</id>
+            <dateRaised>2022-03-21</dateRaised>
+            <Customer>131</Customer>
+            <comments>Monthly stock upkeep order</comments>
+            <potentialValue>5500</potentialValue>
+            <chance>0.8</chance>
+            <status>Bidding</status>
+            <salesman>1286</salesman>
+            <internalId>50</internalId>
+        </Object>
+    </cacheData>
+</MockDataSource>

@@ -1,0 +1,1127 @@
+
+<MockDataSource ID="kpi_Customer" clientOnly="true" sample="true">
+    <fields>
+        <field name="customerNumber" type="sequence" primaryKey="true">
+            <editRequires>false</editRequires>
+        </field>
+        <field name="customerName" type="text" required="true" length="50"/>
+        <field name="contactLastName" type="text" required="true" length="50"/>
+        <field name="contactFirstName" type="text" required="true" length="50"/>
+        <field name="phone" type="text" required="true" length="50"/>
+        <field name="addressLine1" type="text" required="true" length="50"/>
+        <field name="addressLine2" type="text" length="50"/>
+        <field name="city" type="text" required="true" length="50"/>
+        <field name="state" type="text" length="50"/>
+        <field name="postalCode" type="text" length="15"/>
+        <field name="country" type="text" required="true" length="50"/>
+        <field name="salesRepEmployeeNumber" type="integer" title="SalesPerson" foreignKey="kpi_Employee.employeeNumber" displayField="salesPerson" joinType="outer"/>
+        <field name="creditLimit" type="float" format="$,#.00"/>
+        <field name="salesPerson" hidden="true" includeFrom="kpi_Employee.lastName"/>
+    </fields>
+    <cacheData>
+        <Object>
+            <customerNumber>103</customerNumber>
+            <customerName>Atelier graphique</customerName>
+            <contactLastName>Schmitt</contactLastName>
+            <contactFirstName>Carine</contactFirstName>
+            <phone>40.32.2555</phone>
+            <addressLine1>54, rue Royale</addressLine1>
+            <city>Nantes</city>
+            <state></state>
+            <postalCode>44000</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1370</salesRepEmployeeNumber>
+            <creditLimit>21000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Hernandez</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>112</customerNumber>
+            <customerName>Signal Gift Stores</customerName>
+            <contactLastName>King</contactLastName>
+            <contactFirstName>Jean</contactFirstName>
+            <phone>7025551838</phone>
+            <addressLine1>8489 Strong St.</addressLine1>
+            <city>Las Vegas</city>
+            <state>NV</state>
+            <postalCode>83030</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1166</salesRepEmployeeNumber>
+            <creditLimit>71800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Thompson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>114</customerNumber>
+            <customerName>Australian Collectors, Co.</customerName>
+            <contactLastName>Ferguson</contactLastName>
+            <contactFirstName>Peter</contactFirstName>
+            <phone>03 9520 4555</phone>
+            <addressLine1>636 St Kilda Road</addressLine1>
+            <city>Melbourne</city>
+            <state>Victoria</state>
+            <postalCode>3004</postalCode>
+            <country>Australia</country>
+            <salesRepEmployeeNumber>1611</salesRepEmployeeNumber>
+            <creditLimit>117300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Fixter</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>121</customerNumber>
+            <customerName>Baane Mini Imports</customerName>
+            <contactLastName>Bergulfsen</contactLastName>
+            <contactFirstName>Jonas</contactFirstName>
+            <phone>07-98 9555</phone>
+            <addressLine1>Erling Skakkes gate 78</addressLine1>
+            <city>Stavern</city>
+            <state></state>
+            <postalCode>4110</postalCode>
+            <country>Norway</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>81700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>124</customerNumber>
+            <customerName>Mini Gifts Distributors Ltd.</customerName>
+            <contactLastName>Nelson</contactLastName>
+            <contactFirstName>Susan</contactFirstName>
+            <phone>4155551450</phone>
+            <addressLine1>5677 Strong St.</addressLine1>
+            <city>San Rafael</city>
+            <state>CA</state>
+            <postalCode>97562</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1165</salesRepEmployeeNumber>
+            <creditLimit>210500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jennings</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>128</customerNumber>
+            <customerName>Blauer See Auto, Co.</customerName>
+            <contactLastName>Keitel</contactLastName>
+            <contactFirstName>Roland</contactFirstName>
+            <phone>+49 69 66 90 2555</phone>
+            <addressLine1>Lyonerstr. 34</addressLine1>
+            <city>Frankfurt</city>
+            <state></state>
+            <postalCode>60528</postalCode>
+            <country>Germany</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>59700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>129</customerNumber>
+            <customerName>Mini Wheels Co.</customerName>
+            <contactLastName>Murphy</contactLastName>
+            <contactFirstName>Julie</contactFirstName>
+            <phone>6505555787</phone>
+            <addressLine1>5557 North Pendale Street</addressLine1>
+            <city>San Francisco</city>
+            <state>CA</state>
+            <postalCode>94217</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1165</salesRepEmployeeNumber>
+            <creditLimit>64600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jennings</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>131</customerNumber>
+            <customerName>Land of Toys Inc.</customerName>
+            <contactLastName>Lee</contactLastName>
+            <contactFirstName>Kwai</contactFirstName>
+            <phone>2125557818</phone>
+            <addressLine1>897 Long Airport Avenue</addressLine1>
+            <city>NYC</city>
+            <state>NY</state>
+            <postalCode>10022</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1323</salesRepEmployeeNumber>
+            <creditLimit>114900</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Vanauf</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>141</customerNumber>
+            <customerName>Euro+ Shopping Channel</customerName>
+            <contactLastName>Freyre</contactLastName>
+            <contactFirstName>Diego</contactFirstName>
+            <phone>(91) 555 94 44</phone>
+            <addressLine1>C/ Moralzarzal, 86</addressLine1>
+            <city>Madrid</city>
+            <state></state>
+            <postalCode>28034</postalCode>
+            <country>Spain</country>
+            <salesRepEmployeeNumber>1370</salesRepEmployeeNumber>
+            <creditLimit>227600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Hernandez</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>144</customerNumber>
+            <customerName>Volvo Model Replicas, Co</customerName>
+            <contactLastName>Berglund</contactLastName>
+            <contactFirstName>Christina</contactFirstName>
+            <phone>0921-12 3555</phone>
+            <addressLine1>Berguvsvägen 8</addressLine1>
+            <city>Luleå</city>
+            <state></state>
+            <postalCode>S-958 22</postalCode>
+            <country>Sweden</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>53100</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>145</customerNumber>
+            <customerName>Danish Wholesale Imports</customerName>
+            <contactLastName>Petersen</contactLastName>
+            <contactFirstName>Jytte</contactFirstName>
+            <phone>31 12 3555</phone>
+            <addressLine1>Vinbæltet 34</addressLine1>
+            <city>Kobenhavn</city>
+            <state></state>
+            <postalCode>1734</postalCode>
+            <country>Denmark</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>83400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>146</customerNumber>
+            <customerName>Saveley &amp; Henriot, Co.</customerName>
+            <contactLastName>Saveley</contactLastName>
+            <contactFirstName>Mary</contactFirstName>
+            <phone>78.32.5555</phone>
+            <addressLine1>2, rue du Commerce</addressLine1>
+            <city>Lyon</city>
+            <state></state>
+            <postalCode>69004</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1337</salesRepEmployeeNumber>
+            <creditLimit>123900</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bondur</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>148</customerNumber>
+            <customerName>Dragon Souveniers, Ltd.</customerName>
+            <contactLastName>Natividad</contactLastName>
+            <contactFirstName>Eric</contactFirstName>
+            <phone>+65 221 7555</phone>
+            <addressLine1>Bronz Sok.</addressLine1>
+            <city>Singapore</city>
+            <state></state>
+            <postalCode>079903</postalCode>
+            <country>Singapore</country>
+            <salesRepEmployeeNumber>1621</salesRepEmployeeNumber>
+            <creditLimit>103800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Nishi</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>151</customerNumber>
+            <customerName>Muscle Machine Inc</customerName>
+            <contactLastName>Young</contactLastName>
+            <contactFirstName>Jeff</contactFirstName>
+            <phone>2125557413</phone>
+            <addressLine1>4092 Furth Circle</addressLine1>
+            <city>NYC</city>
+            <state>NY</state>
+            <postalCode>10022</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1286</salesRepEmployeeNumber>
+            <creditLimit>138500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Tseng</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>161</customerNumber>
+            <customerName>Technics Stores Inc.</customerName>
+            <contactLastName>Hashimoto</contactLastName>
+            <contactFirstName>Juri</contactFirstName>
+            <phone>6505556809</phone>
+            <addressLine1>9408 Furth Circle</addressLine1>
+            <city>Burlingame</city>
+            <state>CA</state>
+            <postalCode>94217</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1165</salesRepEmployeeNumber>
+            <creditLimit>84600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jennings</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>167</customerNumber>
+            <customerName>Herkku Gifts</customerName>
+            <contactLastName>Oeztan</contactLastName>
+            <contactFirstName>Veysel</contactFirstName>
+            <phone>+47 2267 3215</phone>
+            <addressLine1>Brehmen St. 121</addressLine1>
+            <city>Bergen</city>
+            <state></state>
+            <postalCode>N 5804</postalCode>
+            <country>Norway</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>96800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>171</customerNumber>
+            <customerName>Daedalus Designs Imports</customerName>
+            <contactLastName>Rancé</contactLastName>
+            <contactFirstName>Martine</contactFirstName>
+            <phone>20.16.1555</phone>
+            <addressLine1>184, chaussée de Tournai</addressLine1>
+            <city>Lille</city>
+            <state></state>
+            <postalCode>59000</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1370</salesRepEmployeeNumber>
+            <creditLimit>82900</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Hernandez</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>172</customerNumber>
+            <customerName>La Corne D'abondance, Co.</customerName>
+            <contactLastName>Bertrand</contactLastName>
+            <contactFirstName>Marie</contactFirstName>
+            <phone>(1) 42.34.2555</phone>
+            <addressLine1>265, boulevard Charonne</addressLine1>
+            <city>Paris</city>
+            <state></state>
+            <postalCode>75012</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1337</salesRepEmployeeNumber>
+            <creditLimit>84300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bondur</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>175</customerNumber>
+            <customerName>Gift Depot Inc.</customerName>
+            <contactLastName>King</contactLastName>
+            <contactFirstName>Julie</contactFirstName>
+            <phone>2035552570</phone>
+            <addressLine1>25593 South Bay Ln.</addressLine1>
+            <city>Bridgewater</city>
+            <state>CT</state>
+            <postalCode>97562</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1323</salesRepEmployeeNumber>
+            <creditLimit>84300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Vanauf</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>181</customerNumber>
+            <customerName>Vitachrome Inc.</customerName>
+            <contactLastName>Frick</contactLastName>
+            <contactFirstName>Michael</contactFirstName>
+            <phone>2125551500</phone>
+            <addressLine1>2678 Kingston Rd.</addressLine1>
+            <city>NYC</city>
+            <state>NY</state>
+            <postalCode>10022</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1286</salesRepEmployeeNumber>
+            <creditLimit>76400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Tseng</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>186</customerNumber>
+            <customerName>Toys of Finland, Co.</customerName>
+            <contactLastName>Karttunen</contactLastName>
+            <contactFirstName>Matti</contactFirstName>
+            <phone>90-224 8555</phone>
+            <addressLine1>Keskuskatu 45</addressLine1>
+            <city>Helsinki</city>
+            <state></state>
+            <postalCode>21240</postalCode>
+            <country>Finland</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>96500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>187</customerNumber>
+            <customerName>AV Stores, Co.</customerName>
+            <contactLastName>Ashworth</contactLastName>
+            <contactFirstName>Rachel</contactFirstName>
+            <phone>(171) 555-1555</phone>
+            <addressLine1>Fauntleroy Circus</addressLine1>
+            <city>Manchester</city>
+            <state></state>
+            <postalCode>EC2 5NT</postalCode>
+            <country>UK</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>136800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>198</customerNumber>
+            <customerName>Auto-Moto Classics Inc.</customerName>
+            <contactLastName>Taylor</contactLastName>
+            <contactFirstName>Leslie</contactFirstName>
+            <phone>6175558428</phone>
+            <addressLine1>16780 Pompton St.</addressLine1>
+            <city>Brickhaven</city>
+            <state>MA</state>
+            <postalCode>58339</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1216</salesRepEmployeeNumber>
+            <creditLimit>23000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Patterson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>205</customerNumber>
+            <customerName>Toys4GrownUps.com</customerName>
+            <contactLastName>Young</contactLastName>
+            <contactFirstName>Julie</contactFirstName>
+            <phone>6265557265</phone>
+            <addressLine1>78934 Hillside Dr.</addressLine1>
+            <city>Pasadena</city>
+            <state>CA</state>
+            <postalCode>90003</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1166</salesRepEmployeeNumber>
+            <creditLimit>90700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Thompson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>211</customerNumber>
+            <customerName>King Kong Collectables, Co.</customerName>
+            <contactLastName>Gao</contactLastName>
+            <contactFirstName>Mike</contactFirstName>
+            <phone>+852 2251 1555</phone>
+            <addressLine1>Bank of China Tower</addressLine1>
+            <city>Central Hong Kong</city>
+            <state></state>
+            <postalCode></postalCode>
+            <country>Hong Kong</country>
+            <salesRepEmployeeNumber>1621</salesRepEmployeeNumber>
+            <creditLimit>58600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Nishi</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>216</customerNumber>
+            <customerName>Enaco Distributors</customerName>
+            <contactLastName>Saavedra</contactLastName>
+            <contactFirstName>Eduardo</contactFirstName>
+            <phone>(93) 203 4555</phone>
+            <addressLine1>Rambla de Cataluña, 23</addressLine1>
+            <city>Barcelona</city>
+            <state></state>
+            <postalCode>08022</postalCode>
+            <country>Spain</country>
+            <salesRepEmployeeNumber>1702</salesRepEmployeeNumber>
+            <creditLimit>60300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Gerard</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>219</customerNumber>
+            <customerName>Boards &amp; Toys Co.</customerName>
+            <contactLastName>Young</contactLastName>
+            <contactFirstName>Mary</contactFirstName>
+            <phone>3105552373</phone>
+            <addressLine1>4097 Douglas Av.</addressLine1>
+            <city>Glendale</city>
+            <state>CA</state>
+            <postalCode>92561</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1166</salesRepEmployeeNumber>
+            <creditLimit>11000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Thompson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>227</customerNumber>
+            <customerName>Heintze Collectables</customerName>
+            <contactLastName>Ibsen</contactLastName>
+            <contactFirstName>Palle</contactFirstName>
+            <phone>86 21 3555</phone>
+            <addressLine1>Smagsloget 45</addressLine1>
+            <city>Århus</city>
+            <state></state>
+            <postalCode>8200</postalCode>
+            <country>Denmark</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>120800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>233</customerNumber>
+            <customerName>Québec Home Shopping Network</customerName>
+            <contactLastName>Fresnière</contactLastName>
+            <contactFirstName>Jean</contactFirstName>
+            <phone>(514) 555-8054</phone>
+            <addressLine1>43 rue St. Laurent</addressLine1>
+            <city>Montréal</city>
+            <state>Québec</state>
+            <postalCode>H1J 1C3</postalCode>
+            <country>Canada</country>
+            <salesRepEmployeeNumber>1286</salesRepEmployeeNumber>
+            <creditLimit>48700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Tseng</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>242</customerNumber>
+            <customerName>Alpha Cognac</customerName>
+            <contactLastName>Roulet</contactLastName>
+            <contactFirstName>Annette</contactFirstName>
+            <phone>61.77.6555</phone>
+            <addressLine1>1 rue Alsace-Lorraine</addressLine1>
+            <city>Toulouse</city>
+            <state></state>
+            <postalCode>31000</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1370</salesRepEmployeeNumber>
+            <creditLimit>61100</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Hernandez</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>250</customerNumber>
+            <customerName>Lyon Souveniers</customerName>
+            <contactLastName>Da Silva</contactLastName>
+            <contactFirstName>Daniel</contactFirstName>
+            <phone>+33 1 46 62 7555</phone>
+            <addressLine1>27 rue du Colonel Pierre Avia</addressLine1>
+            <city>Paris</city>
+            <state></state>
+            <postalCode>75508</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1337</salesRepEmployeeNumber>
+            <creditLimit>68100</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bondur</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>259</customerNumber>
+            <customerName>Toms Spezialitäten, Ltd</customerName>
+            <contactLastName>Pfalzheim</contactLastName>
+            <contactFirstName>Henriette</contactFirstName>
+            <phone>0221-5554327</phone>
+            <addressLine1>Mehrheimerstr. 369</addressLine1>
+            <city>Köln</city>
+            <state></state>
+            <postalCode>50739</postalCode>
+            <country>Germany</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>120400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>276</customerNumber>
+            <customerName>Anna's Decorations, Ltd</customerName>
+            <contactLastName>O'Hara</contactLastName>
+            <contactFirstName>Anna</contactFirstName>
+            <phone>02 9936 8555</phone>
+            <addressLine1>201 Miller Street</addressLine1>
+            <city>North Sydney</city>
+            <state>NSW</state>
+            <postalCode>2060</postalCode>
+            <country>Australia</country>
+            <salesRepEmployeeNumber>1611</salesRepEmployeeNumber>
+            <creditLimit>107800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Fixter</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>278</customerNumber>
+            <customerName>Rovelli Gifts</customerName>
+            <contactLastName>Rovelli</contactLastName>
+            <contactFirstName>Giovanni</contactFirstName>
+            <phone>035-640555</phone>
+            <addressLine1>Via Ludovico il Moro 22</addressLine1>
+            <city>Bergamo</city>
+            <state></state>
+            <postalCode>24100</postalCode>
+            <country>Italy</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>119600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>282</customerNumber>
+            <customerName>Souveniers And Things Co.</customerName>
+            <contactLastName>Huxley</contactLastName>
+            <contactFirstName>Adrian</contactFirstName>
+            <phone>+61 2 9495 8555</phone>
+            <addressLine1>Monitor Money Building</addressLine1>
+            <city>Chatswood</city>
+            <state>NSW</state>
+            <postalCode>2067</postalCode>
+            <country>Australia</country>
+            <salesRepEmployeeNumber>1611</salesRepEmployeeNumber>
+            <creditLimit>93300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Fixter</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>311</customerNumber>
+            <customerName>Oulu Toy Supplies, Inc.</customerName>
+            <contactLastName>Koskitalo</contactLastName>
+            <contactFirstName>Pirkko</contactFirstName>
+            <phone>981-443655</phone>
+            <addressLine1>Torikatu 38</addressLine1>
+            <city>Oulu</city>
+            <state></state>
+            <postalCode>90110</postalCode>
+            <country>Finland</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>90500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>319</customerNumber>
+            <customerName>Mini Classics</customerName>
+            <contactLastName>Frick</contactLastName>
+            <contactFirstName>Steve</contactFirstName>
+            <phone>9145554562</phone>
+            <addressLine1>3758 North Pendale Street</addressLine1>
+            <city>White Plains</city>
+            <state>NY</state>
+            <postalCode>24067</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1323</salesRepEmployeeNumber>
+            <creditLimit>102700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Vanauf</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>320</customerNumber>
+            <customerName>Mini Creations Ltd.</customerName>
+            <contactLastName>Huang</contactLastName>
+            <contactFirstName>Wing</contactFirstName>
+            <phone>5085559555</phone>
+            <addressLine1>4575 Hillside Dr.</addressLine1>
+            <city>New Bedford</city>
+            <state>MA</state>
+            <postalCode>50553</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1188</salesRepEmployeeNumber>
+            <creditLimit>94500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Firrelli</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>321</customerNumber>
+            <customerName>Corporate Gift Ideas Co.</customerName>
+            <contactLastName>Brown</contactLastName>
+            <contactFirstName>Julie</contactFirstName>
+            <phone>6505551386</phone>
+            <addressLine1>7734 Strong St.</addressLine1>
+            <city>San Francisco</city>
+            <state>CA</state>
+            <postalCode>94217</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1165</salesRepEmployeeNumber>
+            <creditLimit>105000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jennings</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>323</customerNumber>
+            <customerName>Down Under Souveniers, Inc</customerName>
+            <contactLastName>Graham</contactLastName>
+            <contactFirstName>Mike</contactFirstName>
+            <phone>+64 9 312 5555</phone>
+            <addressLine1>162-164 Grafton Road</addressLine1>
+            <city>Auckland</city>
+            <state></state>
+            <postalCode></postalCode>
+            <country>New Zealand</country>
+            <salesRepEmployeeNumber>1612</salesRepEmployeeNumber>
+            <creditLimit>88000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Marsh</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>324</customerNumber>
+            <customerName>Stylish Desk Decors, Co.</customerName>
+            <contactLastName>Brown</contactLastName>
+            <contactFirstName>Ann</contactFirstName>
+            <phone>(171) 555-0297</phone>
+            <addressLine1>35 King George</addressLine1>
+            <city>London</city>
+            <state></state>
+            <postalCode>WX3 6FW</postalCode>
+            <country>UK</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>77000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>333</customerNumber>
+            <customerName>Australian Gift Network, Co</customerName>
+            <contactLastName>Calaghan</contactLastName>
+            <contactFirstName>Ben</contactFirstName>
+            <phone>61-7-3844-6555</phone>
+            <addressLine1>31 Duncan St. West End</addressLine1>
+            <city>South Brisbane</city>
+            <state>Queensland</state>
+            <postalCode>4101</postalCode>
+            <country>Australia</country>
+            <salesRepEmployeeNumber>1611</salesRepEmployeeNumber>
+            <creditLimit>51600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Fixter</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>334</customerNumber>
+            <customerName>Suominen Souveniers</customerName>
+            <contactLastName>Suominen</contactLastName>
+            <contactFirstName>Kalle</contactFirstName>
+            <phone>+358 9 8045 555</phone>
+            <addressLine1>Software Engineering Center</addressLine1>
+            <city>Espoo</city>
+            <state></state>
+            <postalCode>FIN-02271</postalCode>
+            <country>Finland</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>98800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>339</customerNumber>
+            <customerName>Classic Gift Ideas, Inc</customerName>
+            <contactLastName>Cervantes</contactLastName>
+            <contactFirstName>Francisca</contactFirstName>
+            <phone>2155554695</phone>
+            <addressLine1>782 First Street</addressLine1>
+            <city>Philadelphia</city>
+            <state>PA</state>
+            <postalCode>71270</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1188</salesRepEmployeeNumber>
+            <creditLimit>81100</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Firrelli</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>344</customerNumber>
+            <customerName>CAF Imports</customerName>
+            <contactLastName>Fernandez</contactLastName>
+            <contactFirstName>Jesus</contactFirstName>
+            <phone>+34 913 728 555</phone>
+            <addressLine1>Merchants House</addressLine1>
+            <city>Madrid</city>
+            <state></state>
+            <postalCode>28023</postalCode>
+            <country>Spain</country>
+            <salesRepEmployeeNumber>1702</salesRepEmployeeNumber>
+            <creditLimit>59600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Gerard</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>347</customerNumber>
+            <customerName>Men 'R' US Retailers, Ltd.</customerName>
+            <contactLastName>Chandler</contactLastName>
+            <contactFirstName>Brian</contactFirstName>
+            <phone>2155554369</phone>
+            <addressLine1>6047 Douglas Av.</addressLine1>
+            <city>Los Angeles</city>
+            <state>CA</state>
+            <postalCode>91003</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1166</salesRepEmployeeNumber>
+            <creditLimit>57700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Thompson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>350</customerNumber>
+            <customerName>Marseille Mini Autos</customerName>
+            <contactLastName>Lebihan</contactLastName>
+            <contactFirstName>Laurence</contactFirstName>
+            <phone>91.24.4555</phone>
+            <addressLine1>12, rue des Bouchers</addressLine1>
+            <city>Marseille</city>
+            <state></state>
+            <postalCode>13008</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1337</salesRepEmployeeNumber>
+            <creditLimit>65000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bondur</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>353</customerNumber>
+            <customerName>Reims Collectables</customerName>
+            <contactLastName>Henriot</contactLastName>
+            <contactFirstName>Paul</contactFirstName>
+            <phone>26.47.1555</phone>
+            <addressLine1>59 rue de l'Abbaye</addressLine1>
+            <city>Reims</city>
+            <state></state>
+            <postalCode>51100</postalCode>
+            <country>France</country>
+            <salesRepEmployeeNumber>1337</salesRepEmployeeNumber>
+            <creditLimit>81100</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bondur</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>363</customerNumber>
+            <customerName>Online Diecast Creations Co.</customerName>
+            <contactLastName>Young</contactLastName>
+            <contactFirstName>Dorothy</contactFirstName>
+            <phone>6035558647</phone>
+            <addressLine1>2304 Long Airport Avenue</addressLine1>
+            <city>Nashua</city>
+            <state>NH</state>
+            <postalCode>62005</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1216</salesRepEmployeeNumber>
+            <creditLimit>114200</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Patterson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>379</customerNumber>
+            <customerName>Collectables For Less Inc.</customerName>
+            <contactLastName>Nelson</contactLastName>
+            <contactFirstName>Allen</contactFirstName>
+            <phone>6175558555</phone>
+            <addressLine1>7825 Douglas Av.</addressLine1>
+            <city>Brickhaven</city>
+            <state>MA</state>
+            <postalCode>58339</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1188</salesRepEmployeeNumber>
+            <creditLimit>70700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Firrelli</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>381</customerNumber>
+            <customerName>Royale Belge</customerName>
+            <contactLastName>Cartrain</contactLastName>
+            <contactFirstName>Pascale</contactFirstName>
+            <phone>(071) 23 67 2555</phone>
+            <addressLine1>Boulevard Tirou, 255</addressLine1>
+            <city>Charleroi</city>
+            <state></state>
+            <postalCode>B-6000</postalCode>
+            <country>Belgium</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>23500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>382</customerNumber>
+            <customerName>Salzburg Collectables</customerName>
+            <contactLastName>Pipps</contactLastName>
+            <contactFirstName>Georg</contactFirstName>
+            <phone>6562-9555</phone>
+            <addressLine1>Geislweg 14</addressLine1>
+            <city>Salzburg</city>
+            <state></state>
+            <postalCode>5020</postalCode>
+            <country>Austria</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>71700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>385</customerNumber>
+            <customerName>Cruz &amp; Sons Co.</customerName>
+            <contactLastName>Cruz</contactLastName>
+            <contactFirstName>Arnold</contactFirstName>
+            <phone>+63 2 555 3587</phone>
+            <addressLine1>15 McCallum Street</addressLine1>
+            <city>Makati City</city>
+            <state></state>
+            <postalCode>1227 MM</postalCode>
+            <country>Philippines</country>
+            <salesRepEmployeeNumber>1621</salesRepEmployeeNumber>
+            <creditLimit>81500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Nishi</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>386</customerNumber>
+            <customerName>L'ordine Souveniers</customerName>
+            <contactLastName>Moroni</contactLastName>
+            <contactFirstName>Maurizio</contactFirstName>
+            <phone>0522-556555</phone>
+            <addressLine1>Strada Provinciale 124</addressLine1>
+            <city>Reggio Emilia</city>
+            <state></state>
+            <postalCode>42100</postalCode>
+            <country>Italy</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>121400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>424</customerNumber>
+            <customerName>Classic Legends Inc.</customerName>
+            <contactLastName>Hernandez</contactLastName>
+            <contactFirstName>Maria</contactFirstName>
+            <phone>2125558493</phone>
+            <addressLine1>5905 Pompton St.</addressLine1>
+            <city>NYC</city>
+            <state>NY</state>
+            <postalCode>10022</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1286</salesRepEmployeeNumber>
+            <creditLimit>67500</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Tseng</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>447</customerNumber>
+            <customerName>Gift Ideas Corp.</customerName>
+            <contactLastName>Lewis</contactLastName>
+            <contactFirstName>Dan</contactFirstName>
+            <phone>2035554407</phone>
+            <addressLine1>2440 Pompton St.</addressLine1>
+            <city>Glendale</city>
+            <state>CT</state>
+            <postalCode>97561</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1323</salesRepEmployeeNumber>
+            <creditLimit>49700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Vanauf</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>448</customerNumber>
+            <customerName>Scandinavian Gift Ideas</customerName>
+            <contactLastName>Larsson</contactLastName>
+            <contactFirstName>Martha</contactFirstName>
+            <phone>0695-34 6555</phone>
+            <addressLine1>Åkergatan 24</addressLine1>
+            <city>Bräcke</city>
+            <state></state>
+            <postalCode>S-844 67</postalCode>
+            <country>Sweden</country>
+            <salesRepEmployeeNumber>1504</salesRepEmployeeNumber>
+            <creditLimit>116400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jones</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>452</customerNumber>
+            <customerName>Mini Auto Werke</customerName>
+            <contactLastName>Mendel</contactLastName>
+            <contactFirstName>Roland</contactFirstName>
+            <phone>7675-3555</phone>
+            <addressLine1>Kirchgasse 6</addressLine1>
+            <city>Graz</city>
+            <state></state>
+            <postalCode>8010</postalCode>
+            <country>Austria</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>45300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>455</customerNumber>
+            <customerName>Super Scale Inc.</customerName>
+            <contactLastName>Murphy</contactLastName>
+            <contactFirstName>Leslie</contactFirstName>
+            <phone>2035559545</phone>
+            <addressLine1>567 North Pendale Street</addressLine1>
+            <city>New Haven</city>
+            <state>CT</state>
+            <postalCode>97823</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1286</salesRepEmployeeNumber>
+            <creditLimit>95400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Tseng</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>458</customerNumber>
+            <customerName>Corrida Auto Replicas, Ltd</customerName>
+            <contactLastName>Sommer</contactLastName>
+            <contactFirstName>Martín</contactFirstName>
+            <phone>(91) 555 22 82</phone>
+            <addressLine1>C/ Araquil, 67</addressLine1>
+            <city>Madrid</city>
+            <state></state>
+            <postalCode>28023</postalCode>
+            <country>Spain</country>
+            <salesRepEmployeeNumber>1702</salesRepEmployeeNumber>
+            <creditLimit>104600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Gerard</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>462</customerNumber>
+            <customerName>FunGiftIdeas.com</customerName>
+            <contactLastName>Benitez</contactLastName>
+            <contactFirstName>Violeta</contactFirstName>
+            <phone>5085552555</phone>
+            <addressLine1>1785 First Street</addressLine1>
+            <city>New Bedford</city>
+            <state>MA</state>
+            <postalCode>50553</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1216</salesRepEmployeeNumber>
+            <creditLimit>85800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Patterson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>471</customerNumber>
+            <customerName>Australian Collectables, Ltd</customerName>
+            <contactLastName>Clenahan</contactLastName>
+            <contactFirstName>Sean</contactFirstName>
+            <phone>61-9-3844-6555</phone>
+            <addressLine1>7 Allen Street</addressLine1>
+            <city>Glen Waverly</city>
+            <state>Victoria</state>
+            <postalCode>3150</postalCode>
+            <country>Australia</country>
+            <salesRepEmployeeNumber>1611</salesRepEmployeeNumber>
+            <creditLimit>60300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Fixter</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>473</customerNumber>
+            <customerName>Frau da Collezione</customerName>
+            <contactLastName>Ricotti</contactLastName>
+            <contactFirstName>Franco</contactFirstName>
+            <phone>+39 022515555</phone>
+            <addressLine1>20093 Cologno Monzese</addressLine1>
+            <city>Milan</city>
+            <state></state>
+            <postalCode></postalCode>
+            <country>Italy</country>
+            <salesRepEmployeeNumber>1401</salesRepEmployeeNumber>
+            <creditLimit>34800</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Castillo</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>475</customerNumber>
+            <customerName>West Coast Collectables Co.</customerName>
+            <contactLastName>Thompson</contactLastName>
+            <contactFirstName>Steve</contactFirstName>
+            <phone>3105553722</phone>
+            <addressLine1>3675 Furth Circle</addressLine1>
+            <city>Burbank</city>
+            <state>CA</state>
+            <postalCode>94019</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1166</salesRepEmployeeNumber>
+            <creditLimit>55400</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Thompson</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>484</customerNumber>
+            <customerName>Iberia Gift Imports, Corp.</customerName>
+            <contactLastName>Roel</contactLastName>
+            <contactFirstName>José Pedro</contactFirstName>
+            <phone>(95) 555 82 82</phone>
+            <addressLine1>C/ Romero, 33</addressLine1>
+            <city>Sevilla</city>
+            <state></state>
+            <postalCode>41101</postalCode>
+            <country>Spain</country>
+            <salesRepEmployeeNumber>1702</salesRepEmployeeNumber>
+            <creditLimit>65700</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Gerard</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>486</customerNumber>
+            <customerName>Motor Mint Distributors Inc.</customerName>
+            <contactLastName>Salazar</contactLastName>
+            <contactFirstName>Rosa</contactFirstName>
+            <phone>2155559857</phone>
+            <addressLine1>11328 Douglas Av.</addressLine1>
+            <city>Philadelphia</city>
+            <state>PA</state>
+            <postalCode>71270</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1323</salesRepEmployeeNumber>
+            <creditLimit>72600</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Vanauf</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>487</customerNumber>
+            <customerName>Signal Collectibles Ltd.</customerName>
+            <contactLastName>Taylor</contactLastName>
+            <contactFirstName>Sue</contactFirstName>
+            <phone>4155554312</phone>
+            <addressLine1>2793 Furth Circle</addressLine1>
+            <city>Brisbane</city>
+            <state>CA</state>
+            <postalCode>94217</postalCode>
+            <country>USA</country>
+            <salesRepEmployeeNumber>1165</salesRepEmployeeNumber>
+            <creditLimit>60300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Jennings</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>489</customerNumber>
+            <customerName>Double Decker Gift Stores, Ltd</customerName>
+            <contactLastName>Smith</contactLastName>
+            <contactFirstName>Thomas</contactFirstName>
+            <phone>(171) 555-7555</phone>
+            <addressLine1>120 Hanover Sq.</addressLine1>
+            <city>London</city>
+            <state></state>
+            <postalCode>WA1 1DP</postalCode>
+            <country>UK</country>
+            <salesRepEmployeeNumber>1501</salesRepEmployeeNumber>
+            <creditLimit>43300</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Bott</salesRepEmployeeName>
+        </Object>
+        <Object>
+            <customerNumber>496</customerNumber>
+            <customerName>Kelly's Gift Shop</customerName>
+            <contactLastName>Snowden</contactLastName>
+            <contactFirstName>Tony</contactFirstName>
+            <phone>+64 9 5555500</phone>
+            <addressLine1>Arenales 1938 3'A'</addressLine1>
+            <city>Auckland</city>
+            <state></state>
+            <postalCode></postalCode>
+            <country>New Zealand</country>
+            <salesRepEmployeeNumber>1612</salesRepEmployeeNumber>
+            <creditLimit>110000</creditLimit>
+            <addressLine2></addressLine2>
+            <salesRepEmployeeName>Marsh</salesRepEmployeeName>
+        </Object>
+    </cacheData>
+</MockDataSource>
