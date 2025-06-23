@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.isomorphic.com/isomorphic/servlet/taglib" prefix="isomorphic" %>
+<%@ taglib uri="http://www.smartclient.com/taglib" prefix="isomorphic" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +38,24 @@
 <body>
 <script>
 isc.Page.setEvent("load", function(){
+
+    ensureDS(["pipelineDS","forecastDS","employeeDS","officeDS","customerDS"], init);
+
+    function ensureDS(list, callback){
+        if(list.length===0){
+            if(callback) callback();
+            return;
+        }
+        var id=list.shift();
+        var ds = isc.DataSource.get(id);
+        if(ds){
+            ensureDS(list, callback);
+        }else{
+            isc.DataSource.load(id, function(){ ensureDS(list, callback); });
+        }
+    }
+
+    function init(){
 
     var filterForm = isc.DynamicForm.create({
         ID:"filterForm", width:350, numCols:3, colWidths:["*",50,"*"],
@@ -126,7 +144,8 @@ isc.Page.setEvent("load", function(){
     }
 
     function fetchAndDisplay(criteria){
-        isc.DataSource.get("pipelineDS").fetchData(criteria, function(resp){
+        ensureDS(["pipelineDS"], function(){
+            isc.DataSource.get("pipelineDS").fetchData(criteria, function(resp){
             var data = resp.data || [];
             pipelineGrid.setData(data);
             var repTotals = {}, statusTotals = {};
@@ -150,9 +169,11 @@ isc.Page.setEvent("load", function(){
             summaryPanel.getMember(1).setContents("Orders Won: <b>"+fmt(won)+"</b>");
             summaryPanel.getMember(2).setContents("Orders Lost: <b>"+fmt(lost)+"</b>");
         });
+        });
     }
 
-    fetchAndDisplay({});
+        fetchAndDisplay({});
+    }
 });
 </script>
 </body>
