@@ -168,7 +168,6 @@ isc.Page.setEvent("load", function(){
             pipelineDS.fetchData(criteria, processData);
         } else {
             isc.DataSource.load("pipelineDS", function(ds){
-                if (ds) ds.fetchData(criteria, processData);
             });
         }
     }

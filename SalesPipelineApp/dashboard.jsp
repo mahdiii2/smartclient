@@ -179,6 +179,7 @@ isc.Page.setEvent("load", function () {
     } else {
       isc.DataSource.load("pipelineDS", function(ds){
         if (ds) ds.fetchData({}, processKPIs);
+        ds.fetchData({}, processKPIs);
       });
     }
   }
