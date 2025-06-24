@@ -139,7 +139,8 @@ isc.Page.setEvent("load", function(){
     }
 
     function fetchAndDisplay(criteria){
-        isc.DataSource.get("pipelineDS").fetchData(criteria, function(resp){
+        var pipelineDS = isc.DataSource.get("pipelineDS");
+        var processData = function(resp){
             var data = resp.data || [];
             pipelineGrid.setData(data);
             var repTotals = {}, statusTotals = {};
@@ -162,7 +163,14 @@ isc.Page.setEvent("load", function(){
             summaryPanel.getMember(0).setContents("Total Pipeline: <b>"+fmt(total)+"</b>");
             summaryPanel.getMember(1).setContents("Orders Won: <b>"+fmt(won)+"</b>");
             summaryPanel.getMember(2).setContents("Orders Lost: <b>"+fmt(lost)+"</b>");
-        });
+        };
+        if (pipelineDS) {
+            pipelineDS.fetchData(criteria, processData);
+        } else {
+            isc.DataSource.load("pipelineDS", function(ds){
+                if (ds) ds.fetchData(criteria, processData);
+            });
+        }
     }
 
         fetchAndDisplay({});
