@@ -152,7 +152,8 @@ isc.Page.setEvent("load", function () {
     });
 
     // ---------- compute KPI row ----------
-    isc.DataSource.get("pipelineDS").fetchData({}, function (resp) {
+    var pipelineDS = isc.DataSource.get("pipelineDS");
+    var processKPIs = function (resp) {
       var total=0, won=0, lost=0;
       resp.data.forEach(r=>{
         total+=r.potentialValue;
@@ -172,7 +173,14 @@ isc.Page.setEvent("load", function () {
       dashboardPane.replaceMember(0,
         isc.HLayout.create({width:"100%", height:110, membersMargin:15, members:cards})
       );
-    });
+    };
+    if (pipelineDS) {
+      pipelineDS.fetchData({}, processKPIs);
+    } else {
+      isc.DataSource.load("pipelineDS", function(ds){
+        ds.fetchData({}, processKPIs);
+      });
+    }
   }
 });
 </script>
